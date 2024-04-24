@@ -3,7 +3,7 @@ import {LoginForm} from "@/auth/components/LoginForm.tsx";
 
 export const LoginPage = () => {
   return (
-    <main className="grid grid-rows-2 grid-cols-1 lg:grid-rows-1 lg:grid-cols-2 min-h-dvh">
+    <main className="grid grid-rows-[1fr_auto] grid-cols-1 lg:grid-rows-1 lg:grid-cols-2 min-h-dvh">
       <AuthBanner />
       <LoginForm />
     </main>
