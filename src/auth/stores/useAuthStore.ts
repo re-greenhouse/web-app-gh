@@ -1,6 +1,6 @@
 import {create} from "zustand";
 import {persist} from "zustand/middleware";
-import {Profile} from "@/auth/models/Profile.ts";
+import {Profile} from "@/profiles/models/Profile.ts";
 
 type AuthStore = {
   token?: string,
