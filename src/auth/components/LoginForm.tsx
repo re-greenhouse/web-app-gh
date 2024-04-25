@@ -1,10 +1,18 @@
-import {FormEvent, ReactElement, useRef} from "react";
-import {Link} from "react-router-dom";
+import {FormEvent, ReactElement, useRef, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import {login} from "@/auth/services/auth.service.ts";
+import {useAuthStore} from "@/auth/stores/useAuthStore.ts";
+import {Spinner} from "@/shared/components/Spinner.tsx";
+import {getMyProfile} from "@/profiles/services/profile.service.ts";
 
 export const LoginForm = (): ReactElement => {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const [isLogging, setIsLogging] = useState<boolean>(false);
+  const updateToken = useAuthStore(state => state.updateToken);
+  const updateProfile = useAuthStore(state => state.updateProfile);
+  const navigate = useNavigate();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -18,14 +26,43 @@ export const LoginForm = (): ReactElement => {
     }
 
     const toastId = toast.loading("Iniciando sesión");
-    new Promise(resolve => setTimeout(resolve, 1500))
-      .then(() => {
+    setIsLogging(true);
+
+    login(usernameRef.current.value, passwordRef.current.value)
+      .then(res => {
         toast.update(toastId, {
-          type: "success",
-          render: "Se ha iniciado sesión satisfactoriamente",
+          type: res.status === "success" ? "success" : "error",
+          render: res.message,
           isLoading: false,
-          autoClose: 1000
-        })
+          autoClose: 1500,
+        });
+        setIsLogging(false);
+
+        if (res.token) {
+          const toastProfileId = toast.loading("Recuperando perfil");
+          updateToken(res.token);
+          getMyProfile(res.token)
+            .then(res => {
+              if (res.status === "success") {
+                updateProfile(res.payload!);
+              } else if (res.status === "error") {
+                toast.update(toastProfileId, {
+                  type: "error",
+                  render: "Hubo un error al conectarse al servidor",
+                  isLoading: false,
+                  autoClose: 1500
+                });
+              } else {
+                toast.update(toastProfileId, {
+                  type: "info",
+                  render: "Redireccionando a la creación de perfil",
+                  isLoading: false,
+                  autoClose: 1500
+                });
+                navigate("/crear-perfil");
+              }
+            })
+        }
       });
   }
 
@@ -83,8 +120,16 @@ export const LoginForm = (): ReactElement => {
           />
         </div>
 
-        <button type="submit" className="font-semibold text-light bg-primary rounded-xl py-2 px-4 mb-6 w-full">
-          Iniciar sesión
+        <button
+          disabled={isLogging}
+          type="submit"
+          className="flex justify-center font-semibold text-light bg-primary rounded-xl py-2 px-4 mb-6 w-full"
+        >
+          {
+            isLogging
+              ? <Spinner color="#15F5BA" height={24} />
+              : <span>Iniciar sesión</span>
+          }
         </button>
 
         <Link to="/register" className="text-sm text-primary font-semibold">
