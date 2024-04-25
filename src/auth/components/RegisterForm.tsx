@@ -1,13 +1,49 @@
-import {FormEvent, ReactElement, useRef} from "react";
-import {Link} from "react-router-dom";
+import {FormEvent, ReactElement, useRef, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import {register} from "@/auth/services/auth.service.ts";
+import {toast} from "react-toastify";
+import {Spinner} from "@/shared/components/Spinner.tsx";
 
 export const RegisterForm = (): ReactElement => {
+  const navigate = useNavigate();
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
+  const [isRegistering, setIsRegistering] = useState<boolean>(false);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (
+      !usernameRef.current || !passwordRef.current || !confirmPasswordRef.current ||
+      usernameRef.current.value.length === 0 ||
+      passwordRef.current.value.length === 0 ||
+      confirmPasswordRef.current.value.length === 0
+    ) {
+      return;
+    }
+
+    if (passwordRef.current.value !== confirmPasswordRef.current.value) {
+      toast.error("Las contraseñas no coinciden.");
+      return;
+    }
+
+    const toastId = toast.loading("Realizando registro de usuario.");
+    setIsRegistering(true);
+
+    register(usernameRef.current.value, passwordRef.current.value)
+      .then(res => {
+        toast.update(toastId, {
+          type: res.status === "success" ? "success" : "error",
+          render: res.message,
+          isLoading: false,
+          autoClose: 1500,
+        });
+        if (res.status === "success") {
+          navigate("/login");
+        }
+      })
+      .finally(() => setIsRegistering(false));
   }
 
   return (
@@ -88,8 +124,16 @@ export const RegisterForm = (): ReactElement => {
           />
         </div>
 
-        <button type="submit" className="font-semibold text-light bg-primary rounded-xl py-2 px-4 mb-6 w-full">
-          Registrarse
+        <button
+          disabled={isRegistering}
+          type="submit"
+          className="font-semibold text-light bg-primary rounded-xl py-2 px-4 mb-6 w-full"
+        >
+          {
+            isRegistering
+              ? <Spinner color="#15F5BA" height={24} />
+              : <span>Registrarse</span>
+          }
         </button>
 
         <Link to="/login" className="text-sm text-primary font-semibold">
