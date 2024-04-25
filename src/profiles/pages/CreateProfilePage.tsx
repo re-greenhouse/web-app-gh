@@ -1,5 +1,5 @@
 import {ReactElement} from "react";
-import {CreateProfileForm} from "@/public/components/CreateProfileForm.tsx";
+import {CreateProfileForm} from "@/profiles/components/CreateProfileForm.tsx";
 
 export const CreateProfilePage = (): ReactElement => {
   return (
