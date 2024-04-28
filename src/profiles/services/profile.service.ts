@@ -29,3 +29,21 @@ export const getMyProfile = async(token: string): Promise<{status: string; messa
     return { status: "error", message: "Hubo un problema con el servidor. Intente de nuevo en unos minutos." };
   }
 }
+
+export const createProfile = async(firstName: string, lastName: string, iconUrl: string, token: string): Promise<{status: string; message: string; payload?: Profile}> => {
+  try {
+    const response = await instance.post("/profiles",
+      {
+        firstName: firstName, lastName: lastName, iconUrl: iconUrl
+      },
+      { headers: {Authorization: `Bearer ${token}`} }
+    );
+    return {
+      status: "success",
+      message: "Se ha creado su perfil",
+      payload: response.data
+    };
+  } catch (error: unknown) {
+    return { status: "error", message: "Hubo un problema con el servidor. Intente de nuevo en unos minutos." };
+  }
+}
