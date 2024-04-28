@@ -29,7 +29,7 @@ export const AuthBanner = (): ReactElement => {
           d="M307.124 268.668C331.425 292.969 318.624 342.668 318.624 342.668C318.624 342.668 267.925 354.969 243.624 330.668C219.324 306.368 230.624 254.668 230.624 254.668C230.624 254.668 282.824 244.368 307.124 268.668Z"
           fill="currentColor"/>
       </svg>
-      <div className="absolute bottom-0 bg-light rounded-t-[32px] h-8 w-full"/>
+      <div className="absolute bottom-0 h-8 w-full rounded-t-[32px] lg:right-0 lg:h-full lg:w-8 lg:rounded-tr-none lg:rounded-l-[32px] bg-light"/>
     </div>
   );
 };
