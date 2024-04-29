@@ -8,7 +8,7 @@ const instance = axios.create({
 
 export const register = async(registerRequest: RegisterRequest): Promise<{status: string; message: string;}> => {
   try {
-    await instance.post("/auth/sign-up", { registerRequest });
+    await instance.post("/auth/sign-up", registerRequest);
     return { status: "success", message: "Se ha registrado exitosamente." };
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response?.status == 409) {
