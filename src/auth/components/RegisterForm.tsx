@@ -4,6 +4,7 @@ import {Spinner} from "@/shared/components/Spinner.tsx";
 import {ReferableTextField} from "@/shared/components/ReferableTextField.tsx";
 import {useRegisterForm} from "@/auth/hooks/RegisterForm.hook.tsx";
 import {InfoMessage} from "@/shared/components/Messages";
+import {PrimaryButton} from "@/shared/components/Buttons";
 
 export const RegisterForm = (): ReactElement => {
   const {usernameRef, passwordRef, confirmPasswordRef, firstNameRef, lastNameRef, hasInvitation, isLoading, onSubmit} = useRegisterForm();
@@ -77,18 +78,14 @@ export const RegisterForm = (): ReactElement => {
               </svg>
             }
           />
-          <button
-            disabled={isLoading}
-            type="submit"
-            className="font-semibold text-light bg-primary rounded-xl py-2 px-4 mb-6 w-full"
-          >
+          <PrimaryButton disabled={isLoading} type="submit">
             {
               isLoading
-                ? <Spinner color="#15F5BA" height={24} />
+                ? <Spinner color="#15F5BA" height={24}/>
                 : <span>Registrarse</span>
             }
-          </button>
-          <Link to="/login" className="text-sm text-primary font-semibold">
+          </PrimaryButton>
+          <Link to="/login" className="block text-sm text-primary font-semibold mt-6">
             ¿Ya tienes una cuenta? Inicia sesión aquí
           </Link>
         </form>

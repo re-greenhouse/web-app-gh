@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {Spinner} from "@/shared/components/Spinner.tsx";
 import {ReferableTextField} from "@/shared/components/ReferableTextField.tsx";
 import {useLoginForm} from "@/auth/hooks/LoginForm.hook.tsx";
+import {PrimaryButton} from "@/shared/components/Buttons";
 
 export const LoginForm = (): ReactElement => {
   const {usernameRef, passwordRef, isLoading, onSubmit} = useLoginForm();
@@ -43,18 +44,14 @@ export const LoginForm = (): ReactElement => {
               </svg>
             }
           />
-          <button
-            disabled={isLoading}
-            type="submit"
-            className="flex justify-center font-semibold text-light bg-primary rounded-xl py-2 px-4 mb-6 w-full"
-          >
+          <PrimaryButton disabled={isLoading} type="submit">
             {
               isLoading
                 ? <Spinner color="#15F5BA" height={24}/>
                 : <span>Iniciar sesión</span>
             }
-          </button>
-          <Link to="/register" className="text-sm text-primary font-semibold">
+          </PrimaryButton>
+          <Link to="/register" className="block text-sm text-primary font-semibold mt-6">
             ¿Todavía no tienes una cuenta? Regístrate aquí
           </Link>
         </form>
