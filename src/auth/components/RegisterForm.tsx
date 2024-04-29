@@ -3,15 +3,22 @@ import {Link} from "react-router-dom";
 import {Spinner} from "@/shared/components/Spinner.tsx";
 import {ReferableTextField} from "@/shared/components/ReferableTextField.tsx";
 import {useRegisterForm} from "@/auth/hooks/RegisterForm.hook.tsx";
+import {InfoMessage} from "@/shared/components/Messages";
 
 export const RegisterForm = (): ReactElement => {
-  const {usernameRef, passwordRef, confirmPasswordRef, firstNameRef, lastNameRef, isLoading, onSubmit} = useRegisterForm();
+  const {usernameRef, passwordRef, confirmPasswordRef, firstNameRef, lastNameRef, hasInvitation, isLoading, onSubmit} = useRegisterForm();
 
   return (
     <div className="relative flex justify-center items-center bg-light p-8 pt-0 lg:pl-0 lg:pt-12">
       <div className="max-w-screen-sm w-full">
         <p className="text-2xl font-bold">¡Empiece a usar Greenhouse!</p>
-        <h1 className="text-4xl font-bold text-secondary">Registrarse</h1>
+        <h1 className="text-4xl font-bold text-secondary mb-3">Registrarse</h1>
+
+        {
+          hasInvitation
+            ? <InfoMessage text="Se ha aplicado un código de invitación." />
+            : null
+        }
 
         <form onSubmit={onSubmit} className="bottom-0 py-6">
           <ReferableTextField

@@ -1,31 +1,29 @@
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import {FormEvent, useRef, useState} from "react";
 import {toast} from "react-toastify";
 import {register} from "@/auth/services/auth.service.ts";
+import {areValidHtmlInputRefs} from "@/shared/services/ref-validation.service.ts";
 
 export const useRegisterForm = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
-  const [isRegistering, setIsRegistering] = useState<boolean>(false);
-  const navigate = useNavigate();
-
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
+  const [isRegistering, setIsRegistering] = useState<boolean>(false);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (
-      !usernameRef.current || !passwordRef.current || !confirmPasswordRef.current ||
-      usernameRef.current.value.length === 0 ||
-      passwordRef.current.value.length === 0 ||
-      confirmPasswordRef.current.value.length === 0
+      !areValidHtmlInputRefs([usernameRef, passwordRef, confirmPasswordRef, firstNameRef, lastNameRef, passwordRef])
     ) {
       return;
     }
 
-    if (passwordRef.current.value !== confirmPasswordRef.current.value) {
+    if (passwordRef.current!.value !== confirmPasswordRef.current!.value) {
       toast.error("Las contraseñas no coinciden.");
       return;
     }
@@ -33,7 +31,13 @@ export const useRegisterForm = () => {
     const toastId = toast.loading("Realizando registro de usuario.");
     setIsRegistering(true);
 
-    register(usernameRef.current.value, passwordRef.current.value)
+    register({
+      username: usernameRef.current!.value,
+      password: passwordRef.current!.value,
+      firstName: firstNameRef.current!.value,
+      lastName: lastNameRef.current!.value,
+      invitationCode: searchParams.get("invitationCode"),
+    })
       .then(res => {
         toast.update(toastId, {
           type: res.status === "success" ? "success" : "error",
@@ -55,6 +59,7 @@ export const useRegisterForm = () => {
     firstNameRef: firstNameRef,
     lastNameRef: lastNameRef,
     isLoading: isRegistering,
-    onSubmit: onSubmit
+    onSubmit: onSubmit,
+    hasInvitation: !!searchParams.get('invitation'),
   } as const;
 }
