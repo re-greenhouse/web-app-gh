@@ -36,7 +36,7 @@ export const useRegisterForm = () => {
       password: passwordRef.current!.value,
       firstName: firstNameRef.current!.value,
       lastName: lastNameRef.current!.value,
-      invitationCode: searchParams.get("invitationCode"),
+      invitationCode: searchParams.get("invitationCode") ?? undefined,
     })
       .then(res => {
         toast.update(toastId, {
