@@ -8,7 +8,7 @@ export const LoginForm = (): ReactElement => {
   const {usernameRef, passwordRef, isLoading, onSubmit} = useLoginForm();
 
   return (
-    <div className="relative flex justify-center items-center bg-light p-8 pt-0 lg:pt-12">
+    <div className="relative flex justify-center items-center bg-light p-8 pt-0 lg:pl-0 lg:pt-12">
       <div className="max-w-screen-sm w-full">
         <p className="text-2xl font-bold">¡Bienvenid@ a Greenhouse!</p>
         <h1 className="text-4xl font-bold text-secondary">Iniciar sesión</h1>
