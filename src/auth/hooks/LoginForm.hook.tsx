@@ -31,7 +31,7 @@ export const useLoginForm = () => {
         });
         setIsLogging(false);
         if (res.status === "success") {
-          updateLogin(res.payload.token, res.payload.profile);
+          updateLogin(res.payload.token, res.payload.profile, usernameRef.current!.value, passwordRef.current!.value);
         }
       });
   }
