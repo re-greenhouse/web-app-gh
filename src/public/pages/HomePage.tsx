@@ -71,7 +71,7 @@ export const HomePage = (): ReactElement => {
         <main className="p-4 sm:p-6 lg:p-12">
           <div className="bg-white shadow-lg rounded-lg p-4 sm:p-6 lg:p-12 max-w-full h-full mt-2">
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 text-center">Dashboard</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 w-[80vw] mt-6 justify-center mx-auto">
               <CardButton image="/public/crops_in_progress.webp" title="Cultivos en progreso" link="/link1" />
               <CardButton image="/public/company.webp" title="Mi Empresa" link="/link2" />
               <CardButton image="/public/statistical_reports.webp" title="Reportes Estadísticos" link="/link3" />
@@ -79,7 +79,7 @@ export const HomePage = (): ReactElement => {
             </div>
             <div className="mt-14">
               <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-center">Recent Records</h2>
-              <div className="overflow-x-auto">
+              <div className="flex justify-center items-center overflow-x-auto">
                 <Table<Crop>
                     data={crops}
                     columnNames={['Name', 'Author', 'State', 'Phase', 'Start Date']}
