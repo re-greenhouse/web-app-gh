@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
 import { CardButton } from "@/public/components";
 import { getRecentRecords } from "@/public/services/recent-records.service";
-import {Crop, CropWrapper} from "@/public/models/Crop";
+import { Crop, CropWrapper } from "@/public/models/Crop";
 import { Table } from "@/shared/components/Table/Table.tsx";
 
 export const HomePage = (): ReactElement => {
@@ -13,7 +13,7 @@ export const HomePage = (): ReactElement => {
     const fetchData = async () => {
       const result = await getRecentRecords();
       if (result.status === 'success') {
-        const data = result.data as unknown as CropWrapper; // Adjust type to match response structure
+        const data = result.data as unknown as CropWrapper;
         setCrops(data.crops || []);
         setError(null);
       } else {
@@ -21,7 +21,7 @@ export const HomePage = (): ReactElement => {
       }
       setLoading(false);
     };
-    fetchData().then(r => r);
+    fetchData();
   }, []);
 
   if (loading) {
@@ -33,9 +33,9 @@ export const HomePage = (): ReactElement => {
   }
 
   return (
-      <div className="grid grid-rows-[auto_1fr] bg-light min-h-dvh">
-        <div className="flex justify-between items-center p-6 lg:p-12 lg:pb-1">
-          <div className="flex justify-center items-center text-primary hover:scale-95 duration-300 gap-1">
+      <div className="grid grid-rows-[auto_1fr] bg-light min-h-screen">
+        <div className="flex justify-between items-center p-4 sm:p-6 lg:p-12 lg:pb-1">
+          <div className="flex justify-center items-center text-primary hover:scale-95 transition-transform duration-300 gap-1">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -68,29 +68,30 @@ export const HomePage = (): ReactElement => {
             />
           </svg>
         </div>
-        <main className="p-6 lg:p-12">
-          <div className="bg-white shadow-lg rounded-lg p-6 max-w-full h-full mt-2">
-            <h2 className="text-4xl font-bold mb-1 text-center">Dashboard</h2>
-            <div className="flex flex-col justify-center items-center h-fit pt-14 lg:flex-row lg:justify-around space-x-4 lg:space-x-8">
-              <CardButton image="public/mushrooms.webp" title="Title 1" link="/link1" />
-              <CardButton image="public/mushrooms.webp" title="Title 2" link="/link2" />
-              <CardButton image="public/mushrooms.webp" title="Title 3" link="/link3" />
-              <CardButton image="public/mushrooms.webp" title="Title 4" link="/link4" />
+        <main className="p-4 sm:p-6 lg:p-12">
+          <div className="bg-white shadow-lg rounded-lg p-4 sm:p-6 lg:p-12 max-w-full h-full mt-2">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 text-center">Dashboard</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
+              <CardButton image="/public/crops_in_progress.webp" title="Cultivos en progreso" link="/link1" />
+              <CardButton image="/public/company.webp" title="Mi Empresa" link="/link2" />
+              <CardButton image="/public/statistical_reports.webp" title="Reportes Estadísticos" link="/link3" />
+              <CardButton image="/public/crops_archive.webp" title="Histórico de Cultivos" link="/link4" />
             </div>
             <div className="mt-14">
-              <h2 className="text-2xl font-bold mb-4 text-center">Recent Records</h2>
-              <Table<Crop>
-                  data={crops}
-                  columnNames={['ID', 'Name', 'Author', 'State', 'Phase', 'Start Date']}
-                  columnValues={[
-                    (crop) => crop.id,
-                    (crop) => crop.name,
-                    (crop) => crop.author,
-                    (crop) => crop.state ? 'Active' : 'Inactive',
-                    (crop) => crop.phase,
-                    (crop) => new Date(crop.startDate).toLocaleDateString(),
-                  ]}
-              />
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-center">Recent Records</h2>
+              <div className="overflow-x-auto">
+                <Table<Crop>
+                    data={crops}
+                    columnNames={['Name', 'Author', 'State', 'Phase', 'Start Date']}
+                    columnValues={[
+                      (crop) => crop.name,
+                      (crop) => crop.author,
+                      (crop) => (crop.state ? 'Active' : 'Inactive'),
+                      (crop) => crop.phase,
+                      (crop) => new Date(crop.startDate).toLocaleDateString(),
+                    ]}
+                />
+              </div>
             </div>
           </div>
         </main>

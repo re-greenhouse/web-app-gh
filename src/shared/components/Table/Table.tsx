@@ -10,8 +10,8 @@ type TableProps<T> = {
 
 export const Table = <T extends object>({data, columnNames, columnValues, headerStyle, bodyStyle}: TableProps<T>): ReactElement => {
   return (
-    <div className="grid w-full">
-      <table className="overflow-x-auto w-full text-sm text-left rtl:text-right text-gray-500">
+    <div className="grid w-[80vw]">
+      <table className="text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-xs md:text-base text-gray-700 bg-gray-200" style={headerStyle}>
           <tr>
             {columnNames.map((name, index) =>
