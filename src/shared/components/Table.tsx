@@ -3,7 +3,7 @@ import {CSSProperties, ReactElement, ReactNode} from "react";
 type TableProps<T> = {
   data: Array<T>;
   columnNames: Array<string>;
-  columnValues: Array<(row: T) => string | number | ReactNode> | Array<() => string | number | ReactNode>;
+  columnValues: Array<(row: T) => string | number | ReactNode>;
   headerStyle?: CSSProperties;
   bodyStyle?: CSSProperties;
 }
