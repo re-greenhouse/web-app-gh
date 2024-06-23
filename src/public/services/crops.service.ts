@@ -63,3 +63,31 @@ export const getRecentRecords = async (): Promise<{ status: string; data: Crop[]
         };
     }
 };
+
+export const createNewCrop = async (name: string, author: string): Promise<{ status: string; data: Crop | string; message?: string; }> => {
+    const { token } = useAuthStore.getState();
+
+    try {
+        const response = await instance.post<Crop>("/crops", { name, author }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return {
+            status: "success",
+            data: response.data,
+        };
+    } catch (error: unknown) {
+        if (axios.isAxiosError(error) && error.response) {
+            return {
+                status: "error",
+                data: "There was a problem with the server. Please try again in a few minutes.",
+                message: error.message
+            };
+        }
+        return {
+            status: "error",
+            data: "An unexpected error occurred."
+        };
+    }
+};
