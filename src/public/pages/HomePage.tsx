@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import { CardButton } from "@/public/components";
-import { getRecentRecords } from "@/public/services/recent-records.service";
+import { getRecentRecords } from "@/public/services/crops.service";
 import { Crop, CropWrapper } from "@/public/models/Crop";
 import { Table } from "@/shared/components/Table/Table.tsx";
 import { BaseLayout } from "@/shared/layouts/BaseLayout";
@@ -43,7 +43,7 @@ export const HomePage = (): ReactElement => {
           <CardButton
             image="/public/crops_in_progress.webp"
             title="Cultivos en progreso"
-            link="/link1"
+            link="/crops"
           />
           <CardButton
             image="/public/crops_archive.webp"
