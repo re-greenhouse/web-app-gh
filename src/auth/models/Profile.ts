@@ -3,5 +3,6 @@ export interface Profile {
   userId: string,
   firstName: string,
   lastName: string,
-  iconUrl: string
+  iconUrl: string,
+  role: string
 }
