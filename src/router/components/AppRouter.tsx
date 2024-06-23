@@ -8,6 +8,7 @@ import { PrivateRoute } from "@/router/components/PrivateRoute.tsx";
 import { ProfilePage } from "@/public/pages/ProfilePage.tsx";
 import { CompanyPage } from "@/company/pages/CompanyPage.tsx";
 import { CropsInProgressPage } from "@/crops/pages/CropsInProgressPage";
+import { CropsArchivePage } from "@/crops/pages/CropsArchive";
 
 export const AppRouter = (): ReactElement => {
   const isLogged = useAuthStore((state) => state.isLoggedIn());
@@ -20,6 +21,7 @@ export const AppRouter = (): ReactElement => {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/company" element={<CompanyPage />} />
         <Route path="/crops" element={<CropsInProgressPage />} />
+        <Route path="/archive" element={<CropsArchivePage />} />
       </Route>
       <Route
         element={<PrivateRoute canActivate={!isLogged} defaultDestination="/" />}>

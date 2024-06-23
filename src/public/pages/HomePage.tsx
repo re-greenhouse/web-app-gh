@@ -4,6 +4,7 @@ import { getRecentRecords } from "@/public/services/crops.service";
 import { Crop, CropWrapper } from "@/public/models/Crop";
 import { Table } from "@/shared/components/Table/Table.tsx";
 import { BaseLayout } from "@/shared/layouts/BaseLayout";
+import { LoaderMessage } from "@/shared/components/LoaderMessage";
 
 export const HomePage = (): ReactElement => {
   const [crops, setCrops] = useState<Crop[]>([]);
@@ -26,11 +27,19 @@ export const HomePage = (): ReactElement => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    <BaseLayout>
+      <div className="flex justify-center items-center h-full">
+        <LoaderMessage message="Cargando..." />
+      </div>
+    </BaseLayout>
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    <BaseLayout>
+      <div className="flex justify-center items-center h-full">
+        <LoaderMessage message="Error al cargar el dashboard" />
+      </div>
+    </BaseLayout>
   }
 
   return (
@@ -42,18 +51,18 @@ export const HomePage = (): ReactElement => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 w-[80vw] mt-6 justify-center mx-auto">
           <CardButton
             image="/public/crops_in_progress.webp"
-            title="Cultivos en progreso"
+            title="Cultivos en Progreso"
             link="/crops"
           />
           <CardButton
             image="/public/crops_archive.webp"
-            title="Histórico de Cultivos"
-            link="/link4"
+            title="Cultivos Finalizados"
+            link="/archive"
           />
           <CardButton
             image="/public/company.webp"
             title="Mi Empresa"
-            link="/link2"
+            link="/company"
           />
         </div>
         <div className="mt-14">
