@@ -49,7 +49,7 @@ export const CompanyPage = (): ReactElement => {
             (profile) => profile.firstName,
             (profile) => profile.lastName,
             (profile) => profile.role,
-            (profile) => {
+            () => {
               return (
                 <p>Todo</p>
               )
