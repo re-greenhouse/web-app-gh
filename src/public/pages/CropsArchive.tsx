@@ -4,6 +4,7 @@ import { Crop, CropWrapper } from "@/public/models/Crop";
 import { BaseLayout } from "@/shared/layouts/BaseLayout";
 import { LoaderMessage } from "@/shared/components/LoaderMessage";
 import { CropCard } from "@/crops/components/CropCard";
+import { BannerComponent } from "@/shared/components/Banner";
 
 export const CropsArchivePage = (): ReactElement => {
   const [crops, setCrops] = useState<Crop[]>([]);
@@ -56,9 +57,7 @@ export const CropsArchivePage = (): ReactElement => {
   return (
     <BaseLayout>
       <div className="max-w-full h-full">
-        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 text-center">
-          Cultivos Finalizados
-        </h2>
+        <BannerComponent/>
         <div className="relative mb-4 mx-auto w-[80vw]">
             <input
             type="text"

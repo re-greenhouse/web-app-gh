@@ -9,7 +9,7 @@ export const BaseLayout = ({children}: BaseLayoutProps) => {
   return (
     <div className="grid grid-rows-[auto_1fr] bg-background min-h-dvh">
       <Toolbar />
-      <main className="p-6 lg:p-12">
+      <main className="">
         {children}
       </main>
     </div>
