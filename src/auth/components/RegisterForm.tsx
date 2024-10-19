@@ -7,7 +7,8 @@ import {InfoMessage} from "@/shared/components/Messages";
 import {PrimaryButton} from "@/shared/components/Buttons";
 
 export const RegisterForm = (): ReactElement => {
-  const {usernameRef, passwordRef, confirmPasswordRef, firstNameRef, lastNameRef, hasInvitation, isLoading, onSubmit} = useRegisterForm();
+  //Dejo listo la interfaz, falta mandar la razon social y el ruc a donde deba ir
+  const {usernameRef, passwordRef, confirmPasswordRef, firstNameRef, lastNameRef, razonSocialRef, rucRef, hasInvitation, isLoading, onSubmit} = useRegisterForm();
 
   return (
     <div className="relative flex justify-center items-center bg-background p-8 pt-0 lg:pl-0 lg:pt-12">
@@ -21,20 +22,11 @@ export const RegisterForm = (): ReactElement => {
             : null
         }
 
-        <form onSubmit={onSubmit} className="bottom-0 py-6">
-          <ReferableTextField
-            id="username"
-            ref={usernameRef}
-            label="Nombre de usuario"
-            placeholder="Ingrese su nombre de usuario"
-            type="text"
-            TrailingIcon={
-              <svg className="text-primary w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clipRule="evenodd"/>
-              </svg>
-            }
-          />
-          <div className="grid grid-cols-2 gap-3">
+        <form onSubmit={onSubmit} className="bottom-0 py-2">
+        <div className="pb-4">
+          <h1>Información del cliente</h1>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
             <div>
               <ReferableTextField
                 id="first-name"
@@ -54,6 +46,41 @@ export const RegisterForm = (): ReactElement => {
               />
             </div>
           </div>
+          <div className="pb-4">
+          <h1>Información de la empresa</h1>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+            <div>
+              <ReferableTextField
+                id="razon-social"
+                ref={razonSocialRef}
+                label="Razón Social"
+                placeholder="Ingrese la razón social"
+                type="text"
+              />
+            </div>
+            <div>
+              <ReferableTextField
+                id="ruc"
+                ref={rucRef}
+                label="RUC"
+                placeholder="Ingrese el RUC"
+                type="text"
+              />
+            </div>
+          </div>
+          <ReferableTextField
+            id="username"
+            ref={usernameRef}
+            label="Nombre de usuario"
+            placeholder="Ingrese su nombre de usuario"
+            type="text"
+            TrailingIcon={
+              <svg className="text-primary w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clipRule="evenodd"/>
+              </svg>
+            }
+          />
           <ReferableTextField
             id="password"
             ref={passwordRef}
