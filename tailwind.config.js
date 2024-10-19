@@ -11,7 +11,8 @@ export default {
         secondary: "#898989",
         third: "#282A3F",
         accent: "#15F5BA",
-        background: "#F0F3FF"
+        background: "#F0F3FF",
+        loginButton: "#282A3F",
       }
     },
   },

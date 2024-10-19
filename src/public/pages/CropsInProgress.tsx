@@ -6,7 +6,6 @@ import { LoaderMessage } from "@/shared/components/LoaderMessage";
 import { CropCard } from "@/crops/components/CropCard";
 import { NewCropDialog } from "@/crops/components/NewCropDialog"; // Importa el componente del diálogo
 import { useAuthStore } from "@/auth/stores/useAuthStore";
-import { PrimaryButton } from "@/shared/components/Buttons";
 
 export const CropsInProgress = (): ReactElement => {
   const [crops, setCrops] = useState<Crop[]>([]);
@@ -98,11 +97,6 @@ export const CropsInProgress = (): ReactElement => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="mr-6 pl-10 p-2 border rounded w-full mx-auto focus:outline-none focus:ring focus:current-color transition duration-300 ease-in-out"
-            />
-            <PrimaryButton
-                label="Nuevo Cultivo"
-                size="small"
-                onClick={() => setIsDialogOpen(true)}
             />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 w-[80vw] mt-6 justify-center mx-auto">
