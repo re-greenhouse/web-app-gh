@@ -10,10 +10,10 @@ export const RegisterForm = (): ReactElement => {
   const {usernameRef, passwordRef, confirmPasswordRef, firstNameRef, lastNameRef, hasInvitation, isLoading, onSubmit} = useRegisterForm();
 
   return (
-    <div className="relative flex justify-center items-center bg-light p-8 pt-0 lg:pl-0 lg:pt-12">
+    <div className="relative flex justify-center items-center bg-background p-8 pt-0 lg:pl-0 lg:pt-12">
       <div className="max-w-screen-sm w-full">
-        <p className="text-2xl font-bold">¡Empiece a usar Greenhouse!</p>
-        <h1 className="text-4xl font-bold text-secondary mb-3">Registrarse</h1>
+        <p className="text-2xl">¡Empiece a usar Greenhouse!</p>
+        <h1 className="text-4xl text-primary mb-3">Registrarse</h1>
 
         {
           hasInvitation
@@ -85,7 +85,7 @@ export const RegisterForm = (): ReactElement => {
                 : <span>Registrarse</span>
             }
           </PrimaryButton>
-          <Link to="/login" className="block text-sm text-primary font-semibold mt-6">
+          <Link to="/login" className="block text-sm text-secondary font-semibold mt-6">
             ¿Ya tienes una cuenta? Inicia sesión aquí
           </Link>
         </form>
