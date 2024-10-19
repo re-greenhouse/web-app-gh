@@ -6,6 +6,7 @@ import { LoaderMessage } from "@/shared/components/LoaderMessage";
 import { CropCard } from "@/crops/components/CropCard";
 import { useAuthStore } from "@/auth/stores/useAuthStore";
 import { BannerComponent } from "@/shared/components/Banner";
+import { Dropdown } from "@/shared/components/DropDownComponent";
 
 export const CropsInProgress = (): ReactElement => {
   const [crops, setCrops] = useState<Crop[]>([]);
@@ -15,6 +16,8 @@ export const CropsInProgress = (): ReactElement => {
   const [ openDateFilter, setOpenDateFilter] = useState(false);
   const [openPhaseFilter, setOpenPhaseFilter] = useState(false);
   const [dropdown, setDropdown] = useState(false);
+
+  const options = ["Fórmula", "Patio", "Búnker", "Túnel", "Incubación", "Cobertura", "Inducción", "Cosecha"];
   
   const { profile } = useAuthStore();
 
@@ -108,24 +111,10 @@ export const CropsInProgress = (): ReactElement => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
               </svg>
               {dropdown && (
-              <div
-                id="dropdownHover"
-                className="absolute bg-white divide-y rounded-lg shadow w-44 translate-y-14"
-              >
-                <ul className="py-2 text-sm text-primary ">
-                  <li>
-                    <a href="#" className="block px-4 py-2 hover:bg-background">
-                      Edit
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="block px-4 py-2 hover:bg-background text-red-600">
-                      Delete
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            )}
+                <div className="absolute translate-y-4">
+                  <Dropdown options={options}/>
+                </div>
+              )}
             </button>
             
         </div>

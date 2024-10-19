@@ -1,5 +1,7 @@
 import { ReactElement, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Dropdown } from "@/shared/components/DropDownComponent";
+
 
 type CropCardProps = { cropId: string; startDate: string; phase: string };
 
@@ -7,6 +9,8 @@ export const CropCard = ({ cropId, startDate, phase }: CropCardProps): ReactElem
   const navigate = useNavigate();
   const capitalize = (s: string | any[]) => s && s[0].toUpperCase() + s.slice(1);
   const [dropdown, setDropdown] = useState(false);
+
+  const options = ['Editar', 'Eliminar']
 
   return (
     <div
@@ -35,23 +39,7 @@ export const CropCard = ({ cropId, startDate, phase }: CropCardProps): ReactElem
               </svg>
             </button>
             {dropdown && (
-              <div
-                id="dropdownHover"
-                className="absolute bg-white divide-y rounded-lg shadow w-44"
-              >
-                <ul className="py-2 text-sm text-primary ">
-                  <li>
-                    <a href="#" className="block px-4 py-2 hover:bg-background">
-                      Edit
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="block px-4 py-2 hover:bg-background text-red-600">
-                      Delete
-                    </a>
-                  </li>
-                </ul>
-              </div>
+              <Dropdown options={options}/>
             )}
             </div>
           </div>
