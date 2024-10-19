@@ -4,8 +4,9 @@ import { Crop, CropWrapper } from "@/public/models/Crop";
 import { BaseLayout } from "@/shared/layouts/BaseLayout";
 import { LoaderMessage } from "@/shared/components/LoaderMessage";
 import { CropCard } from "@/crops/components/CropCard";
-import { NewCropDialog } from "@/crops/components/NewCropDialog"; // Importa el componente del diálogo
+import { NewCropDialog } from "@/crops/components/NewCropDialog";
 import { useAuthStore } from "@/auth/stores/useAuthStore";
+import { BannerComponent } from "@/shared/components/Banner";
 
 export const CropsInProgress = (): ReactElement => {
   const [crops, setCrops] = useState<Crop[]>([]);
@@ -13,8 +14,8 @@ export const CropsInProgress = (): ReactElement => {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-
-  const { profile } = useAuthStore(); // Obtiene el perfil del usuario
+  
+  const { profile } = useAuthStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,10 +73,8 @@ export const CropsInProgress = (): ReactElement => {
 
   return (
     <BaseLayout>
+      <BannerComponent/>
       <div className="max-w-full h-full">
-        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 text-center">
-          Cultivos en Progreso
-        </h2>
         <div className="relative mb-4 mx-auto w-[80vw] flex items-center">
             <svg
                 xmlns="http://www.w3.org/2000/svg"

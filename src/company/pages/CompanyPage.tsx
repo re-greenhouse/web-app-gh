@@ -5,8 +5,10 @@ import { LoaderMessage } from "@/shared/components/LoaderMessage.tsx";
 import { Table } from "@/shared/components/Table.tsx";
 import { Profile } from "@/auth/models/Profile.ts";
 
+
 export const CompanyPage = (): ReactElement => {
   const { isLoading, company, employees } = useCompanyPage();
+  
 
   if (isLoading) {
     return (
