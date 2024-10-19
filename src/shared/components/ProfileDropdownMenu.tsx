@@ -16,7 +16,6 @@ export const ProfileDropdownMenu = () => {
               alt={`${profile.firstName} foto de perfil`}
               className="h-10 w-10 object-cover object-center rounded-full"
             />
-            <span className="max-md:hidden font-semibold">{profile.firstName} {profile.lastName}</span>
             <span className="md:hidden font-semibold">
               {profile.firstName.at(0)?.toUpperCase()}
               {profile.lastName.at(0)?.toUpperCase()}
