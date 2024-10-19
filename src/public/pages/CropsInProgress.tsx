@@ -8,7 +8,7 @@ import { NewCropDialog } from "@/crops/components/NewCropDialog"; // Importa el 
 import { useAuthStore } from "@/auth/stores/useAuthStore";
 import { PrimaryButton } from "@/shared/components/Buttons";
 
-export const CropsInProgressPage = (): ReactElement => {
+export const CropsInProgress = (): ReactElement => {
   const [crops, setCrops] = useState<Crop[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -73,7 +73,7 @@ export const CropsInProgressPage = (): ReactElement => {
 
   return (
     <BaseLayout>
-      <div className="bg-white shadow-lg rounded-lg p-4 sm:p-6 lg:p-12 max-w-full h-full">
+      <div className="max-w-full h-full">
         <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 text-center">
           Cultivos en Progreso
         </h2>
