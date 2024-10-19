@@ -9,10 +9,10 @@ export const LoginForm = (): ReactElement => {
   const {usernameRef, passwordRef, isLoading, onSubmit} = useLoginForm();
 
   return (
-    <div className="relative flex justify-center items-center bg-light p-8 pt-0 lg:pl-0 lg:pt-12">
+    <div className="relative flex justify-center items-center bg-background p-8 pt-0 lg:pl-0 lg:pt-12">
       <div className="max-w-screen-sm w-full">
-        <p className="text-2xl font-bold">¡Bienvenid@ a Greenhouse!</p>
-        <h1 className="text-4xl font-bold text-secondary">Iniciar sesión</h1>
+        <p className="text-2xl">¡Bienvenid@ a Greenhouse!</p>
+        <h1 className="text-4xl text-primary">Iniciar sesión</h1>
         <form onSubmit={onSubmit} className="bottom-0 py-6">
           <ReferableTextField
             id="username"
@@ -51,7 +51,7 @@ export const LoginForm = (): ReactElement => {
                 : <span>Iniciar sesión</span>
             }
           </PrimaryButton>
-          <Link to="/register" className="block text-sm text-primary font-semibold mt-6">
+          <Link to="/register" className="block text-sm text-secondary font-semibold mt-6">
             ¿Todavía no tienes una cuenta? Regístrate aquí
           </Link>
         </form>

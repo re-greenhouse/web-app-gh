@@ -4,7 +4,7 @@ import { Crop, CropWrapper } from "@/public/models/Crop";
 import { BaseLayout } from "@/shared/layouts/BaseLayout";
 import { LoaderMessage } from "@/shared/components/LoaderMessage";
 import { CropCard } from "@/crops/components/CropCard";
-import { NewCropDialog } from "@/crops/components/NewCropDialog"; // Importa el componente del diálogo
+import { NewCropDialog } from "@/crops/components/NewCropDialog";
 import { useAuthStore } from "@/auth/stores/useAuthStore";
 import { BannerComponent } from "@/shared/components/Banner";
 
