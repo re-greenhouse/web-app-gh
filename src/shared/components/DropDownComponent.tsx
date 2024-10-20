@@ -4,7 +4,7 @@ type DropdownProps = {
     options: string[];
 }
 
-export const Dropdown = ({ options }: DropdownProps): ReactElement => {
+export const Dropdown = ({ options, onOptionSelect }: DropdownProps): ReactElement => {
     return (
         <div
             id="dropdownHover"
@@ -14,7 +14,7 @@ export const Dropdown = ({ options }: DropdownProps): ReactElement => {
                 <div
                     key={option}
                     className="px-4 py-2 hover:bg-gray-100"
-                    onClick={() => console.log(option)}
+                    onClick={() => onOptionSelect(option)}
                 >
                     {option}
                 </div>
