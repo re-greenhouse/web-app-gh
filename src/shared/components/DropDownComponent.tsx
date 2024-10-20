@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 
 type DropdownProps = {
     options: string[];
+    onOptionSelect: (option: string) => void;
 }
 
 export const Dropdown = ({ options, onOptionSelect }: DropdownProps): ReactElement => {

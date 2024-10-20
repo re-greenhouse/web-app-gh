@@ -18,13 +18,13 @@ export const CropsInProgress = (): ReactElement => {
   const [dropdown, setDropdown] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Todos')
 
-  const options = ["Todos", "Fórmula", "Patio", "Búnker", "Túnel", "Incubación", "Cobertura", "Inducción", "Cosecha"];
+  const options = ["Todos", "Formula", "Patio", "Bunker", "Tunel", "Incubacion", "Cobertura", "Induccion", "Cosecha"];
 
   const toggleDateSorting = () => {
     setOpenDateFilter(!openDateFilter);
   }
 
-  const handleItemClick = (option) => {
+  const handleItemClick = (option: string) => {
     setSelectedOption(option);
     setDropdown(false);
   }
@@ -36,6 +36,8 @@ export const CropsInProgress = (): ReactElement => {
       crop.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       crop.startDate.toLowerCase().includes(searchQuery.toLowerCase()) ||
       crop.phase.toLowerCase().includes(searchQuery.toLowerCase())
+  ).filter(
+    crop => selectedOption === 'Todos' || crop.phase.toLowerCase() === selectedOption.toLowerCase()
   );
 
   const sortedCrops = filteredCrops
@@ -135,7 +137,7 @@ export const CropsInProgress = (): ReactElement => {
                 </svg>
                 {dropdown && (
                   <div className="absolute translate-y-4">
-                    <Dropdown options={options}/>
+                    <Dropdown options={options} onOptionSelect={handleItemClick}/>
                   </div>
                 )}
               </button>
