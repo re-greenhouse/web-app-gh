@@ -1,5 +1,5 @@
 import {ReactElement, useEffect, useState, useRef } from "react";
-import {Link, useLocation} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {ProfileDropdownMenu} from "@/shared/components/ProfileDropdownMenu.tsx";
 
 
@@ -8,37 +8,17 @@ export const Toolbar = (): ReactElement => {
   const [dropDownToolbar, setDropDownToolbar] = useState(false);
 
   const menuRef = useRef(null);
-  const location = useLocation();
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setDropDownToolbar(true);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [menuRef]);
-
-  useEffect(() => {
-    setDropDownToolbar(true);
-  }, [location]);
-
-  const handleMenuClick = () => {
-    setDropDownToolbar(!dropDownToolbar);
-  };
-
   useEffect(() => {
     const pathName = window.location.pathname;
     if (pathName === '/'){
       setActivePage('cropsInProgress');
+      setDropDownToolbar(!dropDownToolbar);
     } else if (pathName === '/archive'){
       setActivePage('archives');
+      setDropDownToolbar(!dropDownToolbar);
     } else if (pathName === '/company'){
       setActivePage('company');
+      setDropDownToolbar(!dropDownToolbar);
     }
   }, []);
 
@@ -58,7 +38,7 @@ export const Toolbar = (): ReactElement => {
         </svg>
         <p className="max-md:hidden font-bold font-sans text-2xl">Greenhouse</p>
       </Link>
-      <div id="sections" className="flex justify-center items-center md:gap-24 gap-5">
+      <div id="sections" className="flex md:flex-row flex-row-reverse justify-center items-center md:gap-24 gap-5">
         <div className="items-center gap-24 hidden md:flex sm:hidden">
           <div className="flex gap-24 text-secondary">
             <Link to="/" className={getDesigns('cropsInProgress')}>
@@ -82,13 +62,13 @@ export const Toolbar = (): ReactElement => {
           </div>
         </div>
         <div className="flex md:hidden sm:flex">
-          <button onClick={handleMenuClick}>
+          <button onClick={()=> {setDropDownToolbar(!dropDownToolbar)}}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 text-primary">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
           </button>  
         </div>
-        <div className={`absolute z-20 translate-y-24  ${dropDownToolbar ? "hidden" : ""} bg-white border rounded-lg md:hidden`} ref={menuRef}>
+        <div className={`absolute z-20 translate-y-24  ${dropDownToolbar ? "hidden" : "block"} bg-white border rounded-lg md:hidden`} ref={menuRef}>
           <div className="flex flex-col text-secondary">
           <Link to="/" className={getDesigns('cropsInProgress')}>
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -110,14 +90,16 @@ export const Toolbar = (): ReactElement => {
                 </Link>
           </div>
         </div>
-        <Link to="/" className="text-primary hover:scale-95 duration-300">
-          <svg className="w-7 h-7 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-              strokeWidth={2.0} stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round"
-              d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"/>
-          </svg>
-        </Link>
-        <ProfileDropdownMenu />
+        <div className="flex justify-center items-center md:gap-24 gap-5">
+          <Link to="/" className="text-primary hover:scale-95 duration-300">
+            <svg className="w-7 h-7 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                strokeWidth={2.0} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round"
+                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"/>
+            </svg>
+          </Link>
+          <ProfileDropdownMenu />
+        </div>
       </div>
     </header>
   );
