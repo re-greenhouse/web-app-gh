@@ -13,13 +13,38 @@ export const CropsInProgress = (): ReactElement => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [ openDateFilter, setOpenDateFilter] = useState(false);
+  const [openDateFilter, setOpenDateFilter] = useState(false);
   const [openPhaseFilter, setOpenPhaseFilter] = useState(false);
   const [dropdown, setDropdown] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('Todos')
 
-  const options = ["Fórmula", "Patio", "Búnker", "Túnel", "Incubación", "Cobertura", "Inducción", "Cosecha"];
+  const options = ["Todos", "Fórmula", "Patio", "Búnker", "Túnel", "Incubación", "Cobertura", "Inducción", "Cosecha"];
+
+  const toggleDateSorting = () => {
+    setOpenDateFilter(!openDateFilter);
+  }
+
+  const handleItemClick = (option) => {
+    setSelectedOption(option);
+    setDropdown(false);
+  }
   
   const { profile } = useAuthStore();
+
+  const filteredCrops = crops.filter(
+    (crop) =>
+      crop.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      crop.startDate.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      crop.phase.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const sortedCrops = filteredCrops
+      .filter(crop => crop.state && ("formula" === crop.phase || "Todos" === crop.phase))
+      .sort((a, b) => {
+        const dateA = new Date(a.startDate).getTime();
+        const dateB = new Date(b.startDate).getTime();
+        return openDateFilter ? dateA- dateB : dateB - dateA;
+      });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,12 +61,7 @@ export const CropsInProgress = (): ReactElement => {
     fetchData();
   }, []);
 
-  const filteredCrops = crops.filter(
-    (crop) =>
-      crop.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      crop.startDate.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      crop.phase.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  
 
   if (loading) {
     return (
@@ -94,7 +114,7 @@ export const CropsInProgress = (): ReactElement => {
             <div className="flex ">
               <button
                   className="inline-flex items-center px-4 text-secondary gap-2 whitespace-nowrap"
-                  onClick={()=>{setOpenDateFilter(!openDateFilter)}}
+                  onClick={toggleDateSorting}
               >
                 Fecha de inicio
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className={`size-4 ${openDateFilter ? "rotate-180" : ""} duration-200`}>
@@ -123,7 +143,7 @@ export const CropsInProgress = (): ReactElement => {
             
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 w-[80vw] mt-6 justify-center mx-auto">
-          {filteredCrops.filter(crop => crop.state).map((crop) => (
+          {sortedCrops.map((crop) => (
             <CropCard
               key={crop.id}
               cropId={crop.id}
