@@ -9,7 +9,7 @@ export const BannerComponent= (): ReactElement => {
     return (
         <div className="relative">
             <img src="public/bannerImage.svg" alt="bannerImage" className="absolute w-full hidden md:block"/>
-            <div className="relative z-10 flex md:flex-row flex-col md:items-end items-center text-center md:px-28 px-12 md:pt-32 pb-10 md:gap-5 gap-2">
+            <div className="relative z-10 flex md:flex-row flex-col md:items-end items-center md:items-start md:text-left text-center md:px-28 px-12 md:pt-32 pb-10 md:gap-5 gap-2">
                 <img
                     src={company?.logoUrl}
                     alt={`${company?.name} logo`}
