@@ -40,7 +40,7 @@ export const CropArchiveCard = ({ cropId, startDate, quality }: CropArchiveCardP
   return (
     <div
       onClick={() => navigate(cropId)}
-      className="flex flex-col cursor-pointer bg-white shadow-md rounded-lg overflow-hidden m-2 sm:m-4"
+      className="flex flex-col cursor-pointer bg-white border-2 rounded-lg overflow-hidden m-2 sm:m-4"
     >
       <div className="w-full overflow-hidden pb-4">
         <img className="object-cover w-full h-1/2 mb-4" src="/public/mushroom_images/hongos2.webp" alt={cropId} />
