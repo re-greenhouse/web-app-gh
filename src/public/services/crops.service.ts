@@ -6,6 +6,7 @@ const instance = axios.create({
     baseURL: import.meta.env.VITE_API_ENDPOINT
 });
 
+//Falta deleteCropById y PatchCropById
 export const getCrops = async (): Promise<{ status: string; data: Crop[] | string; message?: string; }> => {
     const { token } = useAuthStore.getState();
 
