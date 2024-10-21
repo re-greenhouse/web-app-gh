@@ -3,7 +3,7 @@ import { getRecentRecords } from "@/public/services/crops.service";
 import { Crop, CropWrapper } from "@/public/models/Crop";
 import { BaseLayout } from "@/shared/layouts/BaseLayout";
 import { LoaderMessage } from "@/shared/components/LoaderMessage";
-import { CropCard } from "@/crops/components/CropCard";
+import { CropArchiveCard } from "@/crops/components/CropArchiveCard";
 import { useAuthStore } from "@/auth/stores/useAuthStore";
 import { BannerComponent } from "@/shared/components/Banner";
 import { Dropdown } from "@/shared/components/DropDownComponent";
@@ -13,14 +13,39 @@ export const CropsArchivePage = (): ReactElement => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [ openCloseDateFilter, setOpenCloseDateFilter] = useState(false);
-  const [ openStartDateFilter, setOpenStartDateFilter] = useState(false);
+  const [openDateFilter, setOpenDateFilter] = useState(false);
   const [openPhaseFilter, setOpenPhaseFilter] = useState(false);
   const [dropdown, setDropdown] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('Todos')
 
-  const options = ["Excelente", "Regular", "Mala"];
+  const options = ["Todos", "Excelente", "Regular", "Mala"];
+
+  const toggleDateSorting = () => {
+    setOpenDateFilter(!openDateFilter);
+  }
+
+  const handleItemClick = (option: string) => {
+    setSelectedOption(option);
+    setDropdown(false);
+  }
   
   const { profile } = useAuthStore();
+
+  const filteredCrops = crops.filter(
+    (crop) =>
+      crop.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      crop.startDate.toLowerCase().includes(searchQuery.toLowerCase())
+  ).filter(
+    crop => !crop.state
+    // crop => !crop.state && (selectedOption === 'Todos' || crop.quality.toLowerCase() === selectedOption.toLowerCase())
+  );
+
+  const sortedCrops = filteredCrops
+      .sort((a, b) => {
+        const dateA = new Date(a.startDate).getTime();
+        const dateB = new Date(b.startDate).getTime();
+        return openDateFilter ? dateA- dateB : dateB - dateA;
+      });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,13 +61,6 @@ export const CropsArchivePage = (): ReactElement => {
     };
     fetchData();
   }, []);
-
-  const filteredCrops = crops.filter(
-    (crop) =>
-      crop.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      crop.startDate.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      crop.phase.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   if (loading) {
     return (
@@ -95,19 +113,10 @@ export const CropsArchivePage = (): ReactElement => {
             <div className="flex flex-col md:flex-row md:gap-0 gap-5">
               <button
                   className="inline-flex items-center px-4 text-secondary gap-2 whitespace-nowrap"
-                  onClick={()=>{setOpenStartDateFilter(!openStartDateFilter)}}
+                  onClick={toggleDateSorting}
               >
                 Fecha de inicio
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className={`size-4 ${openStartDateFilter ? "rotate-180" : ""} duration-200`}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
-                </svg>
-              </button>
-              <button
-                  className="inline-flex items-center px-4 text-secondary gap-2 whitespace-nowrap"
-                  onClick={()=>{setOpenCloseDateFilter(!openCloseDateFilter)}}
-              >
-                Fecha de cierre
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className={`size-4 ${openCloseDateFilter ? "rotate-180" : ""} duration-200`}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className={`size-4 ${openDateFilter ? "rotate-180" : ""} duration-200`}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                 </svg>
               </button>
@@ -125,7 +134,7 @@ export const CropsArchivePage = (): ReactElement => {
                 </svg>
                 {dropdown && (
                   <div className="absolute translate-y-4">
-                    <Dropdown options={options}/>
+                    <Dropdown options={options} onOptionSelect={handleItemClick}/>
                   </div>
                 )}
               </button>
@@ -133,12 +142,12 @@ export const CropsArchivePage = (): ReactElement => {
             
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 w-[80vw] mt-6 justify-center mx-auto">
-        {filteredCrops.filter(crop => !crop.state).map((crop) => (
-            <CropCard
+        {sortedCrops.map((crop) => (
+            <CropArchiveCard
               key={crop.id}
               cropId={crop.id}
               startDate={crop.startDate}
-              phase={crop.phase}
+              quality='excelente'
             />
           ))}
         </div>

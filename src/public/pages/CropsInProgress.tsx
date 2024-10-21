@@ -18,7 +18,7 @@ export const CropsInProgress = (): ReactElement => {
   const [dropdown, setDropdown] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Todos')
 
-  const options = ["Todos", "Formula", "Patio", "Bunker", "Tunel", "Incubacion", "Cobertura", "Induccion", "Cosecha"];
+  const options = ["Todos", "Formula", "Preparation Area", "Bunker", "Tunnel", "Incubation", "Casing", "Induction", "Harvest"];
 
   const toggleDateSorting = () => {
     setOpenDateFilter(!openDateFilter);
@@ -37,11 +37,10 @@ export const CropsInProgress = (): ReactElement => {
       crop.startDate.toLowerCase().includes(searchQuery.toLowerCase()) ||
       crop.phase.toLowerCase().includes(searchQuery.toLowerCase())
   ).filter(
-    crop => selectedOption === 'Todos' || crop.phase.toLowerCase() === selectedOption.toLowerCase()
+    crop => crop.state && (selectedOption === 'Todos' || crop.phase.toLowerCase() === selectedOption.toLowerCase())
   );
 
   const sortedCrops = filteredCrops
-      .filter(crop => crop.state && ("formula" === crop.phase || "Todos" === crop.phase))
       .sort((a, b) => {
         const dateA = new Date(a.startDate).getTime();
         const dateB = new Date(b.startDate).getTime();
