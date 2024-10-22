@@ -2,7 +2,7 @@ import {CSSProperties, ReactElement, ReactNode} from "react";
 
 type TableProps<T> = {
   data: Array<T>;
-  columnNames: Array<string>;
+  columnNames: Array<string | ReactNode>;
   columnValues: Array<(row: T) => string | number | ReactNode>;
   headerStyle?: CSSProperties;
   bodyStyle?: CSSProperties;
@@ -16,8 +16,8 @@ export const Table = <T extends object>({data, columnNames, columnValues, header
           <thead className="text-xs md:text-base text-gray-700 bg-gray-200" style={headerStyle}>
           <tr>
             {columnNames.map((name, index) =>
-              <th key={index} scope="col" className="px-6 py-3">
-                {name}
+              <th key={index} scope="col" className="px-6 py-3 text-center">
+                {typeof name === 'string' ? name : name}
               </th>
             )}
           </tr>
