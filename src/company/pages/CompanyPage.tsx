@@ -6,6 +6,7 @@ import { Table } from "@/shared/components/Table.tsx";
 import { Profile } from "@/auth/models/Profile.ts";
 import { BannerComponent } from "@/shared/components/Banner";
 
+
 export const CompanyPage = (): ReactElement => {
   const { isLoading, company, employees } = useCompanyPage();
   
@@ -36,14 +37,36 @@ export const CompanyPage = (): ReactElement => {
       <div className="mt-6 max-w-screen-md mx-auto">
         <Table<Profile>
           data={employees}
-          columnNames={["Nombre", "Apellido", "Rol", "Acciones"]}
+          columnNames={["Nombre", "Nombre de usuario", "Cargo dentro de la empresa", "Acciones"]}
           columnValues={[
-            (profile) => profile.firstName,
-            (profile) => profile.lastName,
+            (profile) => {
+              return (
+                <div className="flex gap-1 items-center">
+                  <img src={company?.logoUrl} alt="User Image" className="size-10 rounded-full"/>
+                  <span>{profile.firstName} {profile.lastName}</span>
+                </div>
+              )
+            },
+            //Cambiar elemento harcodeado
+            (profile) => 'username',
             (profile) => profile.role,
             () => {
               return (
-                <p>Todo</p>
+                <button
+              id="dropdownDefaultButton"
+              // onClick={(e) => {
+              //   e.stopPropagation();
+              //   e.preventDefault();
+              //   setDropdown(!dropdown);
+              // }}
+              className="p-3"
+            >
+              <svg width="5" height="16" viewBox="0 0 5 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="2.33301" cy="2" r="2" transform="rotate(-90 2.33301 2)" fill="#898989" />
+                <circle cx="2.33301" cy="8" r="2" transform="rotate(-90 2.33301 8)" fill="#898989" />
+                <circle cx="2.33301" cy="14" r="2" transform="rotate(-90 2.33301 14)" fill="#898989" />
+              </svg>
+            </button>
               )
             }
           ]}
