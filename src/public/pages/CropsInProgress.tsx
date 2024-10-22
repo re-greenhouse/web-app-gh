@@ -143,6 +143,11 @@ export const CropsInProgress = (): ReactElement => {
             </div>
             
         </div>
+        <div className="justify-center w-[80vw] mx-auto text-third text-lg">
+          <strong>
+            Cultivos
+          </strong>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 w-[80vw] mt-6 justify-center mx-auto">
           {sortedCrops.map((crop) => (
             <CropCard
