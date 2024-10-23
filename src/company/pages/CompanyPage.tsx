@@ -4,6 +4,7 @@ import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook.tsx";
 import { LoaderMessage } from "@/shared/components/LoaderMessage.tsx";
 import { Table } from "@/shared/components/Table.tsx";
 import { Profile } from "@/auth/models/Profile.ts";
+import { BannerComponent } from "@/shared/components/Banner";
 
 
 export const CompanyPage = (): ReactElement => {
@@ -32,28 +33,40 @@ export const CompanyPage = (): ReactElement => {
 
   return (
     <BaseLayout>
-      <div className="flex items-end bg-gradient-to-r from-blue-600 to-violet-600 gap-4 w-full rounded-2xl p-4 md:p-8">
-        <img
-          src={company.logoUrl}
-          alt={`${company.name} logo`}
-          className="size-24 md:size-48 object-cover object-center bg-no-repeat bg-transparent rounded-2xl"
-        />
-        <div className="text-light">
-          <h1 className="text-xl md:text-3xl font-bold">{company.name}</h1>
-          <p className="text-sm md:text-base font-medium">RUC: {company.tin}</p>
-        </div>
-      </div>
+      <BannerComponent/>
       <div className="mt-6 max-w-screen-md mx-auto">
         <Table<Profile>
           data={employees}
-          columnNames={["Nombre", "Apellido", "Rol", "Acciones"]}
+          columnNames={["Nombre", "Nombre de usuario", "Cargo dentro de la empresa", "Acciones"]}
           columnValues={[
-            (profile) => profile.firstName,
-            (profile) => profile.lastName,
+            (profile) => {
+              return (
+                <div className="flex gap-1 items-center">
+                  <img src={company?.logoUrl} alt="User Image" className="size-10 rounded-full"/>
+                  <span>{profile.firstName} {profile.lastName}</span>
+                </div>
+              )
+            },
+            //Cambiar elemento harcodeado
+            (profile) => 'username',
             (profile) => profile.role,
             () => {
               return (
-                <p>Todo</p>
+                <button
+              id="dropdownDefaultButton"
+              // onClick={(e) => {
+              //   e.stopPropagation();
+              //   e.preventDefault();
+              //   setDropdown(!dropdown);
+              // }}
+              className="p-3"
+            >
+              <svg width="5" height="16" viewBox="0 0 5 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="2.33301" cy="2" r="2" transform="rotate(-90 2.33301 2)" fill="#898989" />
+                <circle cx="2.33301" cy="8" r="2" transform="rotate(-90 2.33301 8)" fill="#898989" />
+                <circle cx="2.33301" cy="14" r="2" transform="rotate(-90 2.33301 14)" fill="#898989" />
+              </svg>
+            </button>
               )
             }
           ]}

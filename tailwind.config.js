@@ -13,6 +13,9 @@ export default {
         accent: "#15F5BA",
         background: "#F0F3FF",
         loginButton: "#282A3F",
+        textCardColorE: "#465B3F",
+        textCardColorR: "#282A3F",
+        textCardColorM: "#DE4F4F"
       }
     },
   },

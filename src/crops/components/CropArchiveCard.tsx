@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Dropdown } from "@/shared/components/DropDownComponent";
 
 
-type CropCardProps = { cropId: string; startDate: string; phase: string };
+type CropArchiveCardProps = { cropId: string; startDate: string; quality: string };
 
-export const CropCard = ({ cropId, startDate, phase }: CropCardProps): ReactElement => {
+export const CropArchiveCard = ({ cropId, startDate, quality }: CropArchiveCardProps): ReactElement => {
   const navigate = useNavigate();
   const capitalize = (s: string | any[]) => s && s[0].toUpperCase() + s.slice(1);
   const [dropdown, setDropdown] = useState(false);
@@ -15,6 +15,27 @@ export const CropCard = ({ cropId, startDate, phase }: CropCardProps): ReactElem
   const handleItemClick = (option: string) => {
     console.log('Opcion seleccionada:',option)
   }
+
+  const getIconAndColor = () => {
+    switch (quality) {
+        case "excelente":
+          return {icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 21C16.9706 21 21 16.9706 21 12C21 10.1666 20.4518 8.46124 19.5103 7.03891L12.355 14.9893C11.6624 15.7589 10.4968 15.8726 9.66844 15.2513L6.4 12.8C5.95817 12.4686 5.86863 11.8418 6.2 11.4C6.53137 10.9582 7.15817 10.8686 7.6 11.2L10.8684 13.6513L18.214 5.48955C16.5986 3.94717 14.4099 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z" fill="#465B3F"/>
+        </svg>, color: 'text-textCardColorE'};
+        case "regular":
+          return {icon: <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.33301 18C14.3036 18 18.333 13.9706 18.333 9C18.333 4.02944 14.3036 0 9.33301 0C4.36244 0 0.333008 4.02944 0.333008 9C0.333008 13.9706 4.36244 18 9.33301 18ZM4 8C3.44772 8 3 8.44771 3 9C3 9.55228 3.44772 10 4 10L15 10C15.5523 10 16 9.55229 16 9C16 8.44772 15.5523 8 15 8L4 8Z" fill="#282A3F"/>
+            </svg>, color: 'text-textCardColorR'};
+        case "mala":
+          return {icon: <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.33301 18C14.3036 18 18.333 13.9706 18.333 9C18.333 4.02944 14.3036 0 9.33301 0C4.36244 0 0.333008 4.02944 0.333008 9C0.333008 13.9706 4.36244 18 9.33301 18ZM4 8C3.44772 8 3 8.44771 3 9C3 9.55228 3.44772 10 4 10L15 10C15.5523 10 16 9.55229 16 9C16 8.44772 15.5523 8 15 8L4 8Z" fill="#DE4F4F"/>
+            </svg>, color: 'text-textCardColorM'};
+        default:
+          return <span>{quality}</span>;
+      }
+  }
+
+  const { icon, color } = getIconAndColor();
 
   return (
     <div
@@ -56,11 +77,9 @@ export const CropCard = ({ cropId, startDate, phase }: CropCardProps): ReactElem
               <h2 className="text-xs text-secondary">{startDate}</h2>
             </span>
             <span className="flex items-center gap-2">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13.4203 12.2626C14.0687 12.342 14.7178 12.4079 15.3019 12.4258L15.3135 12.4262H15.325C15.3807 12.4262 15.4366 12.4285 15.5084 12.4318L15.5179 12.4322C15.5831 12.4352 15.6654 12.4389 15.75 12.4389C17.6156 12.4389 18.75 10.7398 18.75 8.85714C18.75 7.51429 18.2853 5.61868 16.9422 4.04622C15.5758 2.44656 13.3586 1.25 10 1.25C6.64145 1.25 4.4244 2.44654 3.05811 4.04432C1.71509 5.61489 1.25 7.5073 1.25 8.84445C1.25 10.7271 2.38442 12.4262 4.25 12.4262H4.26017C4.38847 12.4262 4.55917 12.4262 4.73572 12.4121C5.2997 12.3855 5.91895 12.3255 6.54318 12.2514C6.44918 12.6979 6.32405 13.2523 6.15903 13.9359C5.82421 15.2846 5.87584 16.5455 6.59718 17.4595C7.31728 18.3848 8.53989 18.75 9.9625 18.75H10C11.424 18.75 12.6477 18.3841 13.3675 17.4567L13.3687 17.4552C14.0721 16.544 14.1262 15.288 13.8045 13.9402L13.8045 13.9402L13.8037 13.9367C13.6393 13.2626 13.5144 12.7091 13.4203 12.2626Z" stroke="#4C6444" stroke-width="1.5"/>
-              </svg>
-              <strong className="text-sm text-primary">Fase actual: </strong>
-              <h2 className="text-xs text-secondary">{capitalize(phase)}</h2>
+                {icon}
+                <strong className={`text-sm ${color}`}>Calidad: </strong>
+                <h2 className={`text-xs ${color}`}>{capitalize(quality)}</h2>
             </span>
           </div>
         </div>
