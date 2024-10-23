@@ -8,6 +8,7 @@ import { ProfilePage } from "@/public/pages/ProfilePage.tsx";
 import { CompanyPage } from "@/company/pages/CompanyPage.tsx";
 import { CropsArchivePage } from "@/public/pages/CropsArchive";
 import { CropsInProgress } from "@/public/pages/CropsInProgress";
+import { MembershipsPage } from "@/membership/pages/MembershipsPage";
 
 export const AppRouter = (): ReactElement => {
   const isLogged = useAuthStore((state) => state.isLoggedIn());
@@ -23,6 +24,7 @@ export const AppRouter = (): ReactElement => {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/company" element={<CompanyPage />} />
         <Route path="/archive" element={<CropsArchivePage />} />
+        <Route path="/memberships" element={<MembershipsPage />} />
       </Route>
       <Route
         element={
