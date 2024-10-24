@@ -1,25 +1,24 @@
 import { useAuthStore } from "@/auth/stores/useAuthStore.ts";
 import axios from "axios";
-import { Crop } from "@/public/models/Crop.ts";
+import { Record } from "../models/Record";
 
 const instance = axios.create({
     baseURL: import.meta.env.VITE_API_ENDPOINT
 });
 
-//Falta deleteCropById y PatchCropById
-export const getCrops = async (): Promise<{ status: string; data: Crop[] | string; message?: string; }> => {
+export const getRecordsByCropIdAndPhase = async (cropId: string, phase: string): Promise<{ status: string; data: Record[] | string; message?: string; }> => {
     const { token } = useAuthStore.getState();
 
     try {
-        const response = await instance.get<Crop[]>("/crops", {
+        const response = await instance.get<{ records: Record[] }>(`/records/${cropId}/${phase}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         });
-        console.log("Response", response.data);
+
         return {
             status: "success",
-            data: response.data,
+            data: response.data.records,
         };
     } catch (error: unknown) {
         if (axios.isAxiosError(error) && error.response) {
@@ -34,4 +33,4 @@ export const getCrops = async (): Promise<{ status: string; data: Crop[] | strin
             data: "An unexpected error occurred."
         };
     }
-}
+};
