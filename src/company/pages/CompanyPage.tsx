@@ -6,15 +6,53 @@ import { Table } from "@/shared/components/Table.tsx";
 import { Profile } from "@/auth/models/Profile.ts";
 import { BannerComponent } from "@/shared/components/Banner";
 import { InviteComponent } from "@/shared/components/InviteWorkerComponent";
+import { Sidebar } from "@/shared/components/SidebarComponent";
 
+type UserData = {
+  firstName: string;
+  lastName: string;
+  role: string;
+  iconUrl: string;
+};
 
 export const CompanyPage = (): ReactElement => {
   const { isLoading, company, employees } = useCompanyPage();
   const [ sortOrder, setSortOrder] = useState(false);
   const [ showDialog, setDialog] = useState(false);
+  const [ showSidebar, setSidebar] = useState(false);
+
+
+  const [userData, setUserData] = useState<UserData>({
+    firstName: "",
+    lastName: "",
+    role: "",
+    iconUrl: "",
+  });
+
+  const testUser = {
+    firstName: "Test",
+    lastName: "Test",
+    role: "administrator",
+    iconUrl: "https://i.ytimg.com/vi/hZGUnm7P7MM/maxresdefault.jpg",
+  };
+
+
+  const allEmployees = [...employees, testUser];
 
   const toggleSortOrder = () => {
     setSortOrder(prevOrder => (prevOrder === false ? true : false))
+  }
+
+  const handleSidebar = () => {
+    setSidebar(!showSidebar);
+  }
+  const handleUserData = (firstName: string, lastName: string, role: string, iconUrl: string) => {
+    setUserData({ firstName, lastName, role, iconUrl });
+  }
+
+  const handleClick = (name: string, lastName: string, role: string, image: string) => {
+    handleSidebar(),
+    handleUserData(name, lastName, role, image)
   }
 
   const handleClickInvite = () => {
@@ -22,7 +60,7 @@ export const CompanyPage = (): ReactElement => {
   }
 
 
-  const sortedEmployees = [...employees].sort((a, b) => {
+  const sortedEmployees = [...allEmployees].sort((a, b) => {
     const nameA = `${a.firstName} ${a.lastName}`.toLowerCase();
     const nameB = `${b.firstName} ${b.lastName}`.toLowerCase();
     if (sortOrder === false) {
@@ -127,7 +165,7 @@ export const CompanyPage = (): ReactElement => {
             (profile) => {
               return (
                 <div className="flex gap-1 items-center justify-center">
-                  <img src={company?.logoUrl} alt="User Image" className="size-10 rounded-full "/>
+                  <img src={profile.iconUrl} alt="User Image" className="size-10 rounded-full "/>
                   <span>{profile.firstName} {profile.lastName}</span>
                 </div>
               )
@@ -135,27 +173,25 @@ export const CompanyPage = (): ReactElement => {
             //Cambiar elemento harcodeado
             (profile) => 'username',
             (profile) => profile.role,
-            () => {
+            (profile) => {
               return (
                 <button
-              id="dropdownDefaultButton"
-              // onClick={(e) => {
-              //   e.stopPropagation();
-              //   e.preventDefault();
-              //   setDropdown(!dropdown);
-              // }}
-              className="p-3"
-            >
-              <svg width="5" height="16" viewBox="0 0 5 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="2.33301" cy="2" r="2" transform="rotate(-90 2.33301 2)" fill="#898989" />
-                <circle cx="2.33301" cy="8" r="2" transform="rotate(-90 2.33301 8)" fill="#898989" />
-                <circle cx="2.33301" cy="14" r="2" transform="rotate(-90 2.33301 14)" fill="#898989" />
-              </svg>
-            </button>
+                  onClick={() => handleClick(profile.firstName, profile.lastName, profile.role, profile.iconUrl)}
+                  className="p-3"
+                >
+                  <svg width="5" height="16" viewBox="0 0 5 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="2.33301" cy="2" r="2" transform="rotate(-90 2.33301 2)" fill="#898989" />
+                    <circle cx="2.33301" cy="8" r="2" transform="rotate(-90 2.33301 8)" fill="#898989" />
+                    <circle cx="2.33301" cy="14" r="2" transform="rotate(-90 2.33301 14)" fill="#898989" />
+                  </svg>
+                </button>
               )
             }
           ]}
         />
+        <div className={` ${!showSidebar ? "hidden" : ""} `}>
+          {showSidebar && <Sidebar hideSidebar={handleSidebar} userData={userData}/>}
+        </div>
       </div>
     </BaseLayout>
   );

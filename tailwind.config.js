@@ -9,6 +9,9 @@ export default {
       backdropBlur: {
         xs: '2px',
       },
+      blur: {
+        xs: '2px',
+      },
       colors: {
         primary: "#4C6444",
         secondary: "#898989",
