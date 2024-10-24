@@ -131,7 +131,7 @@ export const CropsRecordsPage = (): ReactElement => {
         </h2>
 
         <section className="max-w-full relative my-4 mx-auto w-[80vw] mt-8">
-          <div className="flex items-center md:flex-row flex-col md:gap-0 gap-9 mb-6">
+          <div className="flex items-center md:flex-row flex-col gap-9 mb-6">
             <div className="w-[80vw]">
               <SearchBar
                 value={searchQuery}
