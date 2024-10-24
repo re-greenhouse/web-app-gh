@@ -11,6 +11,7 @@ import { Dropdown } from "@/shared/components/DropDownComponent";
 import { Filter } from "@/shared/components/Filter";
 import { SearchBar } from "@/shared/components/SearchBar";
 import * as XLSX from "xlsx";
+import { RecordChart } from "../components/RecordChart";
 
 export const CropsRecordsPage = (): ReactElement => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -83,22 +84,6 @@ export const CropsRecordsPage = (): ReactElement => {
       selectedAuthor ? record.author === selectedAuthor : true
     );
 
-  const exportToExcel = () => {
-    const dataToExport = filteredRecords.map((record) => ({
-      "Record ID": record.id,
-      Author: record.author,
-      "Updated Date": record.updatedDate,
-      Payload: JSON.stringify(record.payload),
-    }));
-
-    const worksheet = XLSX.utils.json_to_sheet(dataToExport);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Records");
-
-    // Descargar el archivo Excel
-    XLSX.writeFile(workbook, `Records_Crop_${cropId}_Phase_${cropPhase}.xlsx`);
-  };
-
   if (loading) {
     return (
       <BaseLayout>
@@ -148,7 +133,8 @@ export const CropsRecordsPage = (): ReactElement => {
         </h2>
 
         <section className="max-w-full relative my-4 mx-auto w-[80vw] mt-8">
-          <div className="flex items-center md:flex-row flex-col gap-9 mb-6">
+          <RecordChart records={filteredRecords} />
+          <div className="flex items-center md:flex-row flex-col gap-9 my-6">
             <div className="w-[80vw]">
               <SearchBar
                 value={searchQuery}
@@ -175,10 +161,6 @@ export const CropsRecordsPage = (): ReactElement => {
                 </div>
               )}
             </div>
-
-            <PrimaryButton size="small" onClick={exportToExcel}>
-              <span>Descargar registros</span>
-            </PrimaryButton>
           </div>
 
           <h3 className="text-xl text-third font-bold">Registros</h3>
