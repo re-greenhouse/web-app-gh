@@ -19,7 +19,7 @@ export const BannerComponent= (): ReactElement => {
 
     return (
         <div className="relative">
-            <img src="public/bannerImage.svg" alt="bannerImage" className="absolute w-full hidden sm:hidden md:hidden lg:block xl:block 2xl:block"/>
+            <img src="public/bannerImage.webp" alt="bannerImage" className="absolute w-full hidden sm:hidden md:hidden lg:block xl:block 2xl:block"/>
             <div className="relative z-10 flex md:flex-row flex-col md:items-end items-center md:text-left text-center md:px-28 px-12 2xl:pt-40 xl:pt-16 lg:pt-5 pb-10 md:gap-5 gap-2">
                 <img
                     src={company?.logoUrl}
