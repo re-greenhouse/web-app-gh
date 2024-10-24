@@ -2,26 +2,31 @@ import { ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 
 type StepperProps = {
-  steps: string[];
+  steps: { [key: string]: string };
   currentStep: string;
-  phaseToRoute: { [key: string]: string };
   cropId: string;
 };
 
 export const Stepper = ({
   steps,
   currentStep,
-  phaseToRoute,
   cropId,
 }: StepperProps): ReactElement => {
   const navigate = useNavigate();
 
+  const stepNames = Object.keys(steps);
+
+  const currentStepIndex = stepNames.findIndex(
+    (step) => steps[step] === currentStep
+  );
+
   return (
     <div className="flex items-center w-full p-4">
-      {steps.map((step, index) => {
-        const routeKey = phaseToRoute[step];
-        const isCompleted = steps.indexOf(currentStep) > index;
-        const isCurrent = routeKey === currentStep;
+      {stepNames.map((step, index) => {
+        const routeKey = steps[step];
+
+        const isCompleted = index < currentStepIndex;
+        const isCurrent = index === currentStepIndex;
 
         return (
           <div key={index} className="flex-1 flex items-center text-white">
@@ -38,7 +43,7 @@ export const Stepper = ({
               >
                 {isCompleted ? (
                   <img
-                    src="/public/icons/check.svg"
+                    src="/icons/check.svg"
                     alt="Completed"
                     className="w-4 h-4"
                   />
@@ -47,12 +52,14 @@ export const Stepper = ({
                 )}
               </div>
               <div
-                className={`mt-1 ${isCurrent ? "font-bold" : "font-regular"}`}
+                className={`hidden md:block mt-1 ${
+                  isCurrent ? "font-bold" : "font-regular"
+                }`}
               >
                 {step}
               </div>
             </div>
-            {index !== steps.length - 1 && (
+            {index !== stepNames.length - 1 && (
               <div
                 className={`hidden md:block flex-1 h-[2px] ${
                   isCompleted ? "bg-[#7DA257]" : "bg-white"

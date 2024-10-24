@@ -33,30 +33,25 @@ export const RecordCard = ({
       <div className="flex justify-between items-center mb-2">
         <h4 className="text-lg font-semibold">Registro # {recordId}</h4>
         <button className="p-1">
-          <img
-            src="/public/icons/dots.svg"
-            alt="more options"
-            className="w-5 h-5"
-          />
+          <img src="/icons/dots.svg" alt="more options" className="w-5 h-5" />
         </button>
       </div>
       <div className="flex items-center justify-between my-2">
         <p className="text-sm font-medium">Autor: {author}</p>
         <span className="flex">
           <img
-            src="/public/icons/calendar.svg"
+            src="/icons/calendar.svg"
             alt="calendar icon"
             className="w-6 h-6"
           />
-          <p className="text-sm">{updatedDate}</p>
+          <p className="text-sm text-secondary">{updatedDate}</p>
         </span>
-        <a
-          href="#"
+        <button
           onClick={toggleDetails}
           className="text-sm text-secondary underline cursor-pointer"
         >
           {toggleText}
-        </a>
+        </button>
       </div>
 
       {showDetails && (
