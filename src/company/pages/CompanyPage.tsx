@@ -5,15 +5,22 @@ import { LoaderMessage } from "@/shared/components/LoaderMessage.tsx";
 import { Table } from "@/shared/components/Table.tsx";
 import { Profile } from "@/auth/models/Profile.ts";
 import { BannerComponent } from "@/shared/components/Banner";
+import { InviteComponent } from "@/shared/components/InviteWorkerComponent";
 
 
 export const CompanyPage = (): ReactElement => {
   const { isLoading, company, employees } = useCompanyPage();
   const [ sortOrder, setSortOrder] = useState(false);
+  const [ showDialog, setDialog] = useState(false);
 
   const toggleSortOrder = () => {
     setSortOrder(prevOrder => (prevOrder === false ? true : false))
   }
+
+  const handleClickInvite = () => {
+    setDialog(!showDialog);
+  }
+
 
   const sortedEmployees = [...employees].sort((a, b) => {
     const nameA = `${a.firstName} ${a.lastName}`.toLowerCase();
@@ -47,6 +54,9 @@ export const CompanyPage = (): ReactElement => {
 
   return (
     <BaseLayout>
+      <div className={` ${!showDialog ? "hidden" : ""} `}>
+        {showDialog && <InviteComponent hideDialog={handleClickInvite} />}
+      </div>
       <BannerComponent/>
       <div className="relative mb-4 mx-auto w-[80vw] flex items-center md:flex-row flex-col md:gap-0 gap-9">
             <div className=" relative flex w-[80vw]">
@@ -75,7 +85,7 @@ export const CompanyPage = (): ReactElement => {
             <div className="flex ">
               <button
                   className="inline-flex items-center text-center px-4 text-white bg-third rounded-lg p-2 gap-2 whitespace-nowrap"
-                  // onClick={toggleDateSorting}
+                  onClick={handleClickInvite}
               >
                 <h1>Invitar Trabajador</h1>
               </button>
