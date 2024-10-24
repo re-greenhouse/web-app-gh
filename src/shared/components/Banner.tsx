@@ -5,8 +5,18 @@ import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook.tsx";
 
 export const BannerComponent= (): ReactElement => {
     const [activePage, setActivePage] = useState(false);
+    const [ companyName, setCompanyName ] = useState(true);
+    const [ companyTin, setCompanyTin ] = useState(true);
 
     const { company } = useCompanyPage();
+
+    const changeCompanyName = () => {
+        setCompanyName(!companyName);
+    }
+
+    const changeCompanyTin = () => {
+        setCompanyTin(!companyTin);
+    }
 
     useEffect(() => {
         const pathName = window.location.pathname;
@@ -19,7 +29,7 @@ export const BannerComponent= (): ReactElement => {
 
     return (
         <div className="relative">
-            <img src="public/bannerImage.svg" alt="bannerImage" className="absolute w-full hidden sm:hidden md:hidden lg:block xl:block 2xl:block"/>
+            <img src="public/bannerImage.webp" alt="bannerImage" className="absolute w-full hidden sm:hidden md:hidden lg:block xl:block 2xl:block"/>
             <div className="relative z-10 flex md:flex-row flex-col md:items-end items-center md:text-left text-center md:px-28 px-12 2xl:pt-40 xl:pt-16 lg:pt-5 pb-10 md:gap-5 gap-2">
                 <img
                     src={company?.logoUrl}
@@ -34,10 +44,8 @@ export const BannerComponent= (): ReactElement => {
                 </button>
                 <div className="items-end">
                     <div className="flex">
-                        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 text-third whitespace-nowrap">
-                            {company?.name}
-                        </h2>
-                        <button className={`${activePage ? "" : "hidden"} px-2`}>
+                        <input disabled={companyName} type="text" placeholder={company?.name} className={`placeholder:text-third text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-2 text-third whitespace-nowrap font-bold bg-transparent ${companyName ? "" : "bg-white rounded-lg placeholder:text-secondary border-2"}`} />
+                        <button className={`${activePage ? "" : "hidden"} px-2`} onClick={changeCompanyName}>
                             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg" >
                                 <mask id="path-1-outside-1_655_1370" maskUnits="userSpaceOnUse" x="3" y="4.5" width="17" height="17" fill="black">
                                     <rect fill="white" x="3" y="4.5" width="17" height="17"/>
@@ -49,10 +57,8 @@ export const BannerComponent= (): ReactElement => {
                         </button>
                     </div>
                     <div className="flex">
-                        <h2 className="text-base sm:text-xs md:text-sm lg:text-lg text-secondary">
-                            {company?.tin}
-                        </h2>
-                        <button className={`${activePage ? "" : "hidden"} px-2`}>
+                        <input disabled={companyTin} type="text" placeholder={company?.tin} className={`placeholder:text-secondary text-base sm:text-xs md:text-sm lg:text-lg whitespace-nowrap bg-transparent ${companyTin ? "" : "bg-white rounded-lg placeholder:text-secondary border-2"}`} />
+                        <button className={`${activePage ? "" : "hidden"} px-2`} onClick={changeCompanyTin}>
                             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg" className={`${activePage ? "" : "hidden"}`}>
                                 <mask id="path-1-outside-1_655_1370" maskUnits="userSpaceOnUse" x="3" y="4.5" width="17" height="17" fill="black">
                                     <rect fill="white" x="3" y="4.5" width="17" height="17"/>

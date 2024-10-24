@@ -19,7 +19,7 @@ export const Toolbar = (): ReactElement => {
     } else if (pathName === '/company'){
       setActivePage('company');
       setDropDownToolbar(!dropDownToolbar);
-    }
+    } 
   }, []);
 
   const getDesigns = (item: string) => {
@@ -68,7 +68,7 @@ export const Toolbar = (): ReactElement => {
           </svg>
           </button>  
         </div>
-        <div className={`absolute z-20 translate-y-24  ${dropDownToolbar ? "hidden" : "block"} bg-white border rounded-lg md:hidden`} ref={menuRef}>
+        <div className={`absolute z-20 translate-y-24  ${dropDownToolbar ? "hidden" : ""} bg-white border rounded-lg md:hidden`} ref={menuRef}>
           <div className="flex flex-col text-secondary">
           <Link to="/" className={getDesigns('cropsInProgress')}>
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
