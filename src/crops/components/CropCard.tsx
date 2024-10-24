@@ -33,7 +33,7 @@ export const CropCard = ({
         />
         <div className="flex flex-col justify-center align-middle px-6 flex-grow space-y-4">
           <div className="flex">
-            <h4>Crop ID: #{cropId}</h4>
+            <h4 className="overflow-hidden">Crop ID: #{cropId}</h4>
             <div>
               <button
                 id="dropdownDefaultButton"

@@ -10,7 +10,7 @@ import { Stepper } from "../components/Stepper";
 import { Dropdown } from "@/shared/components/DropDownComponent";
 import { Filter } from "@/shared/components/Filter";
 import { SearchBar } from "@/shared/components/SearchBar";
-import * as XLSX from "xlsx"; // Importar la librería xlsx
+import * as XLSX from "xlsx";
 
 export const CropsRecordsPage = (): ReactElement => {
   const [loading, setLoading] = useState<boolean>(true);
