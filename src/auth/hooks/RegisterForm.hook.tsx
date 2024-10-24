@@ -10,6 +10,9 @@ export const useRegisterForm = () => {
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
+  const razonSocialRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const rucRef = useRef<HTMLInputElement>(null);
   const [isRegistering, setIsRegistering] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -18,7 +21,7 @@ export const useRegisterForm = () => {
     e.preventDefault();
 
     if (
-      !areValidHtmlInputRefs([usernameRef, passwordRef, confirmPasswordRef, firstNameRef, lastNameRef, passwordRef])
+      !areValidHtmlInputRefs([usernameRef, passwordRef, confirmPasswordRef, firstNameRef, lastNameRef, passwordRef, razonSocialRef, rucRef, emailRef])
     ) {
       return;
     }
@@ -36,7 +39,11 @@ export const useRegisterForm = () => {
       password: passwordRef.current!.value,
       firstName: firstNameRef.current!.value,
       lastName: lastNameRef.current!.value,
+      email: emailRef.current!.value,
       invitationCode: searchParams.get("invitationCode") ?? undefined,
+    }, {
+      razonSocial: razonSocialRef.current!.value,
+      ruc: rucRef.current!.value,
     })
       .then(res => {
         toast.update(toastId, {
@@ -58,6 +65,9 @@ export const useRegisterForm = () => {
     confirmPasswordRef: confirmPasswordRef,
     firstNameRef: firstNameRef,
     lastNameRef: lastNameRef,
+    emailRef: emailRef,
+    razonSocialRef: razonSocialRef,
+    rucRef: rucRef,
     isLoading: isRegistering,
     onSubmit: onSubmit,
     hasInvitation: !!searchParams.get('invitation'),

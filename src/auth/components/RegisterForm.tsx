@@ -8,7 +8,7 @@ import {PrimaryButton} from "@/shared/components/Buttons";
 
 export const RegisterForm = (): ReactElement => {
   //Dejo listo la interfaz, falta mandar la razon social y el ruc a donde deba ir
-  const {usernameRef, passwordRef, confirmPasswordRef, firstNameRef, lastNameRef, razonSocialRef, rucRef, hasInvitation, isLoading, onSubmit} = useRegisterForm();
+  const {usernameRef, passwordRef, confirmPasswordRef, firstNameRef, lastNameRef, emailRef, razonSocialRef, rucRef, hasInvitation, isLoading, onSubmit} = useRegisterForm();
 
   return (
     <div className="relative flex justify-center items-center bg-background p-8 pt-0 lg:pl-0 lg:pt-12">
@@ -46,6 +46,13 @@ export const RegisterForm = (): ReactElement => {
               />
             </div>
           </div>
+          <ReferableTextField
+                id="correo"
+                ref={emailRef}
+                label="Correo electronico de cliente"
+                placeholder="Ingrese su correo"
+                type="mail"
+              />
           <div className="pb-4">
           <h1>Información de la empresa</h1>
         </div>

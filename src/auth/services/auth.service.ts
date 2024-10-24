@@ -1,14 +1,15 @@
 import axios from "axios";
-import {RegisterRequest} from "@/auth/interfaces/RegisterRequest.ts";
+import {RegisterCompanyRequest, RegisterRequest} from "@/auth/interfaces/RegisterRequest.ts";
 import {Profile} from "@/auth/models/Profile.ts";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_ENDPOINT
 });
 
-export const register = async(registerRequest: RegisterRequest): Promise<{status: string; message: string;}> => {
+export const register = async(registerRequest: RegisterRequest, RegisterCompanyRequest: RegisterCompanyRequest): Promise<{status: string; message: string;}> => {
   try {
     await instance.post("/auth/sign-up", registerRequest);
+    await instance.post("/companies", RegisterCompanyRequest);
     return { status: "success", message: "Se ha registrado exitosamente." };
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response?.status == 409) {
