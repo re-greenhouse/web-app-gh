@@ -7,7 +7,6 @@ import {InfoMessage} from "@/shared/components/Messages";
 import {PrimaryButton} from "@/shared/components/Buttons";
 
 export const RegisterForm = (): ReactElement => {
-  //Dejo listo la interfaz, falta mandar la razon social y el ruc a donde deba ir
   const {usernameRef, passwordRef, confirmPasswordRef, firstNameRef, lastNameRef, emailRef, razonSocialRef, rucRef, hasInvitation, isLoading, onSubmit} = useRegisterForm();
 
   return (

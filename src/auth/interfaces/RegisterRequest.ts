@@ -9,6 +9,7 @@ export interface RegisterRequest {
 }
 
 export interface RegisterCompanyRequest {
-  razonSocial: string;
-  ruc: string;
+  name: string;
+  tin: string;
+  logoUrl?: string;
 }

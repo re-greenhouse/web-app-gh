@@ -14,6 +14,7 @@ export const useRegisterForm = () => {
   const razonSocialRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const rucRef = useRef<HTMLInputElement>(null);
+  const imageUrlRef = useRef("public/companyImage.webp");
   const [isRegistering, setIsRegistering] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -45,8 +46,9 @@ export const useRegisterForm = () => {
       email: emailRef.current!.value,
       invitationCode: searchParams.get("invitationCode") ?? undefined,
     }, {
-      razonSocial: razonSocialRef.current!.value,
-      ruc: rucRef.current!.value,
+      name: razonSocialRef.current!.value,
+      tin: rucRef.current!.value,
+      logoUrl: imageUrlRef.current ?? "public/companyImage.webp"
     });
 
       toast.update(toastId, {
@@ -87,6 +89,7 @@ export const useRegisterForm = () => {
     emailRef: emailRef,
     razonSocialRef: razonSocialRef,
     rucRef: rucRef,
+    imageUrlRef: imageUrlRef,
     isLoading: isRegistering,
     onSubmit: onSubmit,
     hasInvitation: !!searchParams.get('invitation'),
