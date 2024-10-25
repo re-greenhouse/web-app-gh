@@ -138,16 +138,6 @@ export const CompanyPage = (): ReactElement => {
               </button>
             </div>
             ,
-            <div className="flex gap-1 justify-center">
-              <button className="flex gap-1  items-center">
-                <h1>Nombre de usuario</h1>
-                {/* <span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className={`size-4 ${sortOrder ? "rotate-180" : ""} duration-200 hidden md:block`}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
-                </svg>
-                </span> */}
-              </button>
-            </div>,
             "Cargo dentro de la empresa",
             "Acciones"
           ]}
@@ -160,8 +150,6 @@ export const CompanyPage = (): ReactElement => {
                 </div>
               )
             },
-            //Cambiar elemento harcodeado
-            (profile) => 'username',
             (profile) => profile.role,
             (profile) => {
               return (
