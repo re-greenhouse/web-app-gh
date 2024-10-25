@@ -5,9 +5,9 @@ import { BaseLayout } from "@/shared/layouts/BaseLayout.tsx";
 import { TextField } from "@/shared/components/TextField.tsx";
 
 export const ProfilePage = (): ReactElement => {
-  const profile = useAuthStore(state => state.profile)!;
-  const logout = useAuthStore(state => state.logout);
-  
+  const profile = useAuthStore((state) => state.profile)!;
+  const logout = useAuthStore((state) => state.logout);
+
   const [firstName, setFirstName] = useState<string>(profile.firstName);
   const [lastName, setLastName] = useState<string>(profile.lastName);
 
@@ -28,15 +28,15 @@ export const ProfilePage = (): ReactElement => {
             onValueChange={setFirstName}
           />
           <TextField
-            id="first-name"
+            id="last-name"
             type="text"
             label="Apellido"
             value={lastName}
             onValueChange={setLastName}
           />
           <div className="mt-6 space-y-2">
-            <PrimaryButton label="Actualizar datos"/>
-            <PrimaryButton onClick={logout} label="Cerrar sesión"/>
+            <PrimaryButton label="Actualizar datos" />
+            <PrimaryButton onClick={logout} label="Cerrar sesión" />
           </div>
         </div>
       </div>

@@ -96,6 +96,7 @@ export const InviteComponent = ({
                       className="border-2 border-gray-300 rounded-md w-full p-2 mt-2"
                       defaultValue="Tecnico"
                       onChange={handleAdminChange}
+                      name="role"
                     >
                       <option value="Tecnico">Técnico supervisor</option>
                       <option value="Administrador">Administrador</option>

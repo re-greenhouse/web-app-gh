@@ -20,6 +20,7 @@ export const SearchBar = ({
       />
       <input
         type="text"
+        name="search"
         placeholder={placeholder}
         value={value}
         onChange={onChange}

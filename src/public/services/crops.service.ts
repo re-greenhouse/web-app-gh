@@ -16,7 +16,6 @@ export const getCrops = async (): Promise<{ status: string; data: Crop[] | strin
                 Authorization: `Bearer ${token}`
             }
         });
-        console.log("Response", response.data);
         return {
             status: "success",
             data: response.data,
