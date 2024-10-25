@@ -1,6 +1,7 @@
 import { ReactElement, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "@/shared/components/DropDownComponent";
+import { DeleteDialog } from "@/shared/components/DeleteDialog";
 
 type CropCardProps = { cropId: string; startDate: string; phase: string };
 
@@ -13,11 +14,20 @@ export const CropCard = ({
   const capitalize = (s: string | any[]) =>
     s && s[0].toUpperCase() + s.slice(1);
   const [dropdown, setDropdown] = useState(false);
+  const [ showDialog, setDialog] = useState(false);
+
+
+  const handleDialog = () => {
+    setDialog(!showDialog);
+  }
+
 
   const options = ["Editar", "Eliminar"];
 
   const handleItemClick = (option: string) => {
-    console.log("Opción seleccionada:", option);
+    if(option === "Eliminar"){
+      handleDialog();
+    }
   };
 
   return (
@@ -118,6 +128,9 @@ export const CropCard = ({
           </div>
         </div>
       </div>
+      <div className={` ${!showDialog ? "hidden" : ""}`}>
+                    {showDialog && <DeleteDialog hideDialog={handleDialog} text={`¿Estás seguro de que deseas eliminar el Crop: ${cropId}?`}/>}
+                </div>
     </div>
   );
 };

@@ -3,13 +3,10 @@ import { PrimaryButton } from "./Buttons";
 
 type DeleteDialogProps = {
     hideDialog: () => void,
-    userData: {
-        firstName: string,
-        lastName: string
-    }
+    text: string
 }
 
-export const DeleteDialog= ({ hideDialog, userData }: DeleteDialogProps): ReactElement => {
+export const DeleteDialog= ({ hideDialog, text }: DeleteDialogProps): ReactElement => {
 
     return (
         <div>
@@ -18,7 +15,7 @@ export const DeleteDialog= ({ hideDialog, userData }: DeleteDialogProps): ReactE
                     <div className="flex flex-col justify-center w-full p-5">
                         <span className="flex justify-center w-full">
                             <h1 className="mx-auto py-5 text-inviteCompontentText font-semibold text-xl">
-                                ¿Estás seguro de que deseas eliminar a {userData.firstName} {userData.lastName}?
+                                {text}
                             </h1>
                             <span>
                                 <button

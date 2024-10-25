@@ -7,6 +7,7 @@ import { CropCard } from "@/crops/components/CropCard";
 import { useAuthStore } from "@/auth/stores/useAuthStore";
 import { BannerComponent } from "@/shared/components/Banner";
 import { Dropdown } from "@/shared/components/DropDownComponent";
+import { DeleteDialog } from "@/shared/components/DeleteDialog";
 
 export const CropsInProgress = (): ReactElement => {
   const [crops, setCrops] = useState<Crop[]>([]);
@@ -17,7 +18,7 @@ export const CropsInProgress = (): ReactElement => {
   const [openPhaseFilter, setOpenPhaseFilter] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Todos");
-
+  
   const options = [
     "Todos",
     "Formula",

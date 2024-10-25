@@ -97,7 +97,7 @@ export const Sidebar = ({ hideSidebar, userData }: SidebarProps): ReactElement =
                 </span>
             </div>
             <div className={` ${!showDialog ? "hidden" : ""}`}>
-                    {showDialog && <DeleteDialog hideDialog={handleDialog} userData={userData}/>}
+                    {showDialog && <DeleteDialog hideDialog={handleDialog} text={`¿Estás seguro de que deseas eliminar a ${userData.firstName} ${userData.lastName}?`}/>}
                 </div>
         </div>
     )
