@@ -5,7 +5,7 @@ import { LoaderMessage } from "@/shared/components/LoaderMessage.tsx";
 import { Table } from "@/shared/components/Table.tsx";
 import { Profile } from "@/auth/models/Profile.ts";
 import { BannerComponent } from "@/shared/components/Banner";
-import { InviteComponent } from "@/shared/components/InviteWorkerComponent";
+import { InviteComponent } from "../components/InviteWorkerComponent";
 import { Sidebar } from "@/shared/components/SidebarComponent";
 
 type UserData = {
@@ -29,16 +29,6 @@ export const CompanyPage = (): ReactElement => {
     iconUrl: "",
   });
 
-  const testUser = {
-    firstName: "Test",
-    lastName: "Test",
-    role: "administrator",
-    iconUrl: "https://i.ytimg.com/vi/hZGUnm7P7MM/maxresdefault.jpg",
-  };
-
-
-  const allEmployees = [...employees, testUser];
-
   const toggleSortOrder = () => {
     setSortOrder(prevOrder => (prevOrder === false ? true : false))
   }
@@ -60,7 +50,7 @@ export const CompanyPage = (): ReactElement => {
   }
 
 
-  const sortedEmployees = [...allEmployees].sort((a, b) => {
+  const sortedEmployees = [...employees].sort((a, b) => {
     const nameA = `${a.firstName} ${a.lastName}`.toLowerCase();
     const nameB = `${b.firstName} ${b.lastName}`.toLowerCase();
     if (sortOrder === false) {

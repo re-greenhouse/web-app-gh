@@ -38,8 +38,8 @@ export const Toolbar = (): ReactElement => {
         </svg>
         <p className="max-md:hidden font-bold font-sans text-2xl">Greenhouse</p>
       </Link>
-      <div id="sections" className="flex md:flex-row flex-row-reverse justify-center items-center md:gap-24 gap-5">
-        <div className="items-center gap-24 hidden md:flex sm:hidden">
+      <div id="sections" className="flex lg:flex-row flex-row-reverse justify-center items-center lg:gap-24 gap-5">
+        <div className="items-center gap-24 hidden lg:flex">
           <div className="flex gap-24 text-secondary">
             <Link to="/" className={getDesigns('cropsInProgress')}>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -61,14 +61,14 @@ export const Toolbar = (): ReactElement => {
             </Link>
           </div>
         </div>
-        <div className="flex md:hidden sm:flex">
+        <div className="flex lg:hidden sm:flex">
           <button onClick={()=> {setDropDownToolbar(!dropDownToolbar)}}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 text-primary">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
           </button>  
         </div>
-        <div className={`absolute z-20 translate-y-24  ${dropDownToolbar ? "hidden" : ""} bg-white border rounded-lg md:hidden`} ref={menuRef}>
+        <div className={`absolute z-20 translate-y-24  ${dropDownToolbar ? "hidden" : ""} bg-white border rounded-lg lg:hidden`} ref={menuRef}>
           <div className="flex flex-col text-secondary">
           <Link to="/" className={getDesigns('cropsInProgress')}>
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -90,7 +90,7 @@ export const Toolbar = (): ReactElement => {
                 </Link>
           </div>
         </div>
-        <div className="flex justify-center items-center md:gap-24 gap-5">
+        <div className="flex justify-center items-center lg:gap-24 gap-5">
           <Link to="/" className="text-primary hover:scale-95 duration-300">
             <svg className="w-7 h-7 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 strokeWidth={2.0} stroke="currentColor">

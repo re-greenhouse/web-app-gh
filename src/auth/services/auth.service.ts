@@ -43,6 +43,7 @@ export const login = async(username: string, password: string): Promise<
 > => {
   try {
     const response = await instance.post("/auth/sign-in", { username, password });
+    localStorage.setItem("token", response.data["token"]);
     return {
       status: "success",
       message: "Se ha iniciado sesión exitosamente.",
