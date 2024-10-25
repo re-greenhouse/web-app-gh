@@ -4,6 +4,7 @@ import { Dropdown } from "@/shared/components/DropDownComponent";
 
 type CropArchiveCardProps = {
   cropId: string;
+  cropName: string;
   phase: string;
   startDate: string;
   quality: string;
@@ -11,6 +12,7 @@ type CropArchiveCardProps = {
 
 export const CropArchiveCard = ({
   cropId,
+  cropName,
   phase,
   startDate,
   quality,
@@ -98,7 +100,7 @@ export const CropArchiveCard = ({
   return (
     <div
       onClick={() => navigate(`/records/${cropId}/${phase}`)}
-      className="flex flex-col cursor-pointer bg-white border-2 rounded-lg overflow-hidden m-2 sm:m-4"
+      className="flex flex-col cursor-pointer bg-white border-2 rounded-lg overflow-hidden"
     >
       <div className="w-full overflow-hidden pb-4">
         <img
@@ -108,7 +110,7 @@ export const CropArchiveCard = ({
         />
         <div className="flex flex-col justify-center align-middle px-6 flex-grow space-y-4">
           <div className="flex">
-            <h4>Crop ID: #{cropId}</h4>
+            <h4 className="w-full">Crop Name: {cropName}</h4>
             <div>
               <button
                 id="dropdownDefaultButton"

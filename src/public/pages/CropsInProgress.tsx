@@ -44,7 +44,7 @@ export const CropsInProgress = (): ReactElement => {
   const filteredCrops = crops
     .filter(
       (crop) =>
-        crop.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        crop.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         crop.startDate.toLowerCase().includes(searchQuery.toLowerCase()) ||
         crop.phase.toLowerCase().includes(searchQuery.toLowerCase())
     )
@@ -202,15 +202,14 @@ export const CropsInProgress = (): ReactElement => {
           </div>
         </div>
         <div className="justify-center w-[80vw] mx-auto text-third text-lg">
-          <strong>
-            Cultivos
-          </strong>
+          <strong>Cultivos</strong>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 w-[80vw] mt-6 justify-center mx-auto">
           {sortedCrops.map((crop) => (
             <CropCard
               key={crop.id}
               cropId={crop.id}
+              cropName={crop.name}
               startDate={crop.startDate}
               phase={crop.phase}
             />

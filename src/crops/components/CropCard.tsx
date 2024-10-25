@@ -2,10 +2,16 @@ import { ReactElement, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "@/shared/components/DropDownComponent";
 
-type CropCardProps = { cropId: string; startDate: string; phase: string };
+type CropCardProps = {
+  cropId: string;
+  cropName: string;
+  startDate: string;
+  phase: string;
+};
 
 export const CropCard = ({
   cropId,
+  cropName,
   startDate,
   phase,
 }: CropCardProps): ReactElement => {
@@ -23,7 +29,7 @@ export const CropCard = ({
   return (
     <div
       onClick={() => navigate(`/records/${cropId}/${phase}`)}
-      className="flex flex-col cursor-pointer bg-white border-2 rounded-lg overflow-hidden m-2 sm:m-4"
+      className="flex flex-col cursor-pointer bg-white border-2 rounded-lg overflow-hidden"
     >
       <div className="w-full overflow-hidden pb-4">
         <img
@@ -33,7 +39,7 @@ export const CropCard = ({
         />
         <div className="flex flex-col justify-center align-middle px-6 flex-grow space-y-4">
           <div className="flex">
-            <h4 className="overflow-hidden">Crop ID: #{cropId}</h4>
+            <h4 className="overflow-hidden w-full">Crop Name: {cropName}</h4>
             <div>
               <button
                 id="dropdownDefaultButton"
