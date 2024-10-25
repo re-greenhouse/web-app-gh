@@ -29,7 +29,7 @@ export const InviteComponent = ({
       <div className="absolute backdrop-blur-xs bg-black bg-opacity-25 inset-0 flex w-full justify-center h-full z-20 content-center items-center">
         <div className="bg-background lg:w-1/3 lg:h-2/3 content-start justify-center text-center rounded-2xl">
           <form
-            onSubmit={(e) => onSubmit(e, isAdmin)}
+            onSubmit={(e) => onSubmit(e, isAdmin, "employee.invited")}
             className="bottom-0 py-2"
           >
             <div className="flex flex-col justify-center w-full p-5">
@@ -108,7 +108,7 @@ export const InviteComponent = ({
                     ref={emailRef}
                     label="Correo electrónico"
                     placeholder="Ingrese el correo del trabajador"
-                    type="mail"
+                    type="email"
                   />
                 </div>
                 <div className="flex flex-col p-10 gap-8 w-full">
