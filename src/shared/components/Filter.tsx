@@ -5,6 +5,7 @@ type FilterProps = {
   onClick: () => void;
   showArrow: boolean;
   leadingIcon?: string;
+  color?: string;
 };
 
 export const Filter = ({
@@ -12,11 +13,15 @@ export const Filter = ({
   onClick,
   showArrow,
   leadingIcon,
+  color,
 }: FilterProps): ReactElement => {
   return (
-    <div className="flex gap-3 items-center cursor-pointer" onClick={onClick}>
+    <div
+      className="inline-flex items-center gap-3 cursor-pointer"
+      onClick={onClick}
+    >
       {leadingIcon && <img src={leadingIcon} alt="icon" className="w-6 h-6" />}
-      <p className="text-secondary">{label}</p>
+      <p style={{ color: color || "#898989" }}>{label}</p>
       <img
         src="/icons/downArrow.svg"
         alt="arrow"

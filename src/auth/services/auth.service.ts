@@ -26,11 +26,11 @@ export const register = async(registerRequest: RegisterRequest, RegisterCompanyR
     return { status: "success", message: "Usuario y compañía registrados exitosamente." };
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      console.error("Error en la solicitud:", error.response?.data); // Muestra los detalles del error
+      console.error("Error en la solicitud:", error.response?.data);
       if (error.response?.status == 409) {
         return { status: "error", message: "El nombre de usuario ya existe. Por favor, ingrese otro." };
       } else if (error.response?.status == 400) {
-        return { status: "error", message: `Solicitud inválida: ${error.response.data}` }; // Retorna el mensaje detallado
+        return { status: "error", message: `Solicitud inválida: ${error.response.data}` };
       }
     }
     return { status: "error", message: "Hubo un problema con el servidor. Intente de nuevo en unos minutos." };

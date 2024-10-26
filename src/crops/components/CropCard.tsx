@@ -5,10 +5,16 @@ import { DeleteDialog } from "@/shared/components/DeleteDialog";
 import { useDeleteCrop } from "../hooks/CropCard.hook";
 import { getRecordsByCropIdAndPhase, deleteRecordById } from "../services/records.service";
 
-type CropCardProps = { cropId: string; startDate: string; phase: string };
+type CropCardProps = {
+  cropId: string;
+  cropName: string;
+  startDate: string;
+  phase: string;
+};
 
 export const CropCard = ({
   cropId,
+  cropName,
   startDate,
   phase,
 }: CropCardProps): ReactElement => {
@@ -57,7 +63,7 @@ export const CropCard = ({
         <img
           onClick={() => navigate(`/records/${cropId}/${phase}`)}
           className="object-cover w-full h-1/2 mb-4"
-          src="/public/mushroom_images/hongos2.webp"
+          src="/mushroom_images/hongos2.webp"
           alt={cropId}
         />
         <div className="flex flex-col justify-center align-middle px-6 flex-grow space-y-4">
@@ -68,6 +74,7 @@ export const CropCard = ({
             >
               Crop ID: #{cropId}
             </h4>
+            <h4 className="overflow-hidden w-full">Crop Name: {cropName}</h4>
             <div>
               <button
                 id="dropdownDefaultButton"
@@ -115,10 +122,14 @@ export const CropCard = ({
           </div>
           <div className="flex flex-col space-y-2">
             <span className="flex items-center gap-2">
-              <strong className="text-sm text-primary">Fecha de inicio: </strong>
+              <img src="/icons/calendar.svg" alt="calendar" />
+              <strong className="text-sm text-primary">
+                Fecha de inicio:{" "}
+              </strong>
               <h2 className="text-xs text-secondary">{startDate}</h2>
             </span>
             <span className="flex items-center gap-2">
+              <img src="/icons/mushroom.svg" alt="mushroom" />
               <strong className="text-sm text-primary">Fase actual: </strong>
               <h2 className="text-xs text-secondary">{capitalize(phase)}</h2>
             </span>

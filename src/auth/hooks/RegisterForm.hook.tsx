@@ -1,9 +1,9 @@
-import {useNavigate, useSearchParams} from "react-router-dom";
-import {FormEvent, useRef, useState} from "react";
-import {toast} from "react-toastify";
-import {register, login} from "@/auth/services/auth.service.ts";
-import {areValidHtmlInputRefs} from "@/shared/services/ref-validation.service.ts";
-import {useAuthStore} from "@/auth/stores/useAuthStore.ts";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { FormEvent, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import { register, login } from "@/auth/services/auth.service.ts";
+import { areValidHtmlInputRefs } from "@/shared/services/ref-validation.service.ts";
+import { useAuthStore } from "@/auth/stores/useAuthStore.ts";
 
 export const useRegisterForm = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -14,7 +14,7 @@ export const useRegisterForm = () => {
   const razonSocialRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const rucRef = useRef<HTMLInputElement>(null);
-  const imageUrlRef = useRef("public/companyImage.webp");
+  const imageUrlRef = useRef("/images/companyImage.webp");
   const [isRegistering, setIsRegistering] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -24,7 +24,17 @@ export const useRegisterForm = () => {
     e.preventDefault();
 
     if (
-      !areValidHtmlInputRefs([usernameRef, passwordRef, confirmPasswordRef, firstNameRef, lastNameRef, passwordRef, razonSocialRef, rucRef, emailRef])
+      !areValidHtmlInputRefs([
+        usernameRef,
+        passwordRef,
+        confirmPasswordRef,
+        firstNameRef,
+        lastNameRef,
+        passwordRef,
+        razonSocialRef,
+        rucRef,
+        emailRef,
+      ])
     ) {
       return;
     }
@@ -37,19 +47,22 @@ export const useRegisterForm = () => {
     const toastId = toast.loading("Realizando registro de usuario.");
     setIsRegistering(true);
 
-    try{ 
-    const res = await register({
-      username: usernameRef.current!.value,
-      password: passwordRef.current!.value,
-      firstName: firstNameRef.current!.value,
-      lastName: lastNameRef.current!.value,
-      email: emailRef.current!.value,
-      invitationCode: searchParams.get("invitationCode") ?? undefined,
-    }, {
-      name: razonSocialRef.current!.value,
-      tin: rucRef.current!.value,
-      logoUrl: imageUrlRef.current ?? "public/companyImage.webp"
-    });
+    try {
+      const res = await register(
+        {
+          username: usernameRef.current!.value,
+          password: passwordRef.current!.value,
+          firstName: firstNameRef.current!.value,
+          lastName: lastNameRef.current!.value,
+          email: emailRef.current!.value,
+          invitationCode: searchParams.get("invitationCode") ?? undefined,
+        },
+        {
+          name: razonSocialRef.current!.value,
+          tin: rucRef.current!.value,
+          logoUrl: imageUrlRef.current ?? "/images/companyImage.webp",
+        }
+      );
 
       toast.update(toastId, {
         type: res.status === "success" ? "success" : "error",
@@ -92,6 +105,6 @@ export const useRegisterForm = () => {
     imageUrlRef: imageUrlRef,
     isLoading: isRegistering,
     onSubmit: onSubmit,
-    hasInvitation: !!searchParams.get('invitation'),
+    hasInvitation: !!searchParams.get("invitation"),
   } as const;
-}
+};
