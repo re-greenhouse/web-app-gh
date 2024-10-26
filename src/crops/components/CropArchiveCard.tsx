@@ -2,6 +2,8 @@ import { ReactElement, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "@/shared/components/DropDownComponent";
 import { DeleteDialog } from "@/shared/components/DeleteDialog";
+import { useDeleteCrop } from "../hooks/CropCard.hook";
+import { getRecordsByCropIdAndPhase, deleteRecordById } from "../services/records.service";
 
 type CropArchiveCardProps = {
   cropId: string;
@@ -22,17 +24,37 @@ export const CropArchiveCard = ({
   const capitalize = (s: string | any[]) =>
     s && s[0].toUpperCase() + s.slice(1);
   const [dropdown, setDropdown] = useState(false);
-  const [ showDialog, setDialog] = useState(false);
-
+  const [showDialog, setDialog] = useState(false);
+  const { handleDeleteCrop, loading, error } = useDeleteCrop();
 
   const handleDialog = () => {
     setDialog(!showDialog);
-  }
+  };
 
   const options = ["Editar", "Eliminar"];
 
   const handleItemClick = (option: string) => {
-    console.log("Opcion seleccionada:", option);
+    if (option === "Eliminar") {
+      handleDialog();
+    }
+  };
+
+  const deleteAllRecords = async () => {
+    const response = await getRecordsByCropIdAndPhase(cropId, phase);
+    if (response.status === "success" && Array.isArray(response.data)) {
+      for (const record of response.data) {
+        await deleteRecordById(record.id);
+      }
+    }
+  };
+
+  const confirmDelete = async () => {
+    await deleteAllRecords();
+    await handleDeleteCrop(cropId);
+    if (!error) {
+      setDialog(false);
+      window.location.reload();
+    }
   };
 
   const getIconAndColor = () => {
@@ -108,19 +130,22 @@ export const CropArchiveCard = ({
   const { icon, color } = getIconAndColor();
 
   return (
-    <div
-      onClick={() => navigate(`/records/${cropId}/${phase}`)}
-      className="flex flex-col cursor-pointer bg-white border-2 rounded-lg overflow-hidden"
-    >
+    <div className="flex flex-col cursor-pointer bg-white border-2 rounded-lg overflow-hidden m-2 sm:m-4">
       <div className="w-full overflow-hidden pb-4">
-        <img
+      <img
+          onClick={() => navigate(`/records/${cropId}/${phase}`)}
           className="object-cover w-full h-1/2 mb-4"
           src="/mushroom_images/hongos2.webp"
           alt={cropId}
         />
         <div className="flex flex-col justify-center align-middle px-6 flex-grow space-y-4">
-          <div className="flex">
-            <h4 className="w-full">Crop Name: {cropName}</h4>
+          <div className="flex justify-between items-center">
+            <h4
+              onClick={() => navigate(`/records/${cropId}/${phase}`)}
+              className="overflow-hidden"
+            >
+              Crop Name: {cropName}
+            </h4>
             <div>
               <button
                 id="dropdownDefaultButton"
@@ -182,9 +207,15 @@ export const CropArchiveCard = ({
           </div>
         </div>
       </div>
-      <div className={` ${!showDialog ? "hidden" : ""}`}>
-                    {showDialog && <DeleteDialog hideDialog={handleDialog} text={`¿Estás seguro de que deseas eliminar el Crop: ${cropId}?`}/>}
-                </div>
+      {showDialog && (
+        <DeleteDialog
+          hideDialog={handleDialog}
+          text={`¿Estás seguro de que deseas eliminar el Crop: ${cropId} y todos sus registros?`}
+          confirmDelete={confirmDelete}
+          loading={loading}
+          error={error}
+        />
+      )}
     </div>
   );
 };

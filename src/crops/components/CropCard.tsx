@@ -67,14 +67,13 @@ export const CropCard = ({
           alt={cropId}
         />
         <div className="flex flex-col justify-center align-middle px-6 flex-grow space-y-4">
-          <div className="flex">
+          <div className="flex justify-between items-center">
             <h4
               onClick={() => navigate(`/records/${cropId}/${phase}`)}
               className="overflow-hidden"
             >
-              Crop ID: #{cropId}
+              Crop Name: {cropName}
             </h4>
-            <h4 className="overflow-hidden w-full">Crop Name: {cropName}</h4>
             <div>
               <button
                 id="dropdownDefaultButton"
