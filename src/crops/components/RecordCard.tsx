@@ -1,10 +1,8 @@
 import { ReactElement, useState } from "react";
 import { Dropdown } from "@/shared/components/DropDownComponent";
-import {
-  deleteRecordById,
-  updateRecordPayload,
-} from "@/crops/services/records.service";
+import { deleteRecordById, updateRecordPayload } from "../services/records.service";
 import { PrimaryButton } from "@/shared/components/Buttons";
+import { DeleteDialog } from "@/shared/components/DeleteDialog";
 
 type RecordCardProps = {
   recordId: string;
@@ -24,6 +22,9 @@ export const RecordCard = ({
   const [showDropdown, setShowDropdown] = useState(false);
   const [editingPayload, setEditingPayload] = useState(false);
   const [newPayload, setNewPayload] = useState(payload);
+  const [showDialog, setShowDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   let parsedPayload;
   try {
@@ -37,17 +38,26 @@ export const RecordCard = ({
     setToggleText(showDetails ? "Mostrar detalles" : "Ocultar detalles");
   };
 
-  const handleDelete = async () => {
+  const confirmDelete = async () => {
+    setLoading(true);
+    setError(null);
+
     const response = await deleteRecordById(recordId);
+    setLoading(false);
+
     if (response.status === "success") {
-      alert("Registro eliminado exitosamente");
+      setShowDialog(false);
+      window.location.reload();
     } else {
-      alert("Error al eliminar el registro");
+      setError("Error al eliminar el registro.");
     }
   };
 
   const handleEditPayload = async () => {
+    setLoading(true);
     const response = await updateRecordPayload(recordId, newPayload);
+    setLoading(false);
+
     if (response.status === "success") {
       alert("Payload actualizado exitosamente");
       setEditingPayload(false);
@@ -73,7 +83,7 @@ export const RecordCard = ({
                 options={["Editar payload", "Eliminar registro"]}
                 onOptionSelect={(option) => {
                   if (option === "Eliminar registro") {
-                    handleDelete();
+                    setShowDialog(true);
                   } else if (option === "Editar payload") {
                     setEditingPayload(true);
                   }
@@ -140,6 +150,16 @@ export const RecordCard = ({
             </PrimaryButton>
           </div>
         </div>
+      )}
+
+      {showDialog && (
+        <DeleteDialog
+          hideDialog={() => setShowDialog(false)}
+          text={`¿Estás seguro de que deseas eliminar el registro ${recordId}?`}
+          confirmDelete={confirmDelete}
+          loading={loading}
+          error={error}
+        />
       )}
     </div>
   );
