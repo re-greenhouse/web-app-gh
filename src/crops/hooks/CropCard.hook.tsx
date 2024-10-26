@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deleteRecordById } from "../services/crop.service";
+import { deleteRecordById } from "@/public/services/crops.service";
 
 interface UseDeleteCropReturn {
   handleDeleteCrop: (cropId: string) => Promise<void>;

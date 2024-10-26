@@ -35,3 +35,17 @@ export const getCrops = async (): Promise<{ status: string; data: Crop[] | strin
         };
     }
 }
+
+export const deleteRecordById = async (cropId: string): Promise<{ status: string }> => {
+    const { token } = useAuthStore.getState();
+    try {
+      await instance.delete(`/crops/${cropId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return { status: "success" };
+    } catch (error) {
+      return { status: "error" };
+    }
+  };
