@@ -19,6 +19,8 @@ export const Sidebar = ({
   const [editName, setEditName] = useState(true);
   const [editLastName, setEditLastName] = useState(true);
   const [showDialog, setDialog] = useState(false);
+  const loading = false;
+  const error = ""
 
   const profile = useAuthStore((state) => state.profile)!;
 
@@ -32,6 +34,10 @@ export const Sidebar = ({
 
   const handleDialog = () => {
     setDialog(!showDialog);
+  };
+
+  const confirmDelete = async () => {
+    console.log("En proceso")
   };
 
   return (
@@ -190,7 +196,10 @@ export const Sidebar = ({
       </div>
       <div className={` ${!showDialog ? "hidden" : ""}`}>
         {showDialog && (
-          <DeleteDialog hideDialog={handleDialog} text={`¿Estás seguro de que deseas eliminar a ${userData.firstName} ${userData.lastName}?`} />
+          <DeleteDialog hideDialog={handleDialog} text={`¿Estás seguro de que deseas eliminar a ${userData.firstName} ${userData.lastName}?`}
+          confirmDelete={confirmDelete}
+          loading={loading}
+          error={error} />
         )}
       </div>
     </div>
