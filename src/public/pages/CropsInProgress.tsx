@@ -7,6 +7,7 @@ import { CropCard } from "@/crops/components/CropCard";
 import { BannerComponent } from "@/shared/components/Banner";
 import { Dropdown } from "@/shared/components/DropDownComponent";
 import { DeleteDialog } from "@/shared/components/DeleteDialog";
+import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook.tsx";
 import { SearchBar } from "@/shared/components/SearchBar";
 import { Filter } from "@/shared/components/Filter";
 
@@ -20,6 +21,8 @@ export const CropsInProgress = (): ReactElement => {
   const [dropdown, setDropdown] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Todos");
   
+  const { company } = useCompanyPage();
+
   const options = [
     "Todos",
     "Formula",
@@ -63,7 +66,7 @@ export const CropsInProgress = (): ReactElement => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getCrops();
+      const result = await getCrops(company?.id);
       if (result.status === "success") {
         const data = result.data as unknown as CropWrapper;
         setCrops(data.crops || []);
@@ -132,8 +135,8 @@ export const CropsInProgress = (): ReactElement => {
           <strong>Cultivos</strong>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 w-[80vw] mt-6 justify-center mx-auto">
-          {sortedCrops.length > 0 ? (
-            sortedCrops.map((crop) => (
+          {filteredCrops.length > 0 ? (
+            filteredCrops.map((crop) => (
               <CropCard
                 key={crop.id}
                 cropId={crop.id}

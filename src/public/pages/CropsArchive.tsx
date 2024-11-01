@@ -7,6 +7,7 @@ import { CropArchiveCard } from "@/crops/components/CropArchiveCard";
 import { BannerComponent } from "@/shared/components/Banner";
 import { Dropdown } from "@/shared/components/DropDownComponent";
 import { SearchBar } from "@/shared/components/SearchBar";
+import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook.tsx";
 import { Filter } from "@/shared/components/Filter";
 
 export const CropsArchivePage = (): ReactElement => {
@@ -20,6 +21,8 @@ export const CropsArchivePage = (): ReactElement => {
   const [selectedOption, setSelectedOption] = useState("Todos");
 
   const options = ["Todos", "Excelente", "Regular", "Mala"];
+
+  const { company } = useCompanyPage();
 
   const toggleDateSorting = () => {
     setOpenDateFilter(!openDateFilter);
@@ -46,7 +49,7 @@ export const CropsArchivePage = (): ReactElement => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getCrops();
+      const result = await getCrops(company?.id);
       if (result.status === "success") {
         const data = result.data as unknown as CropWrapper;
         setCrops(data.crops || []);
