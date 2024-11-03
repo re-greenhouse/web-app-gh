@@ -43,6 +43,7 @@ export const CropsInProgress = (): ReactElement => {
     setSelectedOption(option);
     setDropdown(false);
   };
+  console.log("foo")
 
   const filteredCrops = crops
     .filter(
@@ -135,8 +136,8 @@ export const CropsInProgress = (): ReactElement => {
           <strong>Cultivos</strong>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 w-[80vw] mt-6 justify-center mx-auto">
-          {filteredCrops.length > 0 ? (
-            filteredCrops.map((crop) => (
+          {sortedCrops.length > 0 ? (
+            sortedCrops.map((crop) => (
               <CropCard
                 key={crop.id}
                 cropId={crop.id}
