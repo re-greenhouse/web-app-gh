@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState, useMemo, useCallback } from "react";
 import { getCrops } from "@/public/services/crops.service";
 import { Crop, CropWrapper } from "@/public/models/Crop";
 import { BaseLayout } from "@/shared/layouts/BaseLayout";
@@ -10,6 +10,8 @@ import { DeleteDialog } from "@/shared/components/DeleteDialog";
 import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook.tsx";
 import { SearchBar } from "@/shared/components/SearchBar";
 import { Filter } from "@/shared/components/Filter";
+import { filterCrops } from "../components/CropUtils";
+import debounce from "lodash/debounce";
 
 export const CropsInProgress = (): ReactElement => {
   const [crops, setCrops] = useState<Crop[]>([]);
@@ -17,10 +19,9 @@ export const CropsInProgress = (): ReactElement => {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [openDateFilter, setOpenDateFilter] = useState(false);
-  const [openPhaseFilter, setOpenPhaseFilter] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Todos");
-  
+
   const { company } = useCompanyPage();
 
   const options = [
@@ -35,6 +36,57 @@ export const CropsInProgress = (): ReactElement => {
     "Harvest",
   ];
 
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    const result = await getCrops(company?.id);
+    if (result.status === "success") {
+      const data = result.data as unknown as CropWrapper;
+      setCrops(data.crops || []);
+      setError(null);
+    } else {
+      setError(result.data as string);
+    }
+    setLoading(false);
+  }, [company?.id]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  // Memoize filtered crops to optimize rendering
+  const filteredCrops = useMemo(() => {
+    return crops
+      .filter(
+        (crop) =>
+          crop.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          crop.startDate.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          crop.phase.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .filter(
+        (crop) =>
+          crop.state &&
+          (selectedOption === "Todos" ||
+            crop.phase.toLowerCase() === selectedOption.toLowerCase())
+      );
+  }, [crops, searchQuery, selectedOption]);
+
+  const sortedCrops = useMemo(() => {
+    return filteredCrops.sort((a, b) => {
+      const dateA = new Date(a.startDate).getTime();
+      const dateB = new Date(b.startDate).getTime();
+      return openDateFilter ? dateA - dateB : dateB - dateA;
+    });
+  }, [filteredCrops, openDateFilter]);
+
+  const visibleCrops = useMemo(
+    () => filterCrops(sortedCrops, true),
+    [sortedCrops]
+  );
+
+  const handleSearchChange = debounce((value: string) => {
+    setSearchQuery(value);
+  }, 300);
+
   const toggleDateSorting = () => {
     setOpenDateFilter(!openDateFilter);
   };
@@ -43,42 +95,6 @@ export const CropsInProgress = (): ReactElement => {
     setSelectedOption(option);
     setDropdown(false);
   };
-  console.log("foo")
-
-  const filteredCrops = crops
-    .filter(
-      (crop) =>
-        crop.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        crop.startDate.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        crop.phase.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .filter(
-      (crop) =>
-        crop.state &&
-        (selectedOption === "Todos" ||
-          crop.phase.toLowerCase() === selectedOption.toLowerCase())
-    );
-
-  const sortedCrops = filteredCrops.sort((a, b) => {
-    const dateA = new Date(a.startDate).getTime();
-    const dateB = new Date(b.startDate).getTime();
-    return openDateFilter ? dateA - dateB : dateB - dateA;
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await getCrops(company?.id);
-      if (result.status === "success") {
-        const data = result.data as unknown as CropWrapper;
-        setCrops(data.crops || []);
-        setError(null);
-      } else {
-        setError(result.data as string);
-      }
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
 
   if (loading) {
     return (
@@ -108,7 +124,7 @@ export const CropsInProgress = (): ReactElement => {
           <div className="flex-1">
             <SearchBar
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => handleSearchChange(e.target.value)}
             />
           </div>
           <Filter
@@ -120,10 +136,8 @@ export const CropsInProgress = (): ReactElement => {
             <Filter
               label="Fase actual"
               leadingIcon="/icons/filterIcon.svg"
-              onClick={() => {
-                setOpenPhaseFilter(!openPhaseFilter), setDropdown(!dropdown);
-              }}
-              showArrow={openPhaseFilter}
+              onClick={() => setDropdown(!dropdown)}
+              showArrow={dropdown}
             />
             {dropdown && (
               <div className="absolute translate-y-4">
@@ -136,8 +150,8 @@ export const CropsInProgress = (): ReactElement => {
           <strong>Cultivos</strong>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 w-[80vw] mt-6 justify-center mx-auto">
-          {sortedCrops.length > 0 ? (
-            sortedCrops.map((crop) => (
+          {visibleCrops.length > 0 ? (
+            visibleCrops.map(crop => (
               <CropCard
                 key={crop.id}
                 cropId={crop.id}
