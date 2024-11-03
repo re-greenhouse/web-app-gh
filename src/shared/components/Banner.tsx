@@ -64,7 +64,7 @@ export const BannerComponent = (): ReactElement => {
           </div>
         </div>
       </div>
-      {changeInfo && <EditCompanyComponent hideDialog={handleEditCompany} />}
+      {changeInfo && <EditCompanyComponent hideDialog={handleEditCompany} company={company}/>}
     </div>
   );
 };

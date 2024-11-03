@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { BaseLayout } from "@/shared/layouts/BaseLayout.tsx";
 import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook.tsx";
 import { LoaderMessage } from "@/shared/components/LoaderMessage.tsx";
@@ -10,6 +10,7 @@ import { Sidebar } from "@/shared/components/SidebarComponent";
 import { SearchBar } from "@/shared/components/SearchBar";
 import { PrimaryButton } from "@/shared/components/Buttons";
 import { Filter } from "@/shared/components/Filter";
+
 
 type UserData = {
   firstName: string;
@@ -24,6 +25,8 @@ export const CompanyPage = (): ReactElement => {
   const [showDialog, setDialog] = useState(false);
   const [showSidebar, setSidebar] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
+
+  
 
   const [userData, setUserData] = useState<UserData>({
     firstName: "",
@@ -108,9 +111,8 @@ export const CompanyPage = (): ReactElement => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-
         <PrimaryButton size="small" onClick={handleClickInvite}>
-          <span>Invitar trabajador</span>
+          <span>Invitar Trabajador</span>
         </PrimaryButton>
       </div>
       <div className="justify-center w-[80vw] mx-auto text-third text-lg">

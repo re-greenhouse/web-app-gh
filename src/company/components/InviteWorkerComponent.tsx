@@ -27,7 +27,7 @@ export const InviteComponent = ({
   return (
     <div>
       <div className="absolute backdrop-blur-xs bg-black bg-opacity-25 inset-0 flex w-full justify-center h-full z-20 content-center items-center">
-        <div className="bg-background lg:w-1/3 lg:h-2/3 content-start justify-center text-center rounded-2xl">
+        <div className="bg-background lg:w-1/3 lg:h-2/3 content-start justify-center text-center rounded-2xl ">
           <form
             onSubmit={(e) => onSubmit(e, isAdmin, "employee.invited")}
             className="bottom-0 py-2"

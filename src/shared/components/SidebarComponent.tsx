@@ -1,6 +1,7 @@
 import { ReactElement, useState } from "react";
 import { useAuthStore } from "@/auth/stores/useAuthStore.ts";
 import { DeleteDialog } from "./DeleteDialog";
+import { PrimaryButton } from "./Buttons";
 
 type SidebarProps = {
   hideSidebar: () => void;
@@ -74,26 +75,10 @@ export const Sidebar = ({
             alt={`${profile?.firstName} logo`}
             className="size-48"
           />
-          <button className={`absolute translate-y-36 translate-x-16`}>
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className=""
-            >
-              <circle cx="24.0001" cy="23.9999" r="16.5333" fill="white" />
-              <path
-                d="M24 4C12.94 4 4 12.94 4 24C4 35.06 12.94 44 24 44C35.06 44 44 35.06 44 24C44 12.94 35.06 4 24 4ZM30.2 14.14C30.48 14.14 30.76 14.24 31 14.46L33.54 17C34 17.44 34 18.14 33.54 18.56L31.54 20.56L27.44 16.46L29.44 14.46C29.64 14.24 29.92 14.14 30.2 14.14ZM26.26 17.62L30.38 21.74L18.26 33.86H14.14V29.74L26.26 17.62Z"
-                fill="#4C6444"
-              />
-            </svg>
-          </button>
         </div>
         <div className="flex flex-col">
           <div className="flex items-center w-full justify-center">
-            <button onClick={toggleEditName}>
+            {/* <button onClick={toggleEditName}>
               <svg
                 width="24"
                 height="25"
@@ -120,7 +105,7 @@ export const Sidebar = ({
                 />
                 <path d="M12.5 8L16.5 12" stroke="#898989" strokeWidth="2" />
               </svg>
-            </button>
+            </button> */}
             <input
               disabled={editName}
               type="text"
@@ -133,7 +118,7 @@ export const Sidebar = ({
             />
           </div>
           <div className="flex items-center w-full justify-center">
-            <button onClick={toggleEditLastName}>
+            {/* <button onClick={toggleEditLastName}>
               <svg
                 width="24"
                 height="25"
@@ -160,7 +145,7 @@ export const Sidebar = ({
                 />
                 <path d="M12.5 8L16.5 12" stroke="#898989" strokeWidth="2" />
               </svg>
-            </button>
+            </button> */}
             <input
               disabled={editLastName}
               type="text"
@@ -185,9 +170,17 @@ export const Sidebar = ({
             </select>
           </div>
         </div>
+        {/* <span className="flex justify-center pt-10">
+          <button
+            className="bg-loginButton text-background border-2 p-1 rounded-lg w-1/3 h-10"
+            onClick={handleDialog}
+          >
+            Editar Trabajador
+          </button>
+        </span> */}
         <span className="flex justify-center pt-10">
           <button
-            className="bg-transparent border-red-600 text-red-600 border-2 p-1 rounded-lg"
+            className="bg-transparent border-red-600 text-red-600 border-2 p-1 rounded-lg w-1/3 h-10"
             onClick={handleDialog}
           >
             Eliminar Trabajador

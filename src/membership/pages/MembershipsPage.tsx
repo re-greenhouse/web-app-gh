@@ -44,7 +44,7 @@ const membershipData = [
   },
   {
     feature: "Cultivos",
-    basic: "365",
+    basic: "5",
     standard: "Ilimitados",
     premium: "Ilimitados",
   },

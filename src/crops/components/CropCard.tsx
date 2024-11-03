@@ -64,7 +64,7 @@ export const CropCard = ({
           onClick={() => navigate(`/records/${cropId}/${phase}`)}
           className="object-cover w-full h-1/2 mb-4"
           src="/mushroom_images/hongos2.webp"
-          alt={cropId}
+          alt={cropName}
         />
         <div className="flex flex-col justify-center align-middle px-6 flex-grow space-y-4">
           <div className="flex justify-between items-center">
