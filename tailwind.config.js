@@ -6,11 +6,23 @@ export default {
   ],
   theme: {
     extend: {
+      backdropBlur: {
+        xs: '2px',
+      },
+      blur: {
+        xs: '2px',
+      },
       colors: {
-        primary: "#211951",
-        secondary: "#836FFF",
+        primary: "#4C6444",
+        secondary: "#898989",
+        third: "#282A3F",
         accent: "#15F5BA",
-        light: "#F0F3FF"
+        background: "#F0F3FF",
+        loginButton: "#282A3F",
+        textCardColorE: "#465B3F",
+        textCardColorR: "#282A3F",
+        textCardColorM: "#DE4F4F",
+        inviteCompontentText: "#111827",
       }
     },
   },

@@ -16,12 +16,7 @@ export const ProfileDropdownMenu = () => {
               alt={`${profile.firstName} foto de perfil`}
               className="h-10 w-10 object-cover object-center rounded-full"
             />
-            <span className="max-md:hidden font-semibold">{profile.firstName} {profile.lastName}</span>
-            <span className="md:hidden font-semibold">
-              {profile.firstName.at(0)?.toUpperCase()}
-              {profile.lastName.at(0)?.toUpperCase()}
-            </span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className={`size-4 ${open ? "rotate-180" : ""} duration-200`}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className={`size-4 ${open ? "rotate-180" : ""} duration-200 hidden md:block`}>
               <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
             </svg>
           </MenuButton>

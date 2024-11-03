@@ -17,7 +17,7 @@ export const CardButton = ({
   return (
     <div
       onClick={() => navigate(link)}
-      className="flex flex-col cursor-pointer bg-white shadow-md rounded-lg overflow-hidden m-2 sm:m-4"
+      className="flex flex-col cursor-pointer bg-white shadow-md rounded-lg overflow-hidden m-2"
     >
       <div className="h-32 sm:h-40 md:h-48 lg:h-56 xl:h-64 w-full overflow-hidden">
         <img className="object-cover w-full h-full" src={image} alt={title} />
