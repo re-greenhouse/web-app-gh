@@ -10,6 +10,7 @@ type CropArchiveCardProps = {
   cropName: string;
   phase: string;
   startDate: string;
+  imageUrl: string;
   quality: string;
 };
 
@@ -18,6 +19,7 @@ export const CropArchiveCard = ({
   cropName,
   phase,
   startDate,
+  imageUrl,
   quality,
 }: CropArchiveCardProps): ReactElement => {
   const navigate = useNavigate();
@@ -59,7 +61,7 @@ export const CropArchiveCard = ({
 
   const getIconAndColor = () => {
     switch (quality) {
-      case "excelente":
+      case "Excelent":
         return {
           icon: (
             <svg
@@ -79,7 +81,7 @@ export const CropArchiveCard = ({
           ),
           color: "text-textCardColorE",
         };
-      case "regular":
+      case "Good":
         return {
           icon: (
             <svg
@@ -99,7 +101,7 @@ export const CropArchiveCard = ({
           ),
           color: "text-textCardColorR",
         };
-      case "mala":
+      case "Bad":
         return {
           icon: (
             <svg
@@ -135,7 +137,7 @@ export const CropArchiveCard = ({
       <img
           onClick={() => navigate(`/records/${cropId}/${phase}`)}
           className="object-cover w-full h-1/2 mb-4"
-          src="/mushroom_images/hongos2.webp"
+          src={imageUrl}
           alt={cropId}
         />
         <div className="flex flex-col justify-center align-middle px-6 flex-grow space-y-4">

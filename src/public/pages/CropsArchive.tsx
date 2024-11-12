@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import { getCrops } from "@/public/services/crops.service";
-import { Crop, CropWrapper } from "@/public/models/Crop";
+import { CropDone, CropWrapper } from "@/public/models/Crop";
 import { BaseLayout } from "@/shared/layouts/BaseLayout";
 import { LoaderMessage } from "@/shared/components/LoaderMessage";
 import { CropArchiveCard } from "@/crops/components/CropArchiveCard";
@@ -11,7 +11,7 @@ import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook.tsx";
 import { Filter } from "@/shared/components/Filter";
 
 export const CropsArchivePage = (): ReactElement => {
-  const [crops, setCrops] = useState<Crop[]>([]);
+  const [crops, setCrops] = useState<CropDone[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -60,7 +60,7 @@ export const CropsArchivePage = (): ReactElement => {
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [company]);
 
   if (loading) {
     return (
@@ -119,14 +119,15 @@ export const CropsArchivePage = (): ReactElement => {
           <strong>Cultivos</strong>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 w-[80vw] mt-6 justify-center mx-auto">
-          {crops.map((crop) => (
+          {sortedCrops.map((crop) => (
             <CropArchiveCard
               key={crop.id}
               cropId={crop.id}
               cropName={crop.name}
               phase={crop.phase}
               startDate={crop.startDate}
-              quality="excelente"
+              imageUrl={crop.imageUrl || "/mushroom_images/hongos2.webp"}
+              quality={crop.quality || ""}
             />
           ))}
         </div>

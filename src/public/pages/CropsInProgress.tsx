@@ -43,7 +43,6 @@ export const CropsInProgress = (): ReactElement => {
     setSelectedOption(option);
     setDropdown(false);
   };
-  console.log("foo")
 
   const filteredCrops = crops
     .filter(
@@ -78,7 +77,7 @@ export const CropsInProgress = (): ReactElement => {
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [company]);
 
   if (loading) {
     return (
