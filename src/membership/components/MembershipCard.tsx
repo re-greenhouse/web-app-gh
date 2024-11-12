@@ -1,12 +1,15 @@
 import { PrimaryButton } from "@/shared/components/Buttons";
 import { ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
+import {Link} from "react-router-dom";
+
 
 type MembershipCardProps = {
   membershipName: string;
   price: string;
   description: string;
   icon: string;
+  suscriptionUrl: string;
 };
 
 export const MembershipCard = ({
@@ -14,11 +17,12 @@ export const MembershipCard = ({
   price,
   description,
   icon,
+  suscriptionUrl,
 }: MembershipCardProps): ReactElement => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/");
+    navigate("https://buy.stripe.com/test_checkout");
   };
 
   return (
@@ -37,7 +41,7 @@ export const MembershipCard = ({
 
       <div className="mt-auto pt-4">
         <PrimaryButton size="medium" onClick={handleClick}>
-          <span>Seleccionar</span>
+          <Link to={suscriptionUrl}>Seleccionar</Link>
         </PrimaryButton>
       </div>
     </div>

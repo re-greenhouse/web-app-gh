@@ -7,7 +7,7 @@ const instance = axios.create({
 });
 
 export const getCrops = async (companyId: string): Promise<{ status: string; data: Crop[] | string; message?: string;}> => {
-    const { token } = useAuthStore.getState();
+    const { token } = useAuthStore.getState(); 
 
     try {
         const response = await instance.get<Crop[]>(`/crops/company/${companyId}`, {
