@@ -96,7 +96,7 @@ export const RecordChart = ({ records }: RecordChartProps) => {
     labels: groupedLabels,
     datasets: [
       {
-        label: `Valores de ${selectedField}`,
+        label: `${selectedField}`,
         data: groupedLabels.map((label) => {
           const values = groupedData[label];
           const sum = values.reduce((acc, val) => acc + val, 0);
@@ -118,8 +118,10 @@ export const RecordChart = ({ records }: RecordChartProps) => {
         <div className="relative mb-4">
           <Filter
             label={timeFrame.charAt(0).toUpperCase() + timeFrame.slice(1)}
+            leadingIcon="/icons/filterIcon.svg"
+            trailingIcon="/icons/downArrow.svg"
             onClick={() => setShowDropdown(!showDropdown)}
-            showArrow={showDropdown}
+            clickedState={showDropdown}
           />
           {showDropdown && (
             <div className="absolute mt-2 z-50">
@@ -176,7 +178,7 @@ export const RecordChart = ({ records }: RecordChartProps) => {
               y: {
                 title: {
                   display: true,
-                  text: "Valor",
+                  text: "Valor registrado",
                 },
               },
             },

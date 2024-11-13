@@ -158,9 +158,10 @@ export const CropsRecordsPage = (): ReactElement => {
             <div className="relative">
               <Filter
                 label="Autor"
-                leadingIcon="/icons/filterIcon.svg"
                 onClick={() => setShowAuthorDropdown(!showAuthorDropdown)}
-                showArrow={showAuthorDropdown}
+                leadingIcon="/icons/filterIcon.svg"
+                trailingIcon="/icons/downArrow.svg"
+                clickedState={showAuthorDropdown}
               />
               {showAuthorDropdown && (
                 <div className="absolute mt-2 bg-white z-10 shadow-lg rounded w-44">

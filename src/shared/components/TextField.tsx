@@ -5,7 +5,7 @@ interface TextFieldProps {
   type: HTMLInputTypeAttribute;
   label: string;
   placeholder?: string;
-  TrailingIcon?: ReactElement;
+  trailingIcon?: ReactElement;
   value: string;
   onValueChange: (value: string) => void;
 }
@@ -15,7 +15,7 @@ export const TextField = ({
   type,
   label,
   placeholder,
-  TrailingIcon,
+  trailingIcon,
   value,
   onValueChange,
 }: TextFieldProps): ReactElement => {
@@ -28,9 +28,9 @@ export const TextField = ({
         {label}
       </label>
       <div className="relative mb-3">
-        {TrailingIcon !== undefined ? (
+        {trailingIcon !== undefined ? (
           <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-            {TrailingIcon}
+            {trailingIcon}
           </div>
         ) : null}
         <input

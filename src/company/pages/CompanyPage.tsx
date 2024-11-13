@@ -11,7 +11,6 @@ import { SearchBar } from "@/shared/components/SearchBar";
 import { PrimaryButton } from "@/shared/components/Buttons";
 import { Filter } from "@/shared/components/Filter";
 
-
 type UserData = {
   firstName: string;
   lastName: string;
@@ -25,8 +24,6 @@ export const CompanyPage = (): ReactElement => {
   const [showDialog, setDialog] = useState(false);
   const [showSidebar, setSidebar] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
-
-  
 
   const [userData, setUserData] = useState<UserData>({
     firstName: "",
@@ -126,7 +123,8 @@ export const CompanyPage = (): ReactElement => {
               <Filter
                 label="Nombre"
                 onClick={toggleSortOrder}
-                showArrow={sortOrder}
+                trailingIcon="/icons/sortIcon.svg"
+                clickedState={sortOrder}
                 color="text-third"
               />
             </div>,

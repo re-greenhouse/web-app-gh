@@ -1,6 +1,6 @@
 import { ReactElement, useState, useEffect } from "react";
 import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook.tsx";
-import { EditCompanyComponent } from "@/company/components/EditCompanyComponent"
+import { EditCompanyComponent } from "@/company/components/EditCompanyComponent";
 
 export const BannerComponent = (): ReactElement => {
   const [activePage, setActivePage] = useState(false);
@@ -10,7 +10,7 @@ export const BannerComponent = (): ReactElement => {
 
   const handleEditCompany = () => {
     setChangeInfo(!changeInfo);
-  }
+  };
 
   useEffect(() => {
     const pathName = window.location.pathname;
@@ -28,7 +28,7 @@ export const BannerComponent = (): ReactElement => {
         alt="bannerImage"
         className="absolute w-full hidden sm:hidden md:hidden lg:block xl:block 2xl:block"
       />
-      <div className="relative z-10 flex md:flex-row flex-col md:items-end items-center md:text-left text-center md:px-28 px-12 2xl:pt-40 xl:pt-16 lg:pt-5 pb-10 md:gap-5 gap-2">
+      <div className="relative z-10 flex md:flex-row flex-col md:items-end items-center md:text-left text-center md:px-28 px-12 2xl:pt-32 xl:pt-16 lg:pt-5 pb-10 md:gap-5 gap-2 w-full">
         <img
           src={company?.logoUrl}
           alt={`${company?.name} logo`}
@@ -57,14 +57,23 @@ export const BannerComponent = (): ReactElement => {
         </button>
         <div className="items-end">
           <div className="flex">
-            <h1 className="placeholder:text-third text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-2 text-third whitespace-nowrap font-bold bg-transparent">{company?.name}</h1>
+            <h1 className="placeholder:text-third text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-2 text-third whitespace-nowrap font-bold bg-transparent">
+              {company?.name}
+            </h1>
           </div>
           <div className="flex">
-            <p className="placeholder:text-secondary text-base sm:text-xs md:text-sm lg:text-lg whitespace-nowrap bg-transparent">{company?.tin}</p>
+            <p className="placeholder:text-secondary text-base sm:text-xs md:text-sm lg:text-lg whitespace-nowrap bg-transparent">
+              {company?.tin}
+            </p>
           </div>
         </div>
       </div>
-      {changeInfo && <EditCompanyComponent hideDialog={handleEditCompany} company={company}/>}
+      {changeInfo && (
+        <EditCompanyComponent
+          hideDialog={handleEditCompany}
+          company={company}
+        />
+      )}
     </div>
   );
 };
