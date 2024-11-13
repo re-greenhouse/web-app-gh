@@ -85,15 +85,24 @@ export const CropsRecordsPage = (): ReactElement => {
     );
 
   const exportToExcel = () => {
-    const dataToExport = filteredRecords.map((record) => ({
-      "Record ID": record.id,
-      Author: record.author,
-      "Updated Date": record.updatedDate,
-      Payload: JSON.stringify(record.payload),
-    }));
+    const dataToExport = filteredRecords.map((record) => {
+      const baseData: { [key: string]: string | number } = {
+        "Record ID": record.id,
+        Author: record.author,
+        "Updated Date": record.updatedDate,
+      };
+
+      record.payload.data.forEach((item: { name: string; value: any }) => {
+        baseData[item.name] = item.value;
+      });
+
+      return baseData;
+    });
+
     const worksheet = XLSX.utils.json_to_sheet(dataToExport);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Records");
+
     XLSX.writeFile(workbook, `Records_Crop_${cropId}_Phase_${cropPhase}.xlsx`);
   };
 
