@@ -115,11 +115,7 @@ export const InviteComponent = ({
                   />
                 </div>
                 <div className="flex justify-center p-5 w-full">
-                  <PrimaryButton
-                    disabled={isLoading}
-                    type="submit"
-                    className="w-full"
-                  >
+                  <PrimaryButton disabled={isLoading} type="submit">
                     {isLoading ? (
                       <Spinner color="#15F5BA" height={24} />
                     ) : (

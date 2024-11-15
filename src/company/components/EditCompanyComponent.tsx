@@ -66,7 +66,10 @@ export const EditCompanyComponent = ({
           </button>
           <h1 className="mb-2 text-2xl">Editar Empresa</h1>
           <form
-            action="submit"
+            onSubmit={(e) => {
+              e.preventDefault(); // Previene el comportamiento por defecto
+              editCompany(); // Llama a la función para editar la empresa
+            }}
             className="flex flex-col gap-5 content-center justify-center items-center w-full"
           >
             <h1>Nombre de la empresa:</h1>
@@ -97,11 +100,7 @@ export const EditCompanyComponent = ({
             />
 
             <div className="flex flex-col w-full gap-5 p-5">
-              <PrimaryButton
-                onClick={editCompany}
-                label="Cambiar"
-                type="submit"
-              ></PrimaryButton>
+              <PrimaryButton label="Cambiar" type="submit"></PrimaryButton>
             </div>
           </form>
         </div>
