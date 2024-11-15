@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { Dropdown } from "@/shared/components/DropDownComponent";
 import { DeleteDialog } from "@/shared/components/DeleteDialog";
 import { useDeleteCrop } from "../hooks/CropCard.hook";
-import { getRecordsByCropIdAndPhase, deleteRecordById } from "../services/records.service";
+import {
+  getRecordsByCropIdAndPhase,
+  deleteRecordById,
+} from "../services/records.service";
 
 type CropCardProps = {
   cropId: string;
@@ -58,7 +61,7 @@ export const CropCard = ({
   };
 
   return (
-    <div className="flex flex-col cursor-pointer bg-white border-2 rounded-lg overflow-hidden m-2 sm:m-4">
+    <div className="flex flex-col cursor-pointer bg-white border-2 rounded-lg overflow-hidden m-2 sm:m-4 hover:scale-95 duration-300">
       <div className="w-full overflow-hidden pb-4">
         <img
           onClick={() => navigate(`/records/${cropId}/${phase}`)}
