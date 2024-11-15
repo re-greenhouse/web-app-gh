@@ -126,7 +126,7 @@ export const CropsInProgress = (): ReactElement => {
               }}
             />
             {dropdown && (
-              <div className="absolute translate-y-4">
+              <div className="absolute translate-y-8">
                 <Dropdown options={options} onOptionSelect={handleItemClick} />
               </div>
             )}

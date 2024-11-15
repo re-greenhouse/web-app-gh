@@ -190,7 +190,7 @@ export const CropsRecordsPage = (): ReactElement => {
           </div>
 
           <h3 className="text-xl text-third font-bold">Registros</h3>
-          <div className="flex flex-col items-center justify-center gap-6">
+          <div className="flex flex-col items-center justify-center gap-6 mb-12">
             {filteredRecords.length > 0 ? (
               filteredRecords.map((record) => (
                 <RecordCard

@@ -99,7 +99,7 @@ export const CropsArchivePage = (): ReactElement => {
             trailingIcon="/icons/sortIcon.svg"
             clickedState={openDateFilter}
           />
-          <div className="relative">
+          <div className="relative flex">
             <Filter
               label="Calidad"
               leadingIcon="/icons/filterIcon.svg"
@@ -111,7 +111,7 @@ export const CropsArchivePage = (): ReactElement => {
               clickedState={openCropQualityFilter}
             />
             {dropdown && (
-              <div className="absolute translate-y-4">
+              <div className="absolute translate-y-8">
                 <Dropdown options={options} onOptionSelect={handleItemClick} />
               </div>
             )}
