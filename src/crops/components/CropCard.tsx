@@ -61,11 +61,11 @@ export const CropCard = ({
   };
 
   return (
-    <div className="flex flex-col cursor-pointer bg-white border-2 rounded-lg overflow-hidden m-2 sm:m-4 hover:scale-95 duration-300">
+    <div className="flex flex-col cursor-pointer bg-white border-2 rounded-lg overflow-hidden m-2 sm:m-4 hover:opacity-90 duration-300">
       <div className="w-full overflow-hidden pb-4">
         <img
           onClick={() => navigate(`/records/${cropId}/${phase}`)}
-          className="object-cover w-full h-1/2 mb-4"
+          className="object-cover w-full h-1/2 mb-4 "
           src="/mushroom_images/hongos2.webp"
           alt={cropName}
         />
