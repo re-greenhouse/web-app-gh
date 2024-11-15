@@ -31,6 +31,10 @@ export const RecordChart = ({ records }: RecordChartProps) => {
   const [timeFrame, setTimeFrame] = useState<string>("individual");
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
+  if (records.length === 0) {
+    return <p>No hay datos disponibles para mostrar el gráfico.</p>;
+  }
+
   const filteredFields = records[0]?.payload.data.filter(
     (item: { name: string }) =>
       !item.name.toLowerCase().includes("comment") &&

@@ -1,6 +1,9 @@
 import { ReactElement, useState } from "react";
 import { Dropdown } from "@/shared/components/DropDownComponent";
-import { deleteRecordById, updateRecordPayload } from "../services/records.service";
+import {
+  deleteRecordById,
+  updateRecordPayload,
+} from "../services/records.service";
 import { PrimaryButton } from "@/shared/components/Buttons";
 import { DeleteDialog } from "@/shared/components/DeleteDialog";
 
@@ -96,12 +99,22 @@ export const RecordCard = ({
       </div>
 
       <div className="flex items-center justify-between my-2">
-        <p className="text-sm font-medium">Autor: {author}</p>
+        <span className="flex">
+          <img
+            src="https://publicdomainvectors.org/tn_img/abstract-user-flat-4.webp"
+            alt="user icon"
+            className="w-6 h-6 mr-2"
+          />
+          <p className="text-sm font-medium">
+            <b>Autor:</b> {author}
+          </p>
+        </span>
+
         <span className="flex">
           <img
             src="/icons/calendar.svg"
             alt="calendar icon"
-            className="w-6 h-6"
+            className="w-6 h-6 mr-2"
           />
           <p className="text-sm text-secondary">{updatedDate}</p>
         </span>
@@ -115,6 +128,7 @@ export const RecordCard = ({
 
       {showDetails && !editingPayload && (
         <div>
+          <hr className="my-2 border-t border-gray-300" />
           {parsedPayload?.data ? (
             parsedPayload.data.map(
               (item: { name: string; value: string }, index: number) => (

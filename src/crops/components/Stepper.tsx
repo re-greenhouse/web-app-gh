@@ -32,7 +32,7 @@ export const Stepper = ({
             key={index}
             className={`flex items-center text-white ${
               index === stepNames.length - 1 ? "" : "flex-1"
-            }`} // Elimina flex-1 en el último paso
+            }`}
           >
             <div
               className="flex flex-col items-center relative cursor-pointer"

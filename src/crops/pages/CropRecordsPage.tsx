@@ -68,7 +68,7 @@ export const CropsRecordsPage = (): ReactElement => {
   }, [cropId, cropPhase]);
 
   const handleBack = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   const authors = Array.from(new Set(records.map((record) => record.author)));
