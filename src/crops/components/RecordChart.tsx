@@ -102,8 +102,8 @@ export const RecordChart = ({ records }: RecordChartProps) => {
           const sum = values.reduce((acc, val) => acc + val, 0);
           return sum / values.length;
         }),
-        backgroundColor: "rgba(75, 192, 192, 0.5)",
-        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: "rgba(125, 162, 87, 0.5)",
+        borderColor: "rgba(125, 162, 87, 1)",
         borderWidth: 1,
       },
     ],
@@ -142,7 +142,7 @@ export const RecordChart = ({ records }: RecordChartProps) => {
           <button
             key={key}
             onClick={() => setSelectedField(key)}
-            className={`px-4 py-2 rounded-md ${
+            className={`px-4 py-2 rounded-md hover:scale-95 duration-300 ${
               selectedField === key
                 ? "bg-textCardColorR text-white"
                 : "bg-gray-200"
