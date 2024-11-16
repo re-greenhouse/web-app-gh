@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Client } from "@stomp/stompjs";
 import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook.tsx";
-import { CropAction } from "./CropAction";
+import { NotificationContent } from "./NotificationContent.tsx";
 import { useAuthStore } from "@/auth/stores/useAuthStore";
 import { ProfileService } from "@/profile/services/profile.service";
 import {Notification} from "@/notifications/models/Notification.ts";
@@ -166,7 +166,7 @@ export const NotificationsComponent = (): React.ReactElement => {
                         <img src="icons/close.svg" alt="close" />
                       </button>
                     </div>
-                    <CropAction
+                    <NotificationContent
                       cropID={parsedContent.cropId}
                       phase={parsedContent.phase}
                       message={parsedContent.message}

@@ -3,7 +3,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { RecordCard } from "../components/RecordCard";
 import { LoaderMessage } from "@/shared/components/LoaderMessage";
-import { Record } from "../models/Record";
+import { CropRecord } from "../models/CropRecord.ts";
 import { getRecordsByCropIdAndPhase } from "../services/records.service";
 import { PrimaryButton } from "@/shared/components/Buttons";
 import { Stepper } from "../components/Stepper";
@@ -20,7 +20,7 @@ export const CropsRecordsPage = (): ReactElement => {
     cropId: string;
     cropPhase: string;
   }>();
-  const [records, setRecords] = useState<Record[]>([]);
+  const [records, setRecords] = useState<CropRecord[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedAuthor, setSelectedAuthor] = useState<string>("");
   const [showAuthorDropdown, setShowAuthorDropdown] = useState<boolean>(false);

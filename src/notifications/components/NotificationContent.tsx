@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { updateRecordPayload } from "@/crops/services/records.service";
 import { PrimaryButton } from "@/shared/components/Buttons";
 
-type CropActionProps = {
+type NotificationContentProps = {
   cropID: string;
   phase: string;
   message: string;
@@ -14,7 +14,7 @@ type CropActionProps = {
   profileIcon: string;
 };
 
-export const CropAction = ({
+export const NotificationContent = ({
   cropID,
   phase,
   message,
@@ -23,7 +23,7 @@ export const CropAction = ({
   recordId,
   differences,
   profileIcon,
-}: CropActionProps): ReactElement => {
+}: NotificationContentProps): ReactElement => {
   const navigate = useNavigate();
   const handleRoute = () => {
     navigate(`/records/${cropID}/${phase}`);

@@ -233,7 +233,7 @@ export const Toolbar = (): ReactElement => {
         </div>
       </header>
       <SideBar isOpen={notifications} onClose={handleNotifications}>
-        <NotificationsComponent hide={handleNotifications} />
+        <NotificationsComponent />
       </SideBar>
     </div>
   );

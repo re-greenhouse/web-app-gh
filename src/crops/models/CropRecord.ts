@@ -1,4 +1,4 @@
-export interface AppRecord {
+export interface CropRecord {
     id: string;
     updatedDate: string;
     author: string;
@@ -9,5 +9,5 @@ export interface AppRecord {
   
 
 export interface RecordWrapper {
-    crops: AppRecord[];
+    crops: CropRecord[];
 }

@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Record } from "../models/Record";
+import { CropRecord } from "../models/CropRecord.ts";
 import { Dropdown } from "@/shared/components/DropDownComponent";
 import { Filter } from "@/shared/components/Filter";
 
@@ -23,7 +23,7 @@ ChartJS.register(
 );
 
 type RecordChartProps = {
-  records: Record[];
+  records: CropRecord[];
 };
 
 export const RecordChart = ({ records }: RecordChartProps) => {
