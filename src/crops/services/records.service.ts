@@ -58,7 +58,7 @@ export const deleteRecordById = async (recordId: string): Promise<{ status: stri
 
 export const updateRecordPayload = async (
   recordId: string,
-  payload: string
+  payload: unknown,
 ): Promise<{ status: string }> => {
   const { token } = useAuthStore.getState();
   try {

@@ -6,26 +6,40 @@ interface Message {
     content: string;
     timestamp: string;
 }
+
 type NotificationsProps = {
     hide: () => void;
 }
 
 export const NotificationsComponent = ({ hide }: NotificationsProps): React.ReactElement => {
-    const [messages, setMessages] = useState<Message[]>(() => {
-        const storedMessages = localStorage.getItem("messages");
-        return storedMessages ? JSON.parse(storedMessages) : [];
-    });
-
     const { company } = useCompanyPage();
+    const [messages, setMessages] = useState<Message[]>([]);
 
     const url = "wss://b-b0358e91-8f16-4f54-ac04-60744de2e1b7-1.mq.us-east-2.amazonaws.com:61619";
     const username = "greenhouse";
     const password = "champi202402";
-    const clientId = "123455";
-    const subscriptionName = "YourCompanyDurableSubscriber1";
+
+    const generateRandomString = (length: number) => {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        return result;
+    };
+
+    const [clientId] = useState(() => generateRandomString(8));
+    const [subscriptionName] = useState(() => generateRandomString(16));
 
     useEffect(() => {
-        if (!company?.id) return; // Espera a que company.id esté definido
+        if (company?.id) {
+            const storedMessages = localStorage.getItem(`${company.id}`);
+            setMessages(storedMessages ? JSON.parse(storedMessages) : []);
+        }
+    }, [company]);
+
+    useEffect(() => {
+        if (!company?.id) return;
 
         const topic = `/topic/${company.id}`;
         const ws = new WebSocket(url);
@@ -75,16 +89,16 @@ export const NotificationsComponent = ({ hide }: NotificationsProps): React.Reac
     const handleRemoveMessage = (message: Message) => {
         setMessages((prevMessages) => {
             const updatedMessages = prevMessages.filter((msg) => msg !== message);
-            localStorage.setItem(`${company?.id}`, JSON.stringify(updatedMessages)); // Actualiza el localStorage
-            console.log("Mensajes actualizados en localStorage:", updatedMessages); // Verifica la actualización
+            localStorage.setItem(`${company?.id}`, JSON.stringify(updatedMessages));
+            console.log("Mensajes actualizados en localStorage:", updatedMessages);
             return updatedMessages;
         });
     };
 
     return (
         <div>
-            <div className='absolute backdrop-blur-sm bg-black opacity-80 w-full h-[calc(100vh-96px)] z-30' onClick={hide}></div>
-            <div className='bg-white h-[calc(100vh-96px)] absolute top-[96px] right-0 w-1/4 z-30 flex flex-col'>
+            <div className='absolute backdrop-blur-sm bg-black opacity-80 w-full h-full z-30' onClick={hide}></div>
+            <div className='bg-white h-full absolute top-[96px] right-0 w-1/4 z-30 flex flex-col'>
                 <div className='p-2 overflow-scroll'>
                     <button
                         className="z-30"
@@ -126,12 +140,20 @@ export const NotificationsComponent = ({ hide }: NotificationsProps): React.Reac
                                                 <span className="text-sm text-gray-500">{msg.timestamp}</span>
                                                 <div 
                                                     className="text-sm text-gray-500 cursor-pointer"
-                                                    onClick={() => handleRemoveMessage(msg)} // Pasa el mensaje específico
+                                                    onClick={() => handleRemoveMessage(msg)}
                                                 >
                                                     X
                                                 </div>
                                             </div>
-                                            <CropFinished cropID={parsedContent.cropId} phase={parsedContent.phase} message={parsedContent.message} />
+                                            <CropFinished
+                                                cropID={parsedContent.cropId}
+                                                phase={parsedContent.phase}
+                                                message={parsedContent.message}
+                                                action={parsedContent.action}
+                                                payload={parsedContent.payload}
+                                                recordId={parsedContent.recordId}
+                                                differences={parsedContent.differences}
+                                            />
                                         </div>
                                     </div>
                                 );
