@@ -16,11 +16,11 @@ export const SideBar = ({
   return (
     <div>
       <div
-        className="absolute backdrop-blur-xs bg-black bg-opacity-25 inset-0 flex items-center justify-center z-20"
+        className="fixed backdrop-blur-xs bg-black bg-opacity-25 inset-0 flex items-center justify-center z-20"
         onClick={onClose}
       ></div>
 
-      <div className="bg-white h-full absolute top-0 right-0 w-full md:w-1/4 z-40 flex flex-col">
+      <div className="bg-white h-full fixed top-0 right-0 w-full md:w-1/4 z-40 flex flex-col">
         <div className="p-2 flex justify-start">
           <button aria-label="Cerrar" onClick={onClose} className="p-2">
             <svg
