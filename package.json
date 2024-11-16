@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.1.10",
+    "@stomp/stompjs": "^7.0.0",
     "@types/websocket": "^1.0.10",
     "axios": "^1.6.8",
     "chart.js": "^4.4.5",

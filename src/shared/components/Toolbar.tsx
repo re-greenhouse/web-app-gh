@@ -1,18 +1,18 @@
 import { ReactElement, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ProfileDropdownMenu } from "@/shared/components/ProfileDropdownMenu.tsx";
-import { NotificationsComponent } from "@/notifications/components/notifications";
+import { NotificationsComponent } from "@/notifications/components/Notifications";
+import { SideBar } from "./SideBar";
 
 export const Toolbar = (): ReactElement => {
   const [activePage, setActivePage] = useState("");
   const [dropDownToolbar, setDropDownToolbar] = useState(false);
-  const [notifications, setNotifications] = useState(false)
+  const [notifications, setNotifications] = useState(false);
   const notificationsRef = useRef<HTMLDivElement>(null);
-
 
   const handleNotifications = () => {
     setNotifications(!notifications);
-  }
+  };
 
   const menuRef = useRef(null);
   useEffect(() => {
@@ -73,7 +73,9 @@ export const Toolbar = (): ReactElement => {
             <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
             <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
           </svg>
-          <p className="max-md:hidden font-bold font-sans text-2xl">Greenhouse</p>
+          <p className="max-md:hidden font-bold font-sans text-2xl">
+            Greenhouse
+          </p>
         </Link>
         <div
           id="sections"
@@ -207,7 +209,10 @@ export const Toolbar = (): ReactElement => {
             </div>
           </div>
           <div className="flex justify-center items-center lg:gap-24 gap-5">
-            <button onClick={handleNotifications} className="text-primary hover:scale-95 duration-300">
+            <button
+              onClick={handleNotifications}
+              className="text-primary hover:scale-95 duration-300"
+            >
               <svg
                 className="w-7 h-7 "
                 xmlns="http://www.w3.org/2000/svg"
@@ -227,9 +232,9 @@ export const Toolbar = (): ReactElement => {
           </div>
         </div>
       </header>
-      <div ref={notificationsRef} className={` ${notifications ? "" : "hidden"}`}>
-        <NotificationsComponent hide={handleNotifications}/>
-      </div>
+      <SideBar isOpen={notifications} onClose={handleNotifications}>
+        <NotificationsComponent hide={handleNotifications} />
+      </SideBar>
     </div>
   );
 };
