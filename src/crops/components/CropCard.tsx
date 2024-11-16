@@ -141,7 +141,7 @@ export const CropCard = ({
       {showDialog && (
         <DeleteDialog
           hideDialog={handleDialog}
-          text={`¿Estás seguro de que deseas eliminar el Crop: ${cropId} y todos sus registros?`}
+          text={`¿Estás seguro de que deseas eliminar el cultivo: ${cropName} y todos sus registros?`}
           confirmDelete={confirmDelete}
           loading={loading}
           error={error}

@@ -71,7 +71,6 @@ export class CompanyService {
     }
   }
 
-
   static async getEmployeesByCompanyId(companyId: string, token: string) {
     try {
       const response = await CompanyService.http.get(`/profiles/companies/${companyId}`, {

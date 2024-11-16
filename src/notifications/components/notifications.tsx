@@ -2,18 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Client } from "@stomp/stompjs";
 import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook.tsx";
 import { CropAction } from "./CropAction";
+import { useAuthStore } from "@/auth/stores/useAuthStore";
+import { ProfileService } from "@/profile/services/profile.service";
+import {Notification} from "@/notifications/models/Notification.ts";
 
 interface Message {
   content: string;
   timestamp: string;
+  profileIcon?: string;
 }
 
-type NotificationsProps = {
-  hide: () => void;
-};
-
-export const NotificationsComponent =
-  ({}: NotificationsProps): React.ReactElement => {
+export const NotificationsComponent = (): React.ReactElement => {
     const { company } = useCompanyPage();
     const [messages, setMessages] = useState<Message[]>([]);
 
@@ -22,6 +21,10 @@ export const NotificationsComponent =
     const password = import.meta.env.VITE_WEBSOCKET_PASSWORD!;
     const clientId = import.meta.env.VITE_WEBSOCKET_CLIENT_ID!;
     const subscriptionName = import.meta.env.VITE_WEBSOCKET_SUBSCRIPTION_NAME!;
+
+    const { token } = useAuthStore((state) => ({
+      token: state.token!,
+    }));
 
     useEffect(() => {
       if (company?.id) {
@@ -32,6 +35,21 @@ export const NotificationsComponent =
 
     useEffect(() => {
       if (!company?.id) return;
+
+      const fetchProfileIcon = async (profileId: string) => {
+        try {
+          const response = await ProfileService.getProfileById(
+            profileId,
+            token
+          );
+          if (response.status === "success" && response.payload.iconUrl) {
+            return response.payload.iconUrl;
+          }
+        } catch (error) {
+          console.error("Error fetching profile icon:", error);
+        }
+        return null;
+      };
 
       const topic = `/topic/${company.id}`;
       const client = new Client({
@@ -47,7 +65,7 @@ export const NotificationsComponent =
         onConnect: () => {
           client.subscribe(
             topic,
-            (message) => {
+            async (message) => {
               const content = message.body.trim();
               const now = new Date();
               const date = now.toLocaleDateString("en-GB");
@@ -59,7 +77,27 @@ export const NotificationsComponent =
               });
               const timestamp = `${date} - ${time}`;
 
-              const newMessage = { content, timestamp };
+              let parsedContent: Notification;
+              try {
+                const cleanContent = content
+                  .replace(/[^\x20-\x7E]/g, "")
+                  .trim();
+                parsedContent = JSON.parse(cleanContent);
+              } catch (error) {
+                console.error("Error al parsear JSON:", error);
+                parsedContent = { message: "Contenido no válido" };
+              }
+
+              const profileIcon = parsedContent.profileId ? await fetchProfileIcon(
+                parsedContent.profileId
+              ) : null;
+
+              const newMessage: Message = {
+                content,
+                timestamp,
+                profileIcon,
+              };
+
               setMessages((prevMessages) => {
                 const updatedMessages = [...prevMessages, newMessage];
                 localStorage.setItem(
@@ -85,7 +123,7 @@ export const NotificationsComponent =
       return () => {
         client.deactivate();
       };
-    }, [company]);
+    }, [clientId, company, password, subscriptionName, token, url, username]);
 
     const handleRemoveMessage = (message: Message) => {
       setMessages((prevMessages) => {
@@ -121,12 +159,12 @@ export const NotificationsComponent =
                       <span className="text-sm text-gray-500">
                         {msg.timestamp}
                       </span>
-                      <div
-                        className="text-sm text-gray-500 cursor-pointer"
+                      <button
+                        className="text-sm text-gray-500"
                         onClick={() => handleRemoveMessage(msg)}
                       >
-                        X
-                      </div>
+                        <img src="icons/close.svg" alt="close" />
+                      </button>
                     </div>
                     <CropAction
                       cropID={parsedContent.cropId}
@@ -136,6 +174,7 @@ export const NotificationsComponent =
                       payload={parsedContent.payload}
                       recordId={parsedContent.recordId}
                       differences={parsedContent.differences}
+                      profileIcon={msg.profileIcon || ""}
                     />
                   </div>
                 </div>
@@ -143,6 +182,7 @@ export const NotificationsComponent =
             })
             .reverse()}
         </div>
+
       </div>
     );
   };

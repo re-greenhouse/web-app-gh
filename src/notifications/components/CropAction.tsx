@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateRecordPayload } from "@/crops/services/records.service";
+import { PrimaryButton } from "@/shared/components/Buttons";
 
 type CropActionProps = {
   cropID: string;
@@ -10,6 +11,7 @@ type CropActionProps = {
   payload: Record<string, any>;
   recordId: string;
   differences: Record<string, any>;
+  profileIcon: string;
 };
 
 export const CropAction = ({
@@ -20,9 +22,9 @@ export const CropAction = ({
   payload,
   recordId,
   differences,
+  profileIcon,
 }: CropActionProps): ReactElement => {
   const navigate = useNavigate();
-
   const handleRoute = () => {
     navigate(`/records/${cropID}/${phase}`);
   };
@@ -35,43 +37,45 @@ export const CropAction = ({
   return (
     <div className="py-2">
       {action === "created" || action === "next" || action === "previous" ? (
-        <a onClick={handleRoute} className="cursor-pointer">
-          <div className="flex flex-col">
+        <div onClick={handleRoute} className="cursor-pointer">
+          <div className="flex gap-2">
+            <img
+              src={profileIcon}
+              alt="Foto de perfil"
+              className="w-12 h-12 rounded-full"
+            />
             <h1 className="py-2">{message}</h1>
-            <p className="text-gray-400">Cultivo #{cropID}</p>
           </div>
-          <span className="underline py-2">Ver cambio</span>
-        </a>
+          <a className="underline">Ver cambio</a>
+        </div>
       ) : (
         <div>
-          <div className="flex flex-col">
+          <div className="flex gap-2">
+            {profileIcon && (
+              <img
+                src={profileIcon}
+                alt="Foto de perfil"
+                className="w-12 h-12 rounded-full"
+              />
+            )}
             <h1 className="py-2">{message}</h1>
-            <p className="text-gray-400">Cultivo #{cropID}</p>
-            <p className="text-gray-400">Registro #{recordId}</p>
           </div>
 
           {Array.isArray(differences) && differences.length > 0 && (
             <div className="py-5">
-              <h1>Cambios:</h1>
               {differences.map((diff, index) => (
-                <div key={index} className="py-2">
-                  <p className="font-bold text-gray-400">
-                    Campo de modificación: {diff.name}
-                  </p>
-                  <p className="font-bold text-gray-400">
-                    Antes: {diff.before}
-                  </p>
-                  <p className="font-bold text-gray-400">
-                    Después: {diff.after}
-                  </p>
+                <div className="mb-4" key={index}>
+                  <span className="flex gap-2">
+                    <p className="mr-2">{diff.name}:</p>
+                    <p className="text-gray-400 line-through">{diff.before}</p>
+                    <img src="icons/rightArrow.svg" alt="arrow" />
+                    <p className="font-bold ">{diff.after}</p>
+                  </span>
                 </div>
               ))}
-              <button
-                onClick={handleChange}
-                className="border p-2 rounded-lg hover:bg-white"
-              >
-                Confirmar cambio
-              </button>
+              <PrimaryButton onClick={handleChange} variant="primary">
+                <p>Aplicar cambios</p>
+              </PrimaryButton>
             </div>
           )}
         </div>

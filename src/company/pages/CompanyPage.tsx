@@ -13,6 +13,7 @@ import { SideBar } from "@/shared/components/SideBar";
 import { TextField } from "@/shared/components/TextField";
 import { ProfileService } from "@/profile/services/profile.service";
 import { useAuthStore } from "@/auth/stores/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 export const CompanyPage = (): ReactElement => {
   const { isLoading, company, employees } = useCompanyPage();
@@ -21,6 +22,8 @@ export const CompanyPage = (): ReactElement => {
   const [showSidebar, setSidebar] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const token = useAuthStore((state) => state.token);
+  const userId = useAuthStore((state) => state.profile);
+  const navigate = useNavigate();
 
   const [selectedProfile, setSelectedProfile] = useState<Profile>({
     id: "",
@@ -43,8 +46,12 @@ export const CompanyPage = (): ReactElement => {
   };
 
   const handleProfileSelection = (profile: Profile) => {
-    setSelectedProfile(profile);
-    handleSidebar();
+    if (profile.userId === userId?.userId) {
+      navigate("/profile");
+    } else {
+      setSelectedProfile(profile);
+      handleSidebar();
+    }
   };
 
   const handleClickInvite = () => {
@@ -81,6 +88,7 @@ export const CompanyPage = (): ReactElement => {
       window.location.reload();
     }
   };
+
 
   const handleFieldChange = (field: keyof Profile, value: string) => {
     setSelectedProfile((prevProfile) => ({
