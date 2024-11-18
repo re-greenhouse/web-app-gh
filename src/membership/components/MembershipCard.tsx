@@ -1,24 +1,62 @@
+import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook";
 import { PrimaryButton } from "@/shared/components/Buttons";
-import { ReactElement } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { postMembership } from "../services/membership.service"
+import { Membership } from "../models/Memberships";
 
 type MembershipCardProps = {
   membershipName: string;
+  levelName: string;
   price: string;
   description: string;
   icon: string;
+  suscriptionUrl: string;
 };
 
 export const MembershipCard = ({
   membershipName,
+  levelName,
   price,
   description,
   icon,
+  suscriptionUrl,
 }: MembershipCardProps): ReactElement => {
   const navigate = useNavigate();
+  const { company } = useCompanyPage();
 
-  const handleClick = () => {
-    navigate("/");
+  const addOneMonth = (date: Date): string => {
+    const result = new Date(date);
+    result.setMonth(result.getMonth() + 1);
+    return result.toString();
+  };
+
+  const [data, setData] = useState<Membership | null>(null);
+
+  useEffect(() => {
+    if (company?.id) {
+      setData({
+        membershipLevelName: levelName,
+        companyId: company.id,
+        startDate: new Date().toISOString(),
+        endDate: addOneMonth(new Date()),
+      });
+    }
+  }, [company?.id, levelName]);
+
+
+  const handleClick = async () => {
+    if (data) {
+      try {
+        const response = await postMembership(data);
+        if (response.status === "success") {
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Error al registrar la membresía:", error);
+      }
+    }
+    
   };
 
   return (
@@ -36,8 +74,25 @@ export const MembershipCard = ({
       <p className="text-secondary flex-grow">{description}</p>
 
       <div className="mt-auto pt-4">
-        <PrimaryButton size="medium" onClick={handleClick}>
-          <span>Seleccionar</span>
+        <PrimaryButton size="medium">
+        {levelName === "basico" ? (
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleClick}
+          >
+            Seleccionar (Básico)
+          </a>
+        ) : (
+          <a
+            href={suscriptionUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleClick}
+          >
+            Seleccionar
+          </a>
+        )}
         </PrimaryButton>
       </div>
     </div>

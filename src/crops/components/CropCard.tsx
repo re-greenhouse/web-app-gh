@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { Dropdown } from "@/shared/components/DropDownComponent";
 import { DeleteDialog } from "@/shared/components/DeleteDialog";
 import { useDeleteCrop } from "../hooks/CropCard.hook";
-import { getRecordsByCropIdAndPhase, deleteRecordById } from "../services/records.service";
+import {
+  getRecordsByCropIdAndPhase,
+  deleteRecordById,
+} from "../services/records.service";
 
 type CropCardProps = {
   cropId: string;
@@ -58,13 +61,13 @@ export const CropCard = ({
   };
 
   return (
-    <div className="flex flex-col cursor-pointer bg-white border-2 rounded-lg overflow-hidden m-2 sm:m-4">
+    <div className="flex flex-col cursor-pointer bg-white border-2 rounded-lg overflow-hidden m-2 sm:m-4 hover:opacity-90 duration-300">
       <div className="w-full overflow-hidden pb-4">
         <img
           onClick={() => navigate(`/records/${cropId}/${phase}`)}
-          className="object-cover w-full h-1/2 mb-4"
+          className="object-cover w-full h-1/2 mb-4 "
           src="/mushroom_images/hongos2.webp"
-          alt={cropId}
+          alt={cropName}
         />
         <div className="flex flex-col justify-center align-middle px-6 flex-grow space-y-4">
           <div className="flex justify-between items-center">
@@ -138,7 +141,7 @@ export const CropCard = ({
       {showDialog && (
         <DeleteDialog
           hideDialog={handleDialog}
-          text={`¿Estás seguro de que deseas eliminar el Crop: ${cropId} y todos sus registros?`}
+          text={`¿Estás seguro de que deseas eliminar el cultivo: ${cropName} y todos sus registros?`}
           confirmDelete={confirmDelete}
           loading={loading}
           error={error}

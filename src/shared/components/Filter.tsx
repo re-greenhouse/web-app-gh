@@ -3,16 +3,18 @@ import { ReactElement } from "react";
 type FilterProps = {
   label: string;
   onClick: () => void;
-  showArrow: boolean;
+  clickedState?: boolean;
   leadingIcon?: string;
+  trailingIcon: string;
   color?: string;
 };
 
 export const Filter = ({
   label,
   onClick,
-  showArrow,
+  clickedState,
   leadingIcon,
+  trailingIcon,
   color,
 }: FilterProps): ReactElement => {
   return (
@@ -23,10 +25,10 @@ export const Filter = ({
       {leadingIcon && <img src={leadingIcon} alt="icon" className="w-6 h-6" />}
       <p style={{ color: color || "#898989" }}>{label}</p>
       <img
-        src="/icons/downArrow.svg"
+        src={trailingIcon}
         alt="arrow"
         className={`w-4 h-4 transition-transform duration-300 ${
-          showArrow ? "rotate-180" : ""
+          clickedState ? "rotate-180" : ""
         }`}
       />
     </div>

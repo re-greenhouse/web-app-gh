@@ -26,42 +26,23 @@ export const InviteComponent = ({
 
   return (
     <div>
-      <div className="absolute backdrop-blur-xs bg-black bg-opacity-25 inset-0 flex w-full justify-center h-full z-20 content-center items-center">
-        <div className="bg-background lg:w-1/3 lg:h-2/3 content-start justify-center text-center rounded-2xl">
+      <div className="absolute backdrop-blur-xs bg-black bg-opacity-25 inset-0 flex items-center justify-center z-20">
+        <div className="bg-background w-full max-w-lg h-auto md:max-h-[90vh] rounded-2xl p-5 relative">
           <form
             onSubmit={(e) => onSubmit(e, isAdmin, "employee.invited")}
-            className="bottom-0 py-2"
+            className="flex flex-col items-center justify-center"
           >
-            <div className="flex flex-col justify-center w-full p-5">
-              <span className="flex justify-center w-full">
-                <h1 className="mx-auto py-5 text-inviteCompontentText font-bold text-xl">
-                  Invitar trabajador
-                </h1>
-                <span>
-                  <button onClick={hideDialog}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="size-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
-                </span>
-              </span>
-              <div className="text-start w-full">
-                <h1 className="py-5 text-inviteCompontentText font-semibold text-lg">
+            <div className="flex flex-col items-center">
+              <h1 className="text-inviteCompontentText font-bold text-2xl">
+                Invitar trabajador
+              </h1>
+
+              <div className="mt-4 w-full text-start">
+                <h2 className="text-inviteCompontentText font-semibold text-lg mb-4">
                   Información del trabajador
-                </h1>
-                <div className="flex justify-between gap-3 lg:flex-row flex-col">
-                  <div className="flex flex-col w-full">
+                </h2>
+                <div className="flex flex-wrap gap-3">
+                  <div className="w-full">
                     <ReferableTextField
                       id="first-name"
                       ref={firstNameRef}
@@ -70,7 +51,7 @@ export const InviteComponent = ({
                       type="text"
                     />
                   </div>
-                  <div className="flex flex-col w-full">
+                  <div className="w-full ">
                     <ReferableTextField
                       id="last-name"
                       ref={lastNameRef}
@@ -80,8 +61,8 @@ export const InviteComponent = ({
                     />
                   </div>
                 </div>
-                <div className="flex justify-between gap-3 py-5 lg:flex-row flex-col">
-                  <div className="flex flex-col w-full">
+                <div className="flex flex-wrap gap-3 py-5">
+                  <div className="w-full">
                     <ReferableTextField
                       id="username"
                       ref={usernameRef}
@@ -90,7 +71,7 @@ export const InviteComponent = ({
                       type="text"
                     />
                   </div>
-                  <div className="flex flex-col w-full">
+                  <div className="w-full ">
                     <h1>Rol</h1>
                     <select
                       className="border-2 border-gray-300 rounded-md w-full p-2 mt-2"
@@ -103,7 +84,7 @@ export const InviteComponent = ({
                     </select>
                   </div>
                 </div>
-                <div className="flex flex-col w-full">
+                <div className="w-full">
                   <ReferableTextField
                     id="correo"
                     ref={emailRef}
@@ -112,7 +93,7 @@ export const InviteComponent = ({
                     type="email"
                   />
                 </div>
-                <div className="flex flex-col p-10 gap-8 w-full">
+                <div className="flex flex-col w-full gap-5 p-5">
                   <PrimaryButton disabled={isLoading} type="submit">
                     {isLoading ? (
                       <Spinner color="#15F5BA" height={24} />
@@ -122,6 +103,9 @@ export const InviteComponent = ({
                       </span>
                     )}
                   </PrimaryButton>
+                  <button onClick={hideDialog} aria-label="cancel" className="">
+                    Cancelar
+                  </button>
                 </div>
               </div>
             </div>

@@ -44,7 +44,7 @@ const membershipData = [
   },
   {
     feature: "Cultivos",
-    basic: "365",
+    basic: "5",
     standard: "Ilimitados",
     premium: "Ilimitados",
   },
@@ -75,24 +75,30 @@ export const MembershipsPage = (): ReactElement => {
     {
       id: "1",
       name: "Básico",
+      levelName: "basico",
       price: "0",
       description: "Plan básico para pequeñas empresas.",
       icon: icons.basic,
+      suscriptionUrl: "",
     },
     {
       id: "2",
       name: "Estándar",
+      levelName: "estandar",
       price: "10",
       description: "Plan regular con más características y soporte extendido.",
       icon: icons.standard,
+      suscriptionUrl: "https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_plan_id=2c9380849314792601931df4593f0316",
     },
     {
       id: "3",
       name: "Premium",
+      levelName: "premium",
       price: "20",
       description:
         "Plan premium para grandes empresas con todas las funcionalidades.",
       icon: icons.premium,
+      suscriptionUrl: "https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_plan_id=2c9380849314792601931dfaa3e2031a",
     },
   ];
 
@@ -113,9 +119,11 @@ export const MembershipsPage = (): ReactElement => {
             <MembershipCard
               key={plan.id}
               membershipName={plan.name}
+              levelName={plan.levelName}
               price={plan.price}
               description={plan.description}
               icon={plan.icon}
+              suscriptionUrl={plan.suscriptionUrl}
             />
           ))}
         </div>

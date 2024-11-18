@@ -12,7 +12,7 @@ export class CompanyService {
     try {
       const response = await CompanyService.http.get('/companies', {
         headers: {
-           Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         params: { profileId: profileId }
       });
@@ -37,6 +37,39 @@ export class CompanyService {
     }
   }
 
+  static async editCompany(companyId: string, companyName: string, companyTin: string, companyUrl: string, token: string){
+    try {
+      const response = await CompanyService.http.patch(`/companies/${companyId}`,
+        {
+          name: companyName,
+          tin: companyTin,
+          logoUrl: companyUrl
+        },
+        {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+    });
+      return {
+        statusCode: 200,
+        status: "success",
+        payload: response.data
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        return {
+          statusCode: 404,
+          status: "error",
+          message: error.message
+        };
+      }
+      return {
+        statusCode: 500,
+        status: "error",
+        message: "Hubo un problema con el servidor. Intente de nuevo en unos minutos."
+      };
+    }
+  }
 
   static async getEmployeesByCompanyId(companyId: string, token: string) {
     try {

@@ -1,6 +1,6 @@
 import { useAuthStore } from "@/auth/stores/useAuthStore.ts";
 import axios from "axios";
-import { Record } from "../models/Record";
+import { CropRecord } from "../models/CropRecord.ts";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_ENDPOINT,
@@ -9,11 +9,11 @@ const instance = axios.create({
 export const getRecordsByCropIdAndPhase = async (
   cropId: string,
   phase: string
-): Promise<{ status: string; data: Record[] | string; message?: string }> => {
+): Promise<{ status: string; data: CropRecord[] | string; message?: string }> => {
   const { token } = useAuthStore.getState();
 
   try {
-    const response = await instance.get<{ records: Record[] }>(
+    const response = await instance.get<{ records: CropRecord[] }>(
       `/records/${cropId}/${phase}`,
       {
         headers: {
@@ -21,7 +21,6 @@ export const getRecordsByCropIdAndPhase = async (
         },
       }
     );
-
     return {
       status: "success",
       data: response.data.records,
@@ -58,7 +57,7 @@ export const deleteRecordById = async (recordId: string): Promise<{ status: stri
 
 export const updateRecordPayload = async (
   recordId: string,
-  payload: string
+  payload: unknown,
 ): Promise<{ status: string }> => {
   const { token } = useAuthStore.getState();
   try {

@@ -6,7 +6,6 @@ import { LoaderMessage } from "@/shared/components/LoaderMessage";
 import { CropCard } from "@/crops/components/CropCard";
 import { BannerComponent } from "@/shared/components/Banner";
 import { Dropdown } from "@/shared/components/DropDownComponent";
-import { DeleteDialog } from "@/shared/components/DeleteDialog";
 import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook.tsx";
 import { SearchBar } from "@/shared/components/SearchBar";
 import { Filter } from "@/shared/components/Filter";
@@ -20,7 +19,7 @@ export const CropsInProgress = (): ReactElement => {
   const [openPhaseFilter, setOpenPhaseFilter] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Todos");
-  
+
   const { company } = useCompanyPage();
 
   const options = [
@@ -77,7 +76,7 @@ export const CropsInProgress = (): ReactElement => {
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [company]);
 
   if (loading) {
     return (
@@ -113,19 +112,21 @@ export const CropsInProgress = (): ReactElement => {
           <Filter
             label="Fecha de inicio"
             onClick={toggleDateSorting}
-            showArrow={openDateFilter}
+            trailingIcon="/icons/sortIcon.svg"
+            clickedState={openDateFilter}
           />
-          <div className="relative">
+          <div className="relative flex">
             <Filter
               label="Fase actual"
               leadingIcon="/icons/filterIcon.svg"
+              trailingIcon="/icons/downArrow.svg"
+              clickedState={openPhaseFilter}
               onClick={() => {
                 setOpenPhaseFilter(!openPhaseFilter), setDropdown(!dropdown);
               }}
-              showArrow={openPhaseFilter}
             />
             {dropdown && (
-              <div className="absolute translate-y-4">
+              <div className="absolute translate-y-8">
                 <Dropdown options={options} onOptionSelect={handleItemClick} />
               </div>
             )}
@@ -135,8 +136,8 @@ export const CropsInProgress = (): ReactElement => {
           <strong>Cultivos</strong>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 w-[80vw] mt-6 justify-center mx-auto">
-          {filteredCrops.length > 0 ? (
-            filteredCrops.map((crop) => (
+          {sortedCrops.length > 0 ? (
+            sortedCrops.map((crop) => (
               <CropCard
                 key={crop.id}
                 cropId={crop.id}

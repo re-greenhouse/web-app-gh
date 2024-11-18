@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Record } from "../models/Record";
+import { CropRecord } from "../models/CropRecord.ts";
 import { Dropdown } from "@/shared/components/DropDownComponent";
 import { Filter } from "@/shared/components/Filter";
 
@@ -23,13 +23,17 @@ ChartJS.register(
 );
 
 type RecordChartProps = {
-  records: Record[];
+  records: CropRecord[];
 };
 
 export const RecordChart = ({ records }: RecordChartProps) => {
   const [selectedField, setSelectedField] = useState<string>("");
   const [timeFrame, setTimeFrame] = useState<string>("individual");
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
+
+  if (records.length === 0) {
+    return <p>No hay datos disponibles para mostrar el gráfico.</p>;
+  }
 
   const filteredFields = records[0]?.payload.data.filter(
     (item: { name: string }) =>
@@ -96,14 +100,14 @@ export const RecordChart = ({ records }: RecordChartProps) => {
     labels: groupedLabels,
     datasets: [
       {
-        label: `Valores de ${selectedField}`,
+        label: `${selectedField}`,
         data: groupedLabels.map((label) => {
           const values = groupedData[label];
           const sum = values.reduce((acc, val) => acc + val, 0);
           return sum / values.length;
         }),
-        backgroundColor: "rgba(75, 192, 192, 0.5)",
-        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: "rgba(125, 162, 87, 0.5)",
+        borderColor: "rgba(125, 162, 87, 1)",
         borderWidth: 1,
       },
     ],
@@ -118,8 +122,10 @@ export const RecordChart = ({ records }: RecordChartProps) => {
         <div className="relative mb-4">
           <Filter
             label={timeFrame.charAt(0).toUpperCase() + timeFrame.slice(1)}
+            leadingIcon="/icons/filterIcon.svg"
+            trailingIcon="/icons/downArrow.svg"
             onClick={() => setShowDropdown(!showDropdown)}
-            showArrow={showDropdown}
+            clickedState={showDropdown}
           />
           {showDropdown && (
             <div className="absolute mt-2 z-50">
@@ -140,7 +146,7 @@ export const RecordChart = ({ records }: RecordChartProps) => {
           <button
             key={key}
             onClick={() => setSelectedField(key)}
-            className={`px-4 py-2 rounded-md ${
+            className={`px-4 py-2 rounded-md hover:scale-95 duration-300 ${
               selectedField === key
                 ? "bg-textCardColorR text-white"
                 : "bg-gray-200"
@@ -176,7 +182,7 @@ export const RecordChart = ({ records }: RecordChartProps) => {
               y: {
                 title: {
                   display: true,
-                  text: "Valor",
+                  text: "Valor registrado",
                 },
               },
             },

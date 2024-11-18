@@ -24,12 +24,16 @@ export const Stepper = ({
     <div className="flex items-center w-full p-4">
       {stepNames.map((step, index) => {
         const routeKey = steps[step];
-
         const isCompleted = index < currentStepIndex;
         const isCurrent = index === currentStepIndex;
 
         return (
-          <div key={index} className="flex-1 flex items-center text-white">
+          <div
+            key={index}
+            className={`flex items-center text-white ${
+              index === stepNames.length - 1 ? "" : "flex-1"
+            }`}
+          >
             <div
               className="flex flex-col items-center relative cursor-pointer"
               onClick={() => navigate(`/records/${cropId}/${routeKey}`)}

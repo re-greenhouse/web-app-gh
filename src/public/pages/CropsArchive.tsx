@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import { getCrops } from "@/public/services/crops.service";
-import { Crop, CropWrapper } from "@/public/models/Crop";
+import { CropDone, CropWrapper } from "@/public/models/Crop";
 import { BaseLayout } from "@/shared/layouts/BaseLayout";
 import { LoaderMessage } from "@/shared/components/LoaderMessage";
 import { CropArchiveCard } from "@/crops/components/CropArchiveCard";
@@ -11,7 +11,7 @@ import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook.tsx";
 import { Filter } from "@/shared/components/Filter";
 
 export const CropsArchivePage = (): ReactElement => {
-  const [crops, setCrops] = useState<Crop[]>([]);
+  const [crops, setCrops] = useState<CropDone[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -60,7 +60,7 @@ export const CropsArchivePage = (): ReactElement => {
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [company]);
 
   if (loading) {
     return (
@@ -96,20 +96,22 @@ export const CropsArchivePage = (): ReactElement => {
           <Filter
             label="Fecha de inicio"
             onClick={toggleDateSorting}
-            showArrow={openDateFilter}
+            trailingIcon="/icons/sortIcon.svg"
+            clickedState={openDateFilter}
           />
-          <div className="relative">
+          <div className="relative flex">
             <Filter
               label="Calidad"
               leadingIcon="/icons/filterIcon.svg"
+              trailingIcon="/icons/downArrow.svg"
               onClick={() => {
                 setOpenCropQualityFilter(!openCropQualityFilter),
                   setDropdown(!dropdown);
               }}
-              showArrow={openCropQualityFilter}
+              clickedState={openCropQualityFilter}
             />
             {dropdown && (
-              <div className="absolute translate-y-4">
+              <div className="absolute translate-y-8">
                 <Dropdown options={options} onOptionSelect={handleItemClick} />
               </div>
             )}
@@ -126,7 +128,8 @@ export const CropsArchivePage = (): ReactElement => {
               cropName={crop.name}
               phase={crop.phase}
               startDate={crop.startDate}
-              quality="excelente"
+              imageUrl={crop.imageUrl || "/mushroom_images/hongos2.webp"}
+              quality={crop.quality || ""}
             />
           ))}
         </div>

@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 body {
-    font-family: 'Inria Sans', sans-serif;
+  font-family: "Inria Sans", sans-serif;
 }
-  
+
 h1 {
-    font-weight: bold;
+  font-weight: bold;
 }

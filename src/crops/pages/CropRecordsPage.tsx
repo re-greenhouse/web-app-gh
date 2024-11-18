@@ -3,7 +3,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { RecordCard } from "../components/RecordCard";
 import { LoaderMessage } from "@/shared/components/LoaderMessage";
-import { Record } from "../models/Record";
+import { CropRecord } from "../models/CropRecord.ts";
 import { getRecordsByCropIdAndPhase } from "../services/records.service";
 import { PrimaryButton } from "@/shared/components/Buttons";
 import { Stepper } from "../components/Stepper";
@@ -20,7 +20,7 @@ export const CropsRecordsPage = (): ReactElement => {
     cropId: string;
     cropPhase: string;
   }>();
-  const [records, setRecords] = useState<Record[]>([]);
+  const [records, setRecords] = useState<CropRecord[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedAuthor, setSelectedAuthor] = useState<string>("");
   const [showAuthorDropdown, setShowAuthorDropdown] = useState<boolean>(false);
@@ -68,7 +68,7 @@ export const CropsRecordsPage = (): ReactElement => {
   }, [cropId, cropPhase]);
 
   const handleBack = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   const authors = Array.from(new Set(records.map((record) => record.author)));
@@ -85,15 +85,24 @@ export const CropsRecordsPage = (): ReactElement => {
     );
 
   const exportToExcel = () => {
-    const dataToExport = filteredRecords.map((record) => ({
-      "Record ID": record.id,
-      Author: record.author,
-      "Updated Date": record.updatedDate,
-      Payload: JSON.stringify(record.payload),
-    }));
+    const dataToExport = filteredRecords.map((record) => {
+      const baseData: { [key: string]: string | number } = {
+        "Record ID": record.id,
+        Author: record.author,
+        "Updated Date": record.updatedDate,
+      };
+
+      record.payload.data.forEach((item: { name: string; value: any }) => {
+        baseData[item.name] = item.value;
+      });
+
+      return baseData;
+    });
+
     const worksheet = XLSX.utils.json_to_sheet(dataToExport);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Records");
+
     XLSX.writeFile(workbook, `Records_Crop_${cropId}_Phase_${cropPhase}.xlsx`);
   };
 
@@ -158,9 +167,10 @@ export const CropsRecordsPage = (): ReactElement => {
             <div className="relative">
               <Filter
                 label="Autor"
-                leadingIcon="/icons/filterIcon.svg"
                 onClick={() => setShowAuthorDropdown(!showAuthorDropdown)}
-                showArrow={showAuthorDropdown}
+                leadingIcon="/icons/filterIcon.svg"
+                trailingIcon="/icons/downArrow.svg"
+                clickedState={showAuthorDropdown}
               />
               {showAuthorDropdown && (
                 <div className="absolute mt-2 bg-white z-10 shadow-lg rounded w-44">
@@ -180,7 +190,7 @@ export const CropsRecordsPage = (): ReactElement => {
           </div>
 
           <h3 className="text-xl text-third font-bold">Registros</h3>
-          <div className="flex flex-col items-center justify-center gap-6">
+          <div className="flex flex-col items-center justify-center gap-6 mb-12">
             {filteredRecords.length > 0 ? (
               filteredRecords.map((record) => (
                 <RecordCard
