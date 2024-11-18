@@ -20,7 +20,7 @@ export const EditCompanyComponent = ({
   const [companyName, setCompanyName] = useState(company.name);
   const [companyTin, setCompanyTin] = useState(company.tin);
   const [companyImage, setCompanyImage] = useState(company.logoUrl);
-  const { profile, token } = useAuthStore((state) => ({
+  const { token } = useAuthStore((state) => ({
     profile: state.profile!,
     token: state.token!,
   }));

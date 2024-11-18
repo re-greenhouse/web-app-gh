@@ -89,7 +89,7 @@ export const BannerComponent = (): ReactElement => {
           </div>
         </div>
       </div>
-      {changeInfo && (
+      {changeInfo && company && (
         <EditCompanyComponent
           hideDialog={handleEditCompany}
           company={company}

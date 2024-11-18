@@ -49,15 +49,17 @@ export const CropsArchivePage = (): ReactElement => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getCrops(company?.id);
-      if (result.status === "success") {
-        const data = result.data as unknown as CropWrapper;
-        setCrops(data.crops || []);
-        setError(null);
-      } else {
-        setError(result.data as string);
+      if (company?.id){
+        const result = await getCrops(company?.id);
+        if (result.status === "success") {
+          const data = result.data as unknown as CropWrapper;
+          setCrops(data.crops || []);
+          setError(null);
+        } else {
+          setError(result.data as string);
+        }
+        setLoading(false);
       }
-      setLoading(false);
     };
     fetchData();
   }, [company]);
