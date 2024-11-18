@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { BaseLayout } from "@/shared/layouts/BaseLayout.tsx";
 import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook.tsx";
 import { LoaderMessage } from "@/shared/components/LoaderMessage.tsx";
@@ -14,6 +14,9 @@ import { TextField } from "@/shared/components/TextField";
 import { ProfileService } from "@/profile/services/profile.service";
 import { useAuthStore } from "@/auth/stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import { getMembershipByCompnyId, getMembershipBenefitsByMembershipName } from "@/membership/services/membership.service";
+import { Membership } from "@/membership/models/Memberships";
+import { MembershipLevel } from "@/membership/models/MembershipLevel";
 
 export const CompanyPage = (): ReactElement => {
   const { isLoading, company, employees } = useCompanyPage();
@@ -21,9 +24,12 @@ export const CompanyPage = (): ReactElement => {
   const [showDialog, setDialog] = useState(false);
   const [showSidebar, setSidebar] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [maxValue, setMaxValue] = useState(0);
+  const [invitedWorkers, setInvitedWorkers] = useState(false);
   const token = useAuthStore((state) => state.token);
   const userId = useAuthStore((state) => state.profile);
   const navigate = useNavigate();
+  const [text, setText] = useState("")
 
   const [selectedProfile, setSelectedProfile] = useState<Profile>({
     id: "",
@@ -36,6 +42,33 @@ export const CompanyPage = (): ReactElement => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (company?.id) {
+      const fetchData = async () => {
+        const result = await getMembershipByCompnyId(company.id);
+        if (result.status === "success") {
+          const data = result.data as Membership;
+          const response = await getMembershipBenefitsByMembershipName(data.membershipLevelName);
+          if (response.status === "success") {
+            const information = response.data as MembershipLevel;
+            setMaxValue(information.benefits[0].value);
+          }
+        }
+      };
+      fetchData();
+    }
+  }, [company?.id]);
+
+  useEffect(() => {
+    if (employees.length >= maxValue) {
+      setInvitedWorkers(true);
+      setText("Limite de alcanzado")
+    } else {
+      setInvitedWorkers(false);
+      setText("Invitar Trabajador")
+    }
+  }, [employees, maxValue]);
 
   const toggleSortOrder = () => {
     setSortOrder((prevOrder) => !prevOrder);
@@ -89,7 +122,6 @@ export const CompanyPage = (): ReactElement => {
     }
   };
 
-
   const handleFieldChange = (field: keyof Profile, value: string) => {
     setSelectedProfile((prevProfile) => ({
       ...prevProfile,
@@ -138,8 +170,8 @@ export const CompanyPage = (): ReactElement => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <PrimaryButton size="small" onClick={handleClickInvite}>
-          <span>Invitar Trabajador</span>
+        <PrimaryButton size="small" onClick={handleClickInvite} disabled={invitedWorkers}>
+          <span>{text}</span>
         </PrimaryButton>
       </div>
       <div className="justify-center w-[80vw] mx-auto text-third text-lg">

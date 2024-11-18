@@ -21,7 +21,6 @@ export const getRecordsByCropIdAndPhase = async (
         },
       }
     );
-
     return {
       status: "success",
       data: response.data.records,

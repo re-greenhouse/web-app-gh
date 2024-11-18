@@ -75,6 +75,7 @@ export const MembershipsPage = (): ReactElement => {
     {
       id: "1",
       name: "Básico",
+      levelName: "basico",
       price: "0",
       description: "Plan básico para pequeñas empresas.",
       icon: icons.basic,
@@ -83,6 +84,7 @@ export const MembershipsPage = (): ReactElement => {
     {
       id: "2",
       name: "Estándar",
+      levelName: "estandar",
       price: "10",
       description: "Plan regular con más características y soporte extendido.",
       icon: icons.standard,
@@ -91,6 +93,7 @@ export const MembershipsPage = (): ReactElement => {
     {
       id: "3",
       name: "Premium",
+      levelName: "premium",
       price: "20",
       description:
         "Plan premium para grandes empresas con todas las funcionalidades.",
@@ -116,6 +119,7 @@ export const MembershipsPage = (): ReactElement => {
             <MembershipCard
               key={plan.id}
               membershipName={plan.name}
+              levelName={plan.levelName}
               price={plan.price}
               description={plan.description}
               icon={plan.icon}

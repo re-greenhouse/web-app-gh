@@ -8,6 +8,7 @@ type NotificationContentProps = {
   phase: string;
   message: string;
   action: string;
+  //En caso de error cambiar el any
   payload: Record<string, any>;
   recordId: string;
   differences: Record<string, any>;
