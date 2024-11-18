@@ -17,7 +17,7 @@ const generateRandomPassword = (length: number = 8): string => {
 };
 
 export const useRegisterForm = () => {
-  const { profile, token } = useAuthStore((state) => ({
+  const { token } = useAuthStore((state) => ({
     profile: state.profile!,
     token: state.token!,
   }));
