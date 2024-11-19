@@ -124,7 +124,8 @@ export const CropsInProgress = (): ReactElement => {
               trailingIcon="/icons/downArrow.svg"
               clickedState={openPhaseFilter}
               onClick={() => {
-                setOpenPhaseFilter(!openPhaseFilter), setDropdown(!dropdown);
+                setOpenPhaseFilter(!openPhaseFilter);
+                setDropdown(!dropdown);
               }}
             />
             {dropdown && (
