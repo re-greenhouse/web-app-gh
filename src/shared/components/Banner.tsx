@@ -34,7 +34,7 @@ export const BannerComponent = (): ReactElement => {
   return (
     <div className="flex w-full">
       <img
-        src="public/bannerImage.webp"
+        src="bannerImage.webp"
         alt="bannerImage"
         className="absolute w-full hidden sm:hidden md:hidden lg:block xl:block 2xl:block"
       />

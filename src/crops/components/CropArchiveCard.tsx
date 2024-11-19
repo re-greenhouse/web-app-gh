@@ -64,7 +64,7 @@ export const CropArchiveCard = ({
 
   const getIconAndColor = () => {
     switch (quality) {
-      case "Excelent":
+      case "Excellent":
         return {
           icon: (
             <svg
@@ -136,14 +136,14 @@ export const CropArchiveCard = ({
 
   return (
     <div className="flex flex-col cursor-pointer bg-white border-2 rounded-lg overflow-hidden m-2 sm:m-4 hover:opacity-90 duration-300">
-      <div className="w-full overflow-hidden pb-4">
+      <div className="grid grid-rows-[1fr_auto] w-full overflow-hidden">
         <img
           onClick={() => navigate(`/records/${cropId}/${phase}`)}
-          className="object-cover w-full h-1/2 mb-4"
+          className="object-cover w-full h-auto aspect-video"
           src={imageUrl}
           alt={cropId}
         />
-        <div className="flex flex-col justify-center align-middle px-6 flex-grow space-y-4">
+        <div className="flex flex-col  pb-6 justify-center align-middle py-4 px-6 flex-grow space-y-4">
           <div className="flex justify-between items-center">
             <h4
               onClick={() => navigate(`/records/${cropId}/${phase}`)}
@@ -192,22 +192,22 @@ export const CropArchiveCard = ({
                 </svg>
               </button>
               {dropdown && (
-                <Dropdown options={options} onOptionSelect={handleItemClick} />
+                <Dropdown options={options} onOptionSelect={handleItemClick}/>
               )}
             </div>
           </div>
           <div className="flex flex-col space-y-2">
             <span className="flex items-center gap-2">
-              <img src="/icons/calendar.svg" alt="calendar" />
-              <strong className="text-sm text-primary">
+              <img src="/icons/calendar.svg" alt="calendar"/>
+              <strong className="text-primary">
                 Fecha de inicio:{" "}
               </strong>
-              <p className="text-xs text-secondary">{startDate}</p>
+              <p className="text-secondary">{startDate}</p>
             </span>
             <span className="flex items-center gap-2">
               {icon}
-              <strong className={`text-sm ${color}`}>Calidad: </strong>
-              <p className={`text-xs ${color}`}>{capitalize(quality)}</p>
+              <strong className={`${color}`}>Calidad: </strong>
+              <p className={color}>{capitalize(quality)}</p>
             </span>
           </div>
         </div>
