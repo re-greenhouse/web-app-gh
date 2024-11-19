@@ -3,11 +3,13 @@ import { useCompanyPage } from "@/company/hooks/useCompanyPage.hook.tsx";
 import { EditCompanyComponent } from "@/company/components/EditCompanyComponent";
 import { getMembershipByCompnyId } from "@/membership/services/membership.service";
 import { Membership } from "@/membership/models/Memberships";
+import { useLocation } from "react-router-dom";
 
 export const BannerComponent = (): ReactElement => {
-  const [activePage, setActivePage] = useState(false);
   const [changeInfo, setChangeInfo] = useState(false);
   const [membershipLevelName, setMembershipLevelName] = useState("")
+  const location = useLocation();
+  const activePage = location.pathname === "/company"
 
   const { company } = useCompanyPage();
 
@@ -17,25 +19,17 @@ export const BannerComponent = (): ReactElement => {
 
   useEffect(() => {
     if (company?.id) {
-    const fetchData = async () => {
-      const result = await getMembershipByCompnyId(company.id);
-      if (result.status === "success") {
-        const data = result.data as Membership;
-        setMembershipLevelName(data.membershipLevelName)
-      }
-    };
-    fetchData();
-  }
+      const fetchData = async () => {
+        const result = await getMembershipByCompnyId(company.id);
+        if (result.status === "success") {
+          const data = result.data as Membership;
+          setMembershipLevelName(data.membershipLevelName)
+        }
+      };
+      fetchData();
+    }
   }, [company?.id])
 
-  useEffect(() => {
-    const pathName = window.location.pathname;
-    if (pathName === "/company") {
-      setActivePage(true);
-    } else {
-      setActivePage(false);
-    }
-  }, []);
 
   return (
     <div className="flex w-full">
