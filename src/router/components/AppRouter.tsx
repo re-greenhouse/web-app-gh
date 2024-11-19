@@ -10,6 +10,7 @@ import { CropsInProgress } from "@/public/pages/CropsInProgress";
 import { MembershipsPage } from "@/membership/pages/MembershipsPage";
 import { CropsRecordsPage } from "@/crops/pages/CropRecordsPage";
 import { ProfilePage } from "@/profile/pages/ProfilePage";
+import {NotificationsProvider} from "@/notifications/context/useNotificationContext.tsx";
 
 export const AppRouter = (): ReactElement => {
   const isLogged = useAuthStore((state) => state.isLoggedIn());
@@ -21,15 +22,17 @@ export const AppRouter = (): ReactElement => {
           <PrivateRoute canActivate={isLogged} defaultDestination="/login" />
         }
       >
-        <Route path="/" element={<CropsInProgress />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/company" element={<CompanyPage />} />
-        <Route path="/archive" element={<CropsArchivePage />} />
-        <Route path="/memberships" element={<MembershipsPage />} />
-        <Route
-          path="/records/:cropId/:cropPhase"
-          element={<CropsRecordsPage />}
-        />
+        <NotificationsProvider>
+          <Route path="/" element={<CropsInProgress />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/company" element={<CompanyPage />} />
+          <Route path="/archive" element={<CropsArchivePage />} />
+          <Route path="/memberships" element={<MembershipsPage />} />
+          <Route
+            path="/records/:cropId/:cropPhase"
+            element={<CropsRecordsPage />}
+          />
+        </NotificationsProvider>
       </Route>
       <Route
         element={
