@@ -20,7 +20,7 @@ export const PrimaryButton = ({
   variant = "primary",
 }: PrimaryButtonProps): ReactElement => {
   let buttonStyles = "py-2 px-4 text-base w-full";
-  let variantStyles = variant === "primary" ? "bg-loginButton text-background" : "bg-background text-black";
+  const variantStyles = variant === "primary" ? "bg-loginButton text-background" : "bg-background text-black";
   if (size === "small") {
     buttonStyles = "py-2 px-2 text-sm w-full md:w-1/4 lg:w-1/6";
   } else if (size === "large") {
