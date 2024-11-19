@@ -112,14 +112,14 @@ export const CropsInProgress = (): ReactElement => {
             />
           </div>
           <Filter
-            label="Fecha de inicio"
+            label={openDateFilter ? 'Más recientes' : 'Más antiguos'}
             onClick={toggleDateSorting}
             trailingIcon="/icons/sortIcon.svg"
             clickedState={openDateFilter}
           />
           <div className="relative flex">
             <Filter
-              label="Fase actual"
+              label={`Fase actual: ${selectedOption}`}
               leadingIcon="/icons/filterIcon.svg"
               trailingIcon="/icons/downArrow.svg"
               clickedState={openPhaseFilter}
