@@ -67,7 +67,7 @@ export const BannerComponent = (): ReactElement => {
         </button>
         <div className="items-end">
           <div className="flex">
-            <h1 className="placeholder:text-third text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-2 text-third whitespace-nowrap font-bold bg-transparent">
+            <h1 className="placeholder:text-third capitalize text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-2 text-third whitespace-nowrap font-bold bg-transparent">
               {company?.name}
             </h1>
           </div>
