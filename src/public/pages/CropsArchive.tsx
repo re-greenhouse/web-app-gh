@@ -36,7 +36,7 @@ export const CropsArchivePage = (): ReactElement => {
   const filteredCrops = crops
     .filter(
       (crop) =>
-        crop.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        crop.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         crop.startDate.toLowerCase().includes(searchQuery.toLowerCase())
     )
     .filter((crop) => !crop.state && selectedOption === "Todos"); // TODO: Filter by crop quality
@@ -49,7 +49,7 @@ export const CropsArchivePage = (): ReactElement => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (company?.id){
+      if (company?.id) {
         const result = await getCrops(company?.id);
         if (result.status === "success") {
           const data = result.data as unknown as CropWrapper;
