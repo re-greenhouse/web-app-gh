@@ -65,7 +65,7 @@ export const CropsInProgress = (): ReactElement => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if(company?.id){
+      if (company?.id) {
         const result = await getCrops(company?.id);
         if (result.status === "success") {
           const data = result.data as unknown as CropWrapper;
