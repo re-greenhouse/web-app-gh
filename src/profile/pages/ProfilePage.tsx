@@ -47,13 +47,13 @@ export const ProfilePage = (): ReactElement => {
 
   return (
     <BaseLayout>
-      <div className="mx-auto rounded-2xl drop-shadow-md p-12 bg-white w-fit">
+      <div className="mx-auto rounded-2xl drop-shadow-md p-12 bg-white max-w-96">
         <img
           src={iconUrl}
           alt="Foto de perfil"
-          className="w-52 h-52 object-cover object-center rounded-full border-2 border-primary"
+          className="size-52 mx-auto object-cover object-center rounded-full border-2 border-primary"
         />
-        <div>
+        <div className="pt-4">
           <TextField
             id="first-name"
             type="text"
@@ -82,7 +82,7 @@ export const ProfilePage = (): ReactElement => {
               disabled={loading}
             />
             {error && <p className="text-red-500">{error}</p>}
-            <PrimaryButton onClick={logout} label="Cerrar sesión" />
+            <PrimaryButton variant="secondary" onClick={logout} label="Cerrar sesión" />
           </div>
         </div>
       </div>
