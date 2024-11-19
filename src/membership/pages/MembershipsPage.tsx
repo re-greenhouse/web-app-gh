@@ -1,7 +1,7 @@
-import {BaseLayout} from "@/shared/layouts/BaseLayout";
-import {ReactElement} from "react";
-import {MembershipCard} from "../components/MembershipCard";
-import {Table} from "@/shared/components/Table";
+import { BaseLayout } from "@/shared/layouts/BaseLayout";
+import { ReactElement } from "react";
+import { MembershipCard } from "../components/MembershipCard";
+import { Table } from "@/shared/components/Table";
 
 const icons = {
   basic: "/icons/mushroom.svg",
@@ -44,7 +44,7 @@ const membershipData = [
   },
   {
     feature: "Cultivos",
-    basic: "5",
+    basic: "365",
     standard: "Ilimitados",
     premium: "Ilimitados",
   },
@@ -88,7 +88,8 @@ export const MembershipsPage = (): ReactElement => {
       price: "10",
       description: "Plan regular con más características y soporte extendido.",
       icon: icons.standard,
-      suscriptionUrl: "https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_plan_id=2c9380849314792601931df4593f0316",
+      suscriptionUrl:
+        "https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_plan_id=2c9380849314792601931df4593f0316",
     },
     {
       id: "3",
@@ -98,7 +99,8 @@ export const MembershipsPage = (): ReactElement => {
       description:
         "Plan premium para grandes empresas con todas las funcionalidades.",
       icon: icons.premium,
-      suscriptionUrl: "https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_plan_id=2c9380849314792601931dfaa3e2031a",
+      suscriptionUrl:
+        "https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_plan_id=2c9380849314792601931dfaa3e2031a",
     },
   ];
 

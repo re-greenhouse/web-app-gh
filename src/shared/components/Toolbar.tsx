@@ -1,8 +1,9 @@
 import { ReactElement, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ProfileDropdownMenu } from "@/shared/components/ProfileDropdownMenu.tsx";
-import { NotificationsComponent } from "@/notifications/components/notifications"
+
 import { SideBar } from "./SideBar";
+import { NotificationsComponent } from "@/notifications/components/Notifications";
 
 export const Toolbar = (): ReactElement => {
   const [activePage, setActivePage] = useState("");
