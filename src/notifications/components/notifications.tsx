@@ -5,7 +5,7 @@ import { NotificationContent } from "./NotificationContent.tsx";
 import { useAuthStore } from "@/auth/stores/useAuthStore";
 import { ProfileService } from "@/profile/services/profile.service";
 import {Notification} from "@/notifications/models/Notification.ts";
-import { v4 as uuidv4 } from 'uuid';
+import {useSessionClientId} from "@/notifications/hooks/useSessionClientId.ts";
 
 interface Message {
   content: string;
@@ -20,8 +20,8 @@ export const NotificationsComponent = (): React.ReactElement => {
     const url = import.meta.env.VITE_WEBSOCKET_URL!;
     const username = import.meta.env.VITE_WEBSOCKET_USERNAME!;
     const password = import.meta.env.VITE_WEBSOCKET_PASSWORD!;
-    const clientId = uuidv4();
     const subscriptionName = import.meta.env.VITE_WEBSOCKET_SUBSCRIPTION_NAME!;
+    const clientId =  useSessionClientId();
 
     const { token } = useAuthStore((state) => ({
       token: state.token!,
