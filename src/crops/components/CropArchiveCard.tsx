@@ -64,7 +64,7 @@ export const CropArchiveCard = ({
 
   const getIconAndColor = () => {
     switch (quality) {
-      case "Excelent":
+      case "Excellent":
         return {
           icon: (
             <svg
