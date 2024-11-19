@@ -16,7 +16,7 @@ export const SearchBar = ({
       <img
         src="/icons/search.svg"
         alt="search"
-        className="absolute left-2 top-1/2 transform -translate-y-1/2 h-6 w-6"
+        className="absolute left-2.5 top-1/2 transform -translate-y-1/2 h-6 w-6"
       />
       <input
         type="text"
@@ -24,7 +24,7 @@ export const SearchBar = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="pl-10 p-2 border rounded w-full focus:outline-none focus:ring focus:ring-current-color transition duration-300 ease-in-out"
+        className="pl-10 p-2 border rounded-lg w-full focus:outline-none focus:ring focus:ring-current-color transition duration-300 ease-in-out"
       />
     </div>
   );
