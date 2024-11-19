@@ -195,7 +195,7 @@ export const CompanyPage = (): ReactElement => {
           ]}
           columnValues={[
             (profile) => (
-              <div className="flex gap-1 items-center justify-center">
+              <div className="flex gap-2.5 items-center justify-center">
                 <img
                   src={profile.iconUrl}
                   alt="User Image"
